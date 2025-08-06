@@ -7,6 +7,7 @@ export const App = () => {
       <Button variant="outline">Outline</Button>
       <Button variant="danger">Farlig knapp</Button>
       <Button disabled>Inaktiverad</Button>
+      <div className="bg-red-600 text-white p-2 my-4">Funkar färger?</div>
     </main>
   );
 };
