@@ -1,7 +1,12 @@
+import { Button } from "./ui/Button";
+
 export const App = () => {
   return (
-    <>
-      <h1>Hej Ida</h1>
-    </>
+    <main className="p-6 space-y-4">
+      <Button onClick={() => alert("Hej!")}>Standardknapp</Button>
+      <Button variant="outline">Outline</Button>
+      <Button variant="danger">Farlig knapp</Button>
+      <Button disabled>Inaktiverad</Button>
+    </main>
   );
 };
