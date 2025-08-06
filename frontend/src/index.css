@@ -1,2 +1,54 @@
-@import "tailwindcss/preflight";
-@import "tailwindcss/utilities";
+@import "tailwindcss";
+
+@theme {
+  --font-family-sans: "Zen Kaku Gothic New", sans-serif;
+
+  /* Base scale colors */
+  --color-base-100: #fefcfa;
+  --color-base-200: #fdf8f3;
+  --color-base-300: #fbf4ec;
+  --color-base-400: #f9ecdf;
+  --color-base-500: #f5e4d2;
+  --color-base-600: #f0dbc5;
+  --color-base-700: #ebd2b8;
+  --color-base-800: #e6c9ab;
+  --color-base-900: #e1c09e;
+
+  /* Accent scale colors */
+  --color-accent-100: #f4f1f1;
+  --color-accent-200: #e8e0e1;
+  --color-accent-300: #dccfd1;
+  --color-accent-400: #d0bec1;
+  --color-accent-500: #c4adb1;
+  --color-accent-600: #b89ca1;
+  --color-accent-700: #ac8b91;
+  --color-accent-800: #a07a81;
+  --color-accent-900: #946971;
+  --color-accent-950: #5d3136;
+
+  /* Semantic colors */
+  --color-primary: #5d3136;
+  --color-primary-hover: #4a272b;
+  --color-primary-focus: #6b3a40;
+  --color-background: #f9ecdf;
+  --color-surface: #fefcfa;
+  --color-card: #fdf8f3;
+  --color-muted: #f0dbc5;
+  --color-muted-foreground: #946971;
+  --color-foreground: #5d3136;
+  --color-border: #ebd2b8;
+  --color-border-muted: #f5e4d2;
+
+  /* Shadows */
+  --shadow-soft: 0 2px 8px 0 rgba(93, 49, 54, 0.08);
+  --shadow-medium: 0 4px 16px 0 rgba(93, 49, 54, 0.12);
+  --shadow-strong: 0 8px 32px 0 rgba(93, 49, 54, 0.16);
+
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+}

@@ -39,7 +39,7 @@ export const App = () => {
                     level={5}
                     className="text-primary font-medium tracking-wide"
                   >
-                    UPDATES
+                    INFO BLOCK
                   </Heading>
                 </CardContent>
               </CardHeader>
@@ -53,7 +53,7 @@ export const App = () => {
                     level={5}
                     className="text-primary font-medium tracking-wide"
                   >
-                    NO CODE
+                    MORE INFO
                   </Heading>
                 </CardContent>
               </CardHeader>
@@ -67,7 +67,7 @@ export const App = () => {
                     level={5}
                     className="text-primary font-medium tracking-wide"
                   >
-                    STUDENTS WORKS
+                    EVEN MORE
                   </Heading>
                 </CardContent>
               </CardHeader>
@@ -81,7 +81,7 @@ export const App = () => {
                     level={5}
                     className="text-primary font-medium tracking-wide"
                   >
-                    NEW MEMBERS
+                    SO MUCH INFO
                   </Heading>
                 </CardContent>
               </CardHeader>
