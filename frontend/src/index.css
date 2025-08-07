@@ -15,16 +15,16 @@
   --color-base-900: #e1c09e;
 
   /* Accent scale colors */
-  --color-accent-100: #f4f1f1;
-  --color-accent-200: #e8e0e1;
-  --color-accent-300: #dccfd1;
-  --color-accent-400: #d0bec1;
-  --color-accent-500: #c4adb1;
-  --color-accent-600: #b89ca1;
-  --color-accent-700: #ac8b91;
-  --color-accent-800: #a07a81;
-  --color-accent-900: #946971;
-  --color-accent-950: #5d3136;
+  --color-accent-100: #934D56;
+  --color-accent-200: #86464E;
+  --color-accent-300: #783F46;
+  --color-accent-400: #6B383E;
+  --color-accent-500: #5d3136;
+  --color-accent-600: #502A2F;
+  --color-accent-700: #432327;
+  --color-accent-800: #351C1F;
+  --color-accent-900: #281517;
+  --color-accent-950: #1B0E0F;
 
   /* Semantic colors */
   --color-primary: #5d3136;
@@ -51,4 +51,25 @@
   --radius-xl: 0.75rem;
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
+
+    /* Spacing*/
+  --spacing-18: 4.5rem;
+  --spacing-22: 5.5rem;
+  --spacing-26: 6.5rem;
+  --spacing-30: 7.5rem;
+
+  /* Font sizes */
+   --font-size-xs: 0.75rem;   --leading-xs: 1rem;
+  --font-size-sm: 0.875rem;  --leading-sm: 1.25rem;
+  --font-size-base: 1rem;    --leading-base: 1.5rem;
+  --font-size-lg: 1.125rem;  --leading-lg: 1.75rem;
+  --font-size-xl: 1.25rem;   --leading-xl: 1.75rem;
+  --font-size-2xl: 1.5rem;   --leading-2xl: 2rem;
+  --font-size-3xl: 1.875rem; --leading-3xl: 2.25rem;
+  --font-size-4xl: 2.25rem;  --leading-4xl: 2.5rem;
+  --font-size-5xl: 3rem;     --leading-5xl: 1;
+  --font-size-6xl: 3.75rem;  --leading-6xl: 1;
+  --font-size-7xl: 4.5rem;   --leading-7xl: 1;
+  --font-size-8xl: 6rem;     --leading-8xl: 1;
+  --font-size-9xl: 8rem;     --leading-9xl: 1;
 }

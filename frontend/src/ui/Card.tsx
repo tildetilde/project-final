@@ -4,17 +4,23 @@ import { cn } from "../lib/utils";
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   children: React.ReactNode;
   hoverable?: boolean;
+  clickable?: boolean  
 }
 
 export const Card = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, children, hoverable = false, ...props }, ref) => {
+  ({ className, children, hoverable = false, clickable = false, ...props }, ref) => {
+        const hoverClasses = hoverable
+      ? "hover:shadow-medium hover:border-primary/30 hover:bg-card hover:-translate-y-1"
+      : "";
+       const clickClasses = clickable ? "cursor-pointer" : "";
+       
     return (
       <div
         ref={ref}
         className={cn(
           "rounded-2xl bg-surface border border-primary/20 p-8 transition-all duration-300",
-          hoverable &&
-            "hover:shadow-medium hover:border-primary/30 hover:bg-card hover:-translate-y-1 cursor-pointer",
+          hoverClasses,
+          clickClasses,
           className
         )}
         {...props}
