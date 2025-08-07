@@ -1,7 +1,11 @@
-import { Button } from "./ui/Button";
-import { Card, CardHeader, CardContent } from "./ui/Card";
-import { Heading } from "./ui/Heading";
-import { DotPattern } from "./ui/DotPattern";
+import {
+  Button,
+  Card,
+  CardHeader,
+  CardContent,
+  Heading,
+  DotPattern,
+} from './ui';
 
 export const App = () => {
   return (
