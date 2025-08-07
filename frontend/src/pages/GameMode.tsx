@@ -1,6 +1,14 @@
 import React from 'react';
 import { Heading, Card, CardHeader, CardContent } from '../ui';
+import { StartCard } from '../components/StartCard'
 import { TimeLineCard } from '../components/TimeLineCard';
+
+const startData = {
+  year: 1982,
+  artist: 'Michael Jackson',
+  title: 'Thriller',
+  playerName: 'Spelare 1',
+}
 
 const timelineData = [
   { id: 1, year: 1982, artist: 'Michael Jackson', title: 'Thriller' },
@@ -12,16 +20,12 @@ export const GameMode: React.FC = () => (
   <div className="space-y-6">
     <Heading level={1}>Game Mode</Heading>
 
-    <Card hoverable>
-      <CardHeader>
-        <Heading level={5}>Starting card</Heading>
-      </CardHeader>
-      <CardContent>
-        {/* Game logic here */}
-        {/* Lägg till spelkomponenter eller instruktioner här */}
-        <p>Design kommer snart</p>
-      </CardContent>
-    </Card>
+<StartCard
+      year={startData.year}
+      artist={startData.artist}
+      title={startData.title}
+      playerName={startData.playerName}
+    />
 
     <div>
       <Heading level={3}>Timeline</Heading>
