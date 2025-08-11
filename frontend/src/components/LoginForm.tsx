@@ -20,10 +20,10 @@ export const LoginForm: React.FC = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="text-center space-y-8">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground">Hitster</h1>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Build your music timeline and guess the years in this exciting music game
-          </p>
+<h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground">Music Game Name</h1>
+<p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto">
+  Build your music timeline and guess the years in this exciting music game
+</p>
         </div>
 
         {/* Error display */}
@@ -55,7 +55,7 @@ export const LoginForm: React.FC = () => {
             </div>
           )}
         </Button>
-
+        
         {/* Game info */}
         <div className="mt-6 p-4 bg-muted/30 rounded-xl border border-border-muted max-w-md mx-auto">
           <div className="flex items-start space-x-3">

@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { GameMode } from './pages/GameMode';
+import GameMode from './pages/GameMode';
 import { Login } from './pages/Login';
 import { Dashboard } from './pages/Dashboard';
 import { OAuthCallback } from './pages/OAuthCallback';

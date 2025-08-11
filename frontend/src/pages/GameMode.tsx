@@ -1,44 +1,13 @@
-import React from 'react';
-import { Heading, Card, CardHeader, CardContent } from '../ui';
-import { StartCard } from '../components/StartCard'
-import { TimeLineCard } from '../components/TimeLineCard';
+// src/pages/GameMode.tsx
+import React from 'react'
+import { OrientationGuard } from '../components/OrientationGuard'
+import { GameBoard } from '../components/GameBoard'
 
-const startData = {
-  year: 1982,
-  artist: 'Michael Jackson',
-  title: 'Thriller',
-  playerName: 'Spelare 1',
-}
-
-const timelineData = [
-  { id: 1, year: 1982, artist: 'Michael Jackson', title: 'Thriller' },
-  { id: 2, year: 1991, artist: 'Nirvana', title: 'Smells Like Teen Spirit' },
-  { id: 3, year: 2013, artist: 'Daft Punk', title: 'Get Lucky' },
-];
-
-export const GameMode: React.FC = () => (
-  <div className="space-y-6">
-    <Heading level={1}>Game Mode</Heading>
-
-<StartCard
-      year={startData.year}
-      artist={startData.artist}
-      title={startData.title}
-      playerName={startData.playerName}
-    />
-
-    <div>
-      <Heading level={3}>Timeline</Heading>
-      <div className="flex gap-6 overflow-x-auto py-4">
-        {timelineData.map(item => (
-          <TimeLineCard
-            key={item.id}
-            year={item.year}
-            artist={item.artist}
-            title={item.title}
-          />
-        ))}
-      </div>
+export default function GameMode() {
+  return (
+    <div className="space-y-4 sm:space-y-8">
+      <OrientationGuard minWidth={600} />
+      <GameBoard />
     </div>
-  </div>
-);
+  )
+}
