@@ -73,3 +73,13 @@
   --font-size-8xl: 6rem;     --leading-8xl: 1;
   --font-size-9xl: 8rem;     --leading-9xl: 1;
 }
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (max-width: 640px) {
+  html {
+    font-size: 14px;
+  }
+}
