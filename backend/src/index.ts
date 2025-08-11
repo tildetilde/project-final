@@ -119,7 +119,7 @@ app.get('/callback', async (req: Request, res: Response) => {
     const storedState = req.session.spotify_auth_state;
 
     if (state === null || state !== storedState) {
-        res.redirect(`${process.env.FRONTEND_URI}/#error=state_mismatch`);
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=state_mismatch`);
     } else {
         req.session.spotify_auth_state = undefined; // Clear state from the session
         try {
@@ -131,11 +131,11 @@ app.get('/callback', async (req: Request, res: Response) => {
             req.session.refreshToken = refresh_token;
             req.session.expiresIn = expires_in;
 
-            // Redirect to the frontend without sending tokens in the URL
-            res.redirect(`${process.env.FRONTEND_URI}/dashboard`);
+            // Redirect to the frontend callback route to handle the OAuth completion
+            res.redirect(`${process.env.FRONTEND_URI}/callback`);
         } catch (err) {
             console.error('Could not get access token:', err);
-            res.redirect(`${process.env.FRONTEND_URI}/#error=invalid_token`);
+            res.redirect(`${process.env.FRONTEND_URI}/login?error=invalid_token`);
         }
     }
 });
