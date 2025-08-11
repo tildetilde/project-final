@@ -12,6 +12,7 @@ export const OAuthCallback: React.FC = () => {
         // Check if there's an error in the URL
         const urlParams = new URLSearchParams(window.location.search);
         const errorParam = urlParams.get('error');
+        const successParam = urlParams.get('success');
         
         if (errorParam) {
           console.error('OAuth error:', errorParam);
@@ -19,11 +20,24 @@ export const OAuthCallback: React.FC = () => {
           return;
         }
 
-        // Check authentication status
-        await checkAuthStatus();
-        
-        // Redirect to dashboard after successful authentication
-        navigate('/dashboard');
+        if (successParam === 'true') {
+          console.log('OAuth successful, checking authentication status...');
+          // Wait a moment for the backend session to be established
+          await new Promise(resolve => setTimeout(resolve, 1000));
+          
+          // Check authentication status
+          await checkAuthStatus();
+          
+          // Redirect to dashboard after successful authentication
+          navigate('/dashboard');
+        } else {
+          console.log('No success parameter, checking auth status directly...');
+          // Check authentication status
+          await checkAuthStatus();
+          
+          // Redirect to dashboard after successful authentication
+          navigate('/dashboard');
+        }
       } catch (err) {
         console.error('Error handling OAuth callback:', err);
         navigate('/login?error=authentication_failed');
