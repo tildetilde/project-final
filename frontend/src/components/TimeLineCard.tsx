@@ -7,6 +7,7 @@ interface TimeLineCardProps {
   title: string;
   isCorrect?: boolean;
   isRevealed?: boolean;
+  className?: string;
 }
 
 export const TimeLineCard: React.FC<TimeLineCardProps> = ({ 
@@ -14,7 +15,8 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
   artist, 
   title, 
   isCorrect,
-  isRevealed = true 
+  isRevealed,
+  className = '',
 }) => (
  <Card
     className={`
