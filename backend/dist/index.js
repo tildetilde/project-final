@@ -15,6 +15,10 @@ const requiredEnvVars = [
     'FRONTEND_URI',
     'SESSION_SECRET'
 ];
+// Log environment info for debugging
+console.log('Environment:', process.env.NODE_ENV || 'development');
+console.log('Frontend URI:', process.env.FRONTEND_URI || 'http://localhost:5173');
+console.log('Backend Port:', process.env.PORT || 8888);
 for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
         console.error(`Error: The environment variable ${envVar} is missing`);
@@ -22,11 +26,16 @@ for (const envVar of requiredEnvVars) {
     }
 }
 const app = express();
-const port = 8888;
+const port = process.env.PORT || 8888;
 // Middleware
 app.use(cors({
-    origin: process.env.FRONTEND_URI, // Allow only your frontend
-    credentials: true // Allow cookies
+    origin: [
+        process.env.FRONTEND_URI || 'http://localhost:5173',
+        'https://banganza.netlify.app' // Add your deployed frontend
+    ],
+    credentials: true, // Allow cookies
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'Cookie'],
 }));
 app.use(cookieParser());
 app.use(express.json()); // For handling JSON request bodies
@@ -35,18 +44,36 @@ app.get('/', (req, res) => {
     res.json({
         message: 'Backend server is running!',
         status: 'ok',
-        timestamp: new Date().toISOString()
+        environment: process.env.NODE_ENV || 'development',
+        timestamp: new Date().toISOString(),
+        frontend: process.env.FRONTEND_URI || 'http://localhost:5173'
     });
+});
+// Additional health check for production monitoring
+app.get('/health', (req, res) => {
+    const health = {
+        status: 'ok',
+        timestamp: new Date().toISOString(),
+        uptime: process.uptime(),
+        environment: process.env.NODE_ENV || 'development',
+        database: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected'
+    };
+    if (health.database === 'disconnected') {
+        health.status = 'warning';
+    }
+    res.json(health);
 });
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: false,
+    resave: true, // Changed to true to ensure session is saved
+    saveUninitialized: true, // Changed to true to save new sessions
     cookie: {
         httpOnly: true, // Improve security by making the cookie inaccessible to JavaScript
         secure: process.env.NODE_ENV === 'production', // Use secure cookies only in production
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax', // Required for cross-origin cookies in production
         maxAge: 60 * 60 * 1000 // 1 hour
-    }
+    },
+    name: 'spotify-session' // Give the session a specific name
 }));
 // Connect to MongoDB
 mongoose.connect(process.env.MONGODB_URI)
@@ -80,6 +107,10 @@ const generateRandomString = (length) => {
 app.get('/login', (req, res) => {
     const state = generateRandomString(16);
     req.session.spotify_auth_state = state; // Save state in the session
+    console.log('OAuth login initiated with state:', state);
+    console.log('Session ID:', req.sessionID);
+    console.log('Frontend URI:', process.env.FRONTEND_URI);
+    console.log('Session data before redirect:', req.session);
     // Required scopes to control the user's Spotify app and read playback status
     const scope = [
         'user-read-private',
@@ -87,31 +118,69 @@ app.get('/login', (req, res) => {
         'user-read-playback-state',
         'user-modify-playback-state'
     ];
-    res.redirect(spotifyApi.createAuthorizeURL(scope, state));
+    const authUrl = spotifyApi.createAuthorizeURL(scope, state);
+    console.log('Redirecting to Spotify OAuth URL:', authUrl);
+    // Force session save before redirect
+    req.session.save((err) => {
+        if (err) {
+            console.error('Error saving session:', err);
+            return res.status(500).json({ error: 'Failed to save session' });
+        }
+        console.log('Session saved successfully, redirecting to Spotify');
+        res.redirect(authUrl);
+    });
 });
 // 2. Callback after Spotify authentication
 app.get('/callback', async (req, res) => {
     const { code, state } = req.query;
     const storedState = req.session.spotify_auth_state;
-    if (state === null || state !== storedState) {
-        res.redirect(`${process.env.FRONTEND_URI}/#error=state_mismatch`);
+    console.log('OAuth callback received:');
+    console.log('- Received state:', state);
+    console.log('- Stored state:', storedState);
+    console.log('- Session ID:', req.sessionID);
+    console.log('- Session data:', req.session);
+    if (state === null) {
+        console.error('No state parameter received from Spotify');
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=no_state`);
+        return;
     }
-    else {
-        req.session.spotify_auth_state = undefined; // Clear state from the session
-        try {
-            const data = await spotifyApi.authorizationCodeGrant(code);
-            const { access_token, refresh_token, expires_in } = data.body;
-            // Save tokens in the session
-            req.session.accessToken = access_token;
-            req.session.refreshToken = refresh_token;
-            req.session.expiresIn = expires_in;
-            // Redirect to the frontend without sending tokens in the URL
-            res.redirect(`${process.env.FRONTEND_URI}/dashboard`);
-        }
-        catch (err) {
-            console.error('Could not get access token:', err);
-            res.redirect(`${process.env.FRONTEND_URI}/#error=invalid_token`);
-        }
+    if (!storedState) {
+        console.error('No stored state found in session');
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=no_stored_state`);
+        return;
+    }
+    if (state !== storedState) {
+        console.error('State mismatch in OAuth callback');
+        console.error('- Expected:', storedState);
+        console.error('- Received:', state);
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=state_mismatch`);
+        return;
+    }
+    if (!code) {
+        console.error('No authorization code received from Spotify');
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=no_code`);
+        return;
+    }
+    // Clear state from the session
+    req.session.spotify_auth_state = undefined;
+    try {
+        const data = await spotifyApi.authorizationCodeGrant(code);
+        const { access_token, refresh_token, expires_in } = data.body;
+        // Save tokens in the session
+        req.session.accessToken = access_token;
+        req.session.refreshToken = refresh_token;
+        req.session.expiresIn = expires_in;
+        req.session.tokenCreatedAt = Date.now(); // Store timestamp
+        console.log('OAuth tokens received and stored in session');
+        console.log('- Access token length:', access_token ? access_token.length : 0);
+        console.log('- Refresh token length:', refresh_token ? refresh_token.length : 0);
+        console.log('- Expires in:', expires_in);
+        // Redirect to the frontend callback route to handle the OAuth completion
+        res.redirect(`${process.env.FRONTEND_URI}/callback?success=true`);
+    }
+    catch (err) {
+        console.error('Could not get access token:', err);
+        res.redirect(`${process.env.FRONTEND_URI}/login?error=invalid_token`);
     }
 });
 // 3. Refresh access token
@@ -126,12 +195,39 @@ app.get('/refresh_token', async (req, res) => {
         const { access_token, expires_in } = data.body;
         req.session.accessToken = access_token;
         req.session.expiresIn = expires_in;
+        req.session.tokenCreatedAt = Date.now(); // Update timestamp
         res.json({ success: true });
     }
     catch (err) {
         console.error('Could not refresh access token:', err);
         res.status(500).json({ error: 'Could not refresh access token' });
     }
+});
+// 3.5. Check token status
+app.get('/token-status', (req, res) => {
+    const { accessToken, expiresIn, tokenCreatedAt } = req.session;
+    if (!accessToken || !expiresIn || !tokenCreatedAt) {
+        return res.status(401).json({
+            valid: false,
+            reason: 'No tokens in session',
+            needsRefresh: false
+        });
+    }
+    const now = Date.now();
+    const tokenAge = now - tokenCreatedAt;
+    const timeUntilExpiry = (expiresIn * 1000) - tokenAge;
+    // Token is valid if it hasn't expired yet
+    const isValid = timeUntilExpiry > 0;
+    // Suggest refresh if token expires in less than 5 minutes
+    const needsRefresh = timeUntilExpiry < (5 * 60 * 1000);
+    res.json({
+        valid: isValid,
+        reason: isValid ? 'Token is valid' : 'Token has expired',
+        needsRefresh,
+        timeUntilExpiry: Math.max(0, timeUntilExpiry),
+        expiresIn: expiresIn * 1000,
+        tokenAge
+    });
 });
 // 4. Get user profile (via backend session)
 app.get('/user-profile', async (req, res) => {
@@ -380,7 +476,13 @@ async function populateQuizQuestionsFromPlaylist() {
 }
 // Start the server
 app.listen(port, () => {
-    console.log(`Backend server is running on http://localhost:${port}`);
+    console.log(`Backend server is running on port ${port}`);
+    if (process.env.NODE_ENV === 'production') {
+        console.log('Production mode enabled');
+    }
+    else {
+        console.log(`Development mode: http://localhost:${port}`);
+    }
 }).on('error', (err) => {
     console.error('Error starting the server:', err);
     process.exit(1);
