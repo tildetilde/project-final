@@ -1,7 +1,7 @@
 // Environment configuration
 export const config = {
-  // Backend API URL
-  backendUrl: import.meta.env.VITE_BACKEND_URL || 'http://localhost:8888',
+  // Backend API URL - Use production for OAuth, local for development
+  backendUrl: import.meta.env.VITE_BACKEND_URL || 'https://project-final-pfy9.onrender.com',
   
   // Frontend URL
   frontendUrl: import.meta.env.VITE_FRONTEND_URL || 'http://localhost:5173',
