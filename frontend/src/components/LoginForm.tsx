@@ -26,15 +26,15 @@ export const LoginForm: React.FC = () => {
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="text-center space-y-8">
         <div className="space-y-4">
-          <h1 className="text-4xl md:text-6xl font-bold text-foreground">Hitster</h1>
-          <p className="text-lg text-muted-foreground max-w-md mx-auto">
-            Build your music timeline and guess the years in this exciting music game
-          </p>
+<h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground">Music Game Name</h1>
+<p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto">
+  Build your music timeline and guess the years in this exciting music game
+</p>
         </div>
 
-        <Button onClick={() => setIsModalOpen(true)} className="px-8 py-3 text-lg">
-          Start Game
-        </Button>
+<Button onClick={() => setIsModalOpen(true)} className="px-6 py-3 sm:px-8 text-base sm:text-lg">
+  Start Game
+</Button>
       </div>
 
       <LoginModal

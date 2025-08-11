@@ -2,6 +2,7 @@ import React from 'react';
 import { Heading, Card, CardHeader, CardContent } from '../ui';
 import { StartCard } from '../components/StartCard'
 import { TimeLineCard } from '../components/TimeLineCard';
+import { OrientationGuard } from '../components/OrientationGuard';
 
 const startData = {
   year: 1982,
@@ -17,10 +18,13 @@ const timelineData = [
 ];
 
 export const GameMode: React.FC = () => (
-  <div className="space-y-6">
-    <Heading level={1}>Game Mode</Heading>
+ <div className="space-y-6 sm:space-y-8">
+    <OrientationGuard minWidth={600} /> {/* visas i porträtt < 600px */}
 
-<StartCard
+    <Heading level={1} className="text-2xl sm:text-3xl">Game Mode</Heading>
+
+
+    <StartCard
       year={startData.year}
       artist={startData.artist}
       title={startData.title}
@@ -28,17 +32,18 @@ export const GameMode: React.FC = () => (
     />
 
     <div>
-      <Heading level={3}>Timeline</Heading>
-      <div className="flex gap-6 overflow-x-auto py-4">
+      <Heading level={3} className="text-lg sm:text-xl mb-2 sm:mb-4">Timeline</Heading>
+      <div className="-mx-4 px-4 flex gap-3 sm:gap-4 overflow-x-auto pb-3 sm:pb-4 snap-x snap-mandatory">
         {timelineData.map(item => (
-          <TimeLineCard
-            key={item.id}
-            year={item.year}
-            artist={item.artist}
-            title={item.title}
-          />
+          <div key={item.id} className="flex-shrink-0 w-[140px] sm:w-[180px] snap-start">
+            <TimeLineCard
+              year={item.year}
+              artist={item.artist}
+              title={item.title}
+            />
+          </div>
         ))}
       </div>
     </div>
   </div>
-);
+)
