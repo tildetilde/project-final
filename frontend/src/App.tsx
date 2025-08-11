@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Home } from './pages/Home';
-import { GameMode } from './pages/GameMode';
+import GameMode from './pages/GameMode';
 import { Login } from './pages/Login';
 
 export const App = () => {
