@@ -6,13 +6,15 @@ interface StartCardProps {
   artist: string;
   title: string;
   playerName?: string;
+  className?: string;
 }
 
 export const StartCard: React.FC<StartCardProps> = ({ 
   year, 
   artist, 
   title, 
-  playerName 
+  playerName,
+  className = '',
 }) => (
  <Card
     className={`
