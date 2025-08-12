@@ -17,7 +17,7 @@ const requiredEnvVars = [
 ];
 // Log environment info for debugging
 console.log('Environment:', process.env.NODE_ENV || 'development');
-console.log('Frontend URI:', process.env.FRONTEND_URI || 'http://localhost:5173');
+console.log('Frontend URI:', process.env.FRONTEND_URI || 'http://127.0.0.1:5173');
 console.log('Backend Port:', process.env.PORT || 8888);
 for (const envVar of requiredEnvVars) {
     if (!process.env[envVar]) {
@@ -30,8 +30,8 @@ const port = process.env.PORT || 8888;
 // Middleware
 app.use(cors({
     origin: [
-        process.env.FRONTEND_URI || 'http://localhost:5173',
-        'https://banganza.netlify.app' // Add your deployed frontend
+        process.env.FRONTEND_URI || 'http://127.0.0.1:5173',
+        'https://banganza.netlify.app'
     ],
     credentials: true, // Allow cookies
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
@@ -46,7 +46,7 @@ app.get('/', (req, res) => {
         status: 'ok',
         environment: process.env.NODE_ENV || 'development',
         timestamp: new Date().toISOString(),
-        frontend: process.env.FRONTEND_URI || 'http://localhost:5173'
+        frontend: process.env.FRONTEND_URI || 'http://127.0.0.1:5173'
     });
 });
 // Additional health check for production monitoring
@@ -256,41 +256,264 @@ app.get('/logout', (req, res) => {
     });
 });
 // --- Spotify Player routes (acting as a proxy) ---
-// 6. Play a track on the user's active device
-app.post('/play-track', async (req, res) => {
+// 6. Start/Resume playback (PUT /me/player/play)
+app.put('/spotify/play', async (req, res) => {
     try {
-        const { trackId, deviceId } = req.body;
+        const { trackId, contextUri, uris, deviceId, positionMs, offset } = req.body;
         const accessToken = req.session.accessToken;
-        if (!accessToken || !trackId || !deviceId) {
-            return res.status(400).json({ error: 'Invalid request.' });
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
         }
         spotifyApi.setAccessToken(accessToken);
-        await spotifyApi.play({
-            uris: [`spotify:track:${trackId}`],
-            device_id: deviceId
-        });
-        res.status(200).json({ success: true });
+        // Build the play options object
+        const playOptions = {};
+        if (deviceId) {
+            playOptions.device_id = deviceId;
+        }
+        if (contextUri) {
+            playOptions.context_uri = contextUri;
+        }
+        else if (uris && uris.length > 0) {
+            playOptions.uris = uris;
+        }
+        else if (trackId) {
+            playOptions.uris = [`spotify:track:${trackId}`];
+        }
+        if (positionMs !== undefined) {
+            playOptions.position_ms = positionMs;
+        }
+        if (offset) {
+            // Ensure offset has either position or uri, not both
+            if (offset.position !== undefined) {
+                playOptions.offset = { position: offset.position };
+            }
+            else if (offset.uri) {
+                playOptions.offset = { uri: offset.uri };
+            }
+        }
+        await spotifyApi.play(playOptions);
+        res.status(204).send(); // Spotify returns 204 for successful playback start
     }
     catch (err) {
         console.error('Error during playback:', err);
-        res.status(500).json({ error: 'Could not play the track.' });
+        // Handle specific Spotify API errors
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 403) {
+                res.status(403).json({ error: 'Premium account required for playback control.' });
+            }
+            else if (statusCode === 404) {
+                res.status(404).json({ error: 'Device not found or not available.' });
+            }
+            else if (statusCode === 429) {
+                res.status(429).json({ error: 'Rate limit exceeded. Please try again later.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not start playback.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not start playback.' });
+        }
     }
 });
-// 7. Pause playback
-app.post('/pause-track', async (req, res) => {
+// 7. Pause playback (PUT /me/player/pause)
+app.put('/spotify/pause', async (req, res) => {
     try {
         const { deviceId } = req.body;
         const accessToken = req.session.accessToken;
-        if (!accessToken || !deviceId) {
-            return res.status(400).json({ error: 'Invalid request.' });
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
         }
         spotifyApi.setAccessToken(accessToken);
-        await spotifyApi.pause({ device_id: deviceId });
-        res.status(200).json({ success: true });
+        const pauseOptions = {};
+        if (deviceId) {
+            pauseOptions.device_id = deviceId;
+        }
+        await spotifyApi.pause(pauseOptions);
+        res.status(204).send();
     }
     catch (err) {
         console.error('Error during pause:', err);
-        res.status(500).json({ error: 'Could not pause the track.' });
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 403) {
+                res.status(403).json({ error: 'Premium account required for playback control.' });
+            }
+            else if (statusCode === 404) {
+                res.status(404).json({ error: 'Device not found or not available.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not pause playback.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not pause playback.' });
+        }
+    }
+});
+// 8. Skip to next track (POST /me/player/next)
+app.post('/spotify/next', async (req, res) => {
+    try {
+        const { deviceId } = req.body;
+        const accessToken = req.session.accessToken;
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
+        }
+        spotifyApi.setAccessToken(accessToken);
+        const nextOptions = {};
+        if (deviceId) {
+            nextOptions.device_id = deviceId;
+        }
+        await spotifyApi.skipToNext(nextOptions);
+        res.status(204).send();
+    }
+    catch (err) {
+        console.error('Error skipping to next track:', err);
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 403) {
+                res.status(403).json({ error: 'Premium account required for playback control.' });
+            }
+            else if (statusCode === 404) {
+                res.status(404).json({ error: 'Device not found or not available.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not skip to next track.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not skip to next track.' });
+        }
+    }
+});
+// 9. Skip to previous track (POST /me/player/previous)
+app.post('/spotify/previous', async (req, res) => {
+    try {
+        const { deviceId } = req.body;
+        const accessToken = req.session.accessToken;
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
+        }
+        spotifyApi.setAccessToken(accessToken);
+        const previousOptions = {};
+        if (deviceId) {
+            previousOptions.device_id = deviceId;
+        }
+        await spotifyApi.skipToPrevious(previousOptions);
+        res.status(204).send();
+    }
+    catch (err) {
+        console.error('Error skipping to previous track:', err);
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 403) {
+                res.status(403).json({ error: 'Premium account required for playback control.' });
+            }
+            else if (statusCode === 404) {
+                res.status(404).json({ error: 'Device not found or not available.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not skip to previous track.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not skip to previous track.' });
+        }
+    }
+});
+// 10. Get available devices (GET /me/player/devices)
+app.get('/spotify/devices', async (req, res) => {
+    try {
+        const accessToken = req.session.accessToken;
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
+        }
+        spotifyApi.setAccessToken(accessToken);
+        const data = await spotifyApi.getMyDevices();
+        res.json(data.body);
+    }
+    catch (err) {
+        console.error('Error getting devices:', err);
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 401) {
+                res.status(401).json({ error: 'Not authenticated.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not get devices.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not get devices.' });
+        }
+    }
+});
+// 11. Get current playback state (GET /me/player)
+app.get('/spotify/playback-state', async (req, res) => {
+    try {
+        const accessToken = req.session.accessToken;
+        if (!accessToken) {
+            return res.status(401).json({ error: 'Not authenticated.' });
+        }
+        spotifyApi.setAccessToken(accessToken);
+        const data = await spotifyApi.getMyCurrentPlaybackState();
+        if (!data.body) {
+            // User is not currently playing anything
+            return res.status(204).send();
+        }
+        res.json(data.body);
+    }
+    catch (err) {
+        console.error('Error getting playback state:', err);
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 204) {
+                // User is not currently playing anything
+                res.status(204).send();
+            }
+            else if (statusCode === 401) {
+                res.status(401).json({ error: 'Not authenticated.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not get playback state.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not get playback state.' });
+        }
+    }
+});
+// 12. Transfer playback to device (PUT /me/player)
+app.put('/spotify/transfer', async (req, res) => {
+    try {
+        const { deviceId, play } = req.body;
+        const accessToken = req.session.accessToken;
+        if (!accessToken || !deviceId) {
+            return res.status(400).json({ error: 'Device ID is required.' });
+        }
+        spotifyApi.setAccessToken(accessToken);
+        // Use the correct method to transfer playback
+        await spotifyApi.transferMyPlayback([deviceId], { play });
+        res.status(204).send();
+    }
+    catch (err) {
+        console.error('Error transferring playback:', err);
+        if (err && typeof err === 'object' && 'statusCode' in err) {
+            const statusCode = err.statusCode;
+            if (statusCode === 403) {
+                res.status(403).json({ error: 'Premium account required for playback control.' });
+            }
+            else if (statusCode === 404) {
+                res.status(404).json({ error: 'Device not found or not available.' });
+            }
+            else {
+                res.status(500).json({ error: 'Could not transfer playback.' });
+            }
+        }
+        else {
+            res.status(500).json({ error: 'Could not transfer playback.' });
+        }
     }
 });
 const quizSchema = new Schema({
@@ -481,7 +704,7 @@ app.listen(port, () => {
         console.log('Production mode enabled');
     }
     else {
-        console.log(`Development mode: http://localhost:${port}`);
+        console.log(`Development mode: http://127.0.0.1:${port}`);
     }
 }).on('error', (err) => {
     console.error('Error starting the server:', err);
