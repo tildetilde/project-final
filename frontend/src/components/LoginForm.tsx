@@ -3,7 +3,7 @@ import { useAuth } from "../hooks/useAuth"
 import { Button } from "../ui/Button"
 
 export const LoginForm: React.FC = () => {
-  const { login, isLoading, error: authError } = useAuth()
+  const { login, isLoading, error: authError } = useAuth(false)
   
   // Get error from URL parameters
   const urlParams = new URLSearchParams(window.location.search);

@@ -18,7 +18,7 @@ import { config } from '../config/environment';
 
 const BACKEND_URL = config.backendUrl;
 
-export const useAuth = () => {
+export const useAuth = (autoCheck = true) => {
   const [authState, setAuthState] = useState<AuthState>({
     isAuthenticated: false,
     user: null,
@@ -71,13 +71,16 @@ export const useAuth = () => {
           console.log('Token needs refresh, refreshing proactively...');
           await refreshToken();
         }
+      } else if (response.status === 401) {
+        // No valid session exists - this is expected for unauthenticated users
+        console.log('No valid session found during token status check');
       }
     } catch (error) {
       console.error('Error checking token status:', error);
     }
   }, [refreshToken]);
 
-  const checkAuthStatus = useCallback(async () => {
+  const checkAuthStatus = useCallback(async (isRetry = false) => {
     try {
       setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
       
@@ -93,9 +96,9 @@ export const useAuth = () => {
           // Token is valid but needs refresh, refresh it first
           console.log('Token needs refresh, refreshing before profile check...');
           const refreshSuccess = await refreshToken();
-          if (refreshSuccess) {
-            // Token refreshed successfully, check auth status again
-            await checkAuthStatus();
+          if (refreshSuccess && !isRetry) {
+            // Token refreshed successfully, check auth status again (but only once)
+            await checkAuthStatus(true);
           }
           return; // checkAuthStatus will be called again after refresh
         }
@@ -104,12 +107,22 @@ export const useAuth = () => {
           // Token is expired, try to refresh
           console.log('Token expired, attempting refresh...');
           const refreshSuccess = await refreshToken();
-          if (refreshSuccess) {
-            // Token refreshed successfully, check auth status again
-            await checkAuthStatus();
+          if (refreshSuccess && !isRetry) {
+            // Token refreshed successfully, check auth status again (but only once)
+            await checkAuthStatus(true);
           }
           return;
         }
+      } else if (tokenResponse.status === 401) {
+        // No valid session exists - user is not authenticated
+        console.log('No valid session found - user not authenticated');
+        setAuthState({
+          isAuthenticated: false,
+          user: null,
+          isLoading: false,
+          error: null,
+        });
+        return;
       }
       
       // Token is valid, proceed with profile check
@@ -125,13 +138,13 @@ export const useAuth = () => {
           isLoading: false,
           error: null,
         });
-      } else if (response.status === 401) {
-        // Token expired or invalid, try to refresh
+      } else if (response.status === 401 && !isRetry) {
+        // Token expired or invalid, try to refresh (but only once)
         console.log('Token expired, attempting refresh...');
         const refreshSuccess = await refreshToken();
         if (refreshSuccess) {
-          // Token refreshed successfully, check auth status again
-          await checkAuthStatus();
+          // Token refreshed successfully, check auth status again (but only once)
+          await checkAuthStatus(true);
         }
       } else {
         setAuthState({
@@ -154,15 +167,20 @@ export const useAuth = () => {
 
   // Check authentication status on mount
   useEffect(() => {
-    checkAuthStatus();
-    
-    // Set up proactive token refresh every 5 minutes
-    const interval = setInterval(() => {
-      checkTokenStatus();
-    }, 5 * 60 * 1000); // Check every 5 minutes
-    
-    return () => clearInterval(interval);
-  }, [checkAuthStatus, checkTokenStatus]);
+    if (autoCheck) {
+      checkAuthStatus();
+      
+      // Set up proactive token refresh every 5 minutes
+      const interval = setInterval(() => {
+        checkTokenStatus();
+      }, 5 * 60 * 1000); // Check every 5 minutes
+      
+      return () => clearInterval(interval);
+    } else {
+      // If autoCheck is false, just set loading to false
+      setAuthState(prev => ({ ...prev, isLoading: false }));
+    }
+  }, [checkAuthStatus, checkTokenStatus, autoCheck]);
 
   const login = useCallback(() => {
     // Redirect to backend login endpoint
