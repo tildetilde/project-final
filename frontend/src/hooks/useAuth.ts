@@ -1,4 +1,5 @@
 import { useState, useEffect, useCallback } from 'react';
+import { config } from '../config/environment';
 
 interface User {
   id: string;
@@ -14,9 +15,8 @@ interface AuthState {
   error: string | null;
 }
 
-import { config } from '../config/environment';
-
 const BACKEND_URL = config.backendUrl;
+const USE_MOCK = import.meta.env.VITE_USE_SPOTIFY_MOCK === '1';
 
 export const useAuth = (autoCheck = true) => {
   const [authState, setAuthState] = useState<AuthState>({
@@ -26,7 +26,27 @@ export const useAuth = (autoCheck = true) => {
     error: null,
   });
 
+  // --- Helpers för mockläge ---
+  const setMockAuthenticated = useCallback(() => {
+    const mockUser: User = {
+      id: 'dev',
+      display_name: 'Mock User',
+      email: 'mock@example.com',
+      images: [{ url: 'https://placehold.co/64x64' }],
+    };
+    setAuthState({
+      isAuthenticated: true,
+      user: mockUser,
+      isLoading: false,
+      error: null,
+    });
+  }, []);
+
   const refreshToken = useCallback(async () => {
+    if (USE_MOCK) {
+      // Inget att refresha i mock – låtsas att allt gick bra
+      return true;
+    }
     try {
       console.log('Refreshing access token...');
       const response = await fetch(`${BACKEND_URL}/refresh_token`, {
@@ -34,11 +54,9 @@ export const useAuth = (autoCheck = true) => {
       });
 
       if (response.ok) {
-        // Token refreshed successfully
         console.log('Token refreshed successfully');
         return true;
       } else {
-        // Token refresh failed, user needs to login again
         console.log('Token refresh failed, redirecting to login');
         setAuthState({
           isAuthenticated: false,
@@ -46,25 +64,24 @@ export const useAuth = (autoCheck = true) => {
           isLoading: false,
           error: 'Session expired. Please login again.',
         });
-        // Redirect to login page
         window.location.href = '/login';
         return false;
       }
     } catch (error) {
       console.error('Error refreshing token:', error);
       setAuthState(prev => ({ ...prev, error: 'Failed to refresh token' }));
-      // Redirect to login page on error
       window.location.href = '/login';
       return false;
     }
   }, []);
 
   const checkTokenStatus = useCallback(async () => {
+    if (USE_MOCK) return; // hoppa över i mockläge
     try {
       const response = await fetch(`${BACKEND_URL}/token-status`, {
         credentials: 'include',
       });
-      
+
       if (response.ok) {
         const status = await response.json();
         if (status.needsRefresh && status.valid) {
@@ -72,7 +89,6 @@ export const useAuth = (autoCheck = true) => {
           await refreshToken();
         }
       } else if (response.status === 401) {
-        // No valid session exists - this is expected for unauthenticated users
         console.log('No valid session found during token status check');
       }
     } catch (error) {
@@ -81,40 +97,41 @@ export const useAuth = (autoCheck = true) => {
   }, [refreshToken]);
 
   const checkAuthStatus = useCallback(async (isRetry = false) => {
+    // Direktbypass i mockläge
+    if (USE_MOCK) {
+      setMockAuthenticated();
+      return;
+    }
+
     try {
       setAuthState(prev => ({ ...prev, isLoading: true, error: null }));
-      
-      // First check token status
+
+      // 1) token-status
       const tokenResponse = await fetch(`${BACKEND_URL}/token-status`, {
         credentials: 'include',
       });
-      
+
       if (tokenResponse.ok) {
         const tokenStatus = await tokenResponse.json();
-        
+
         if (tokenStatus.needsRefresh && tokenStatus.valid) {
-          // Token is valid but needs refresh, refresh it first
           console.log('Token needs refresh, refreshing before profile check...');
           const refreshSuccess = await refreshToken();
           if (refreshSuccess && !isRetry) {
-            // Token refreshed successfully, check auth status again (but only once)
             await checkAuthStatus(true);
           }
-          return; // checkAuthStatus will be called again after refresh
+          return;
         }
-        
+
         if (!tokenStatus.valid) {
-          // Token is expired, try to refresh
           console.log('Token expired, attempting refresh...');
           const refreshSuccess = await refreshToken();
           if (refreshSuccess && !isRetry) {
-            // Token refreshed successfully, check auth status again (but only once)
             await checkAuthStatus(true);
           }
           return;
         }
       } else if (tokenResponse.status === 401) {
-        // No valid session exists - user is not authenticated
         console.log('No valid session found - user not authenticated');
         setAuthState({
           isAuthenticated: false,
@@ -124,8 +141,8 @@ export const useAuth = (autoCheck = true) => {
         });
         return;
       }
-      
-      // Token is valid, proceed with profile check
+
+      // 2) hämta profil
       const response = await fetch(`${BACKEND_URL}/user-profile`, {
         credentials: 'include',
       });
@@ -139,11 +156,9 @@ export const useAuth = (autoCheck = true) => {
           error: null,
         });
       } else if (response.status === 401 && !isRetry) {
-        // Token expired or invalid, try to refresh (but only once)
         console.log('Token expired, attempting refresh...');
         const refreshSuccess = await refreshToken();
         if (refreshSuccess) {
-          // Token refreshed successfully, check auth status again (but only once)
           await checkAuthStatus(true);
         }
       } else {
@@ -163,31 +178,54 @@ export const useAuth = (autoCheck = true) => {
         error: 'Failed to check authentication status',
       });
     }
-  }, [refreshToken]);
+  }, [refreshToken, setMockAuthenticated]);
 
   // Check authentication status on mount
   useEffect(() => {
-    if (autoCheck) {
-      checkAuthStatus();
-      
-      // Set up proactive token refresh every 5 minutes
-      const interval = setInterval(() => {
-        checkTokenStatus();
-      }, 5 * 60 * 1000); // Check every 5 minutes
-      
-      return () => clearInterval(interval);
-    } else {
-      // If autoCheck is false, just set loading to false
+    if (!autoCheck) {
       setAuthState(prev => ({ ...prev, isLoading: false }));
+      return;
     }
-  }, [checkAuthStatus, checkTokenStatus, autoCheck]);
+
+    if (USE_MOCK) {
+      // Direkt inloggad i mockläge
+      setMockAuthenticated();
+      return;
+    }
+
+    checkAuthStatus();
+
+    // Proaktiv refresh var 5:e minut (ej i mock)
+    const interval = setInterval(() => {
+      checkTokenStatus();
+    }, 5 * 60 * 1000);
+
+    return () => clearInterval(interval);
+  }, [checkAuthStatus, checkTokenStatus, autoCheck, setMockAuthenticated]);
 
   const login = useCallback(() => {
-    // Redirect to backend login endpoint
+    if (USE_MOCK) {
+      // Sätt inloggat och gå vidare lokalt
+      setMockAuthenticated();
+      // välj den route som passar din app bäst
+      window.location.href = '/dashboard';
+      return;
+    }
     window.location.href = `${BACKEND_URL}/login`;
-  }, []);
+  }, [setMockAuthenticated]);
 
   const logout = useCallback(async () => {
+    if (USE_MOCK) {
+      setAuthState({
+        isAuthenticated: false,
+        user: null,
+        isLoading: false,
+        error: null,
+      });
+      window.location.href = '/login';
+      return;
+    }
+
     try {
       const response = await fetch(`${BACKEND_URL}/logout`, {
         credentials: 'include',
@@ -209,21 +247,26 @@ export const useAuth = (autoCheck = true) => {
 
   // Handle OAuth callback
   const handleOAuthCallback = useCallback(async () => {
-    // Check if we're returning from OAuth callback
+    if (USE_MOCK) {
+      setMockAuthenticated();
+      return;
+    }
+
     const urlParams = new URLSearchParams(window.location.search);
     const error = urlParams.get('error');
-    
+
     if (error) {
       setAuthState(prev => ({ ...prev, error }));
       return;
     }
 
-    // Check auth status after OAuth callback
     await checkAuthStatus();
-  }, [checkAuthStatus]);
+  }, [checkAuthStatus, setMockAuthenticated]);
 
   // Listen for OAuth callback
   useEffect(() => {
+    if (USE_MOCK) return; // inget callbackflöde i mock
+
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.has('error') || window.location.pathname === '/dashboard') {
       handleOAuthCallback();

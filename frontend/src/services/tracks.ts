@@ -1,17 +1,26 @@
-import { TrackCard } from '@/types/game'
-import { mockTracks } from './spotifyMock'
-
-// om du redan har src/shuffle.ts – använd den
-const shuffle = <T,>(a: T[]) => {
-  const arr = a.slice()
-  for (let i = arr.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[arr[i], arr[j]] = [arr[j], arr[i]]
-  }
-  return arr
-}
+import type { TrackCard } from '../types/game'
+import { mockBackendTracks } from './spotifyMock'
+import { shuffle } from '../lib/shuffle'
 
 export async function fetchTracks(limit = 100): Promise<TrackCard[]> {
-  await new Promise(r => setTimeout(r, 150)) // liten delay för “laddar”-känsla
-  return shuffle(mockTracks).slice(0, Math.min(limit, mockTracks.length))
+  await new Promise(r => setTimeout(r, 150)) // liten delay
+
+  const cards: TrackCard[] = mockBackendTracks.map(t => ({
+    // backend-fält
+    _id: t._id,
+    trackId: t.trackId,
+    trackTitle: t.trackTitle,
+    trackArtist: t.trackArtist,
+    releaseYear: t.releaseYear,
+    trackUrl: t.trackUrl,
+
+    // 🔽 alias till vad UI:t faktiskt läser
+    title: t.trackTitle,
+    artist: t.trackArtist,
+    year: t.releaseYear,
+    name: t.trackTitle,
+  })) as TrackCard[]
+
+  const deck = shuffle(cards)
+  return deck.slice(0, Math.min(limit, deck.length))
 }

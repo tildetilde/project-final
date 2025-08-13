@@ -66,6 +66,11 @@ export const GameBoard: React.FC = () => {
     if (Number.isFinite(index)) placeAt(index)
   }
 
+  // små helpers så vi funkar både med alias (title/artist/year) och dina backendfält
+  const yy = (c: any) => c?.year ?? c?.releaseYear
+  const tt = (c: any) => c?.title ?? c?.trackTitle
+  const aa = (c: any) => c?.artist ?? c?.trackArtist
+
   return (
     <div className="space-y-5 sm:space-y-8 animate-in fade-in-50">
       {/* Header */}
@@ -94,19 +99,6 @@ export const GameBoard: React.FC = () => {
       {/* Spelbrädet */}
       {phase !== 'SETUP' && (
         <>
-          {/* Pinned start card (endast ett) */}
-          {team.timeline[0] && (
-            <div className="w-[136px] h-[180px] sm:w-48 sm:h-64 lg:w-60 lg:h-80 animate-in slide-in-from-left-3">
-              <StartCard
-                year={team.timeline[0].year}
-                artist={team.timeline[0].artist}
-                title={team.timeline[0].title}
-                playerName={team.name}
-                className="w-full h-full"
-              />
-            </div>
-          )}
-
           <div className="space-y-2">
             <Heading level={3} className="text-lg sm:text-xl">Timeline</Heading>
 
@@ -116,14 +108,33 @@ export const GameBoard: React.FC = () => {
               onDragEnd={onDragEnd}
               modifiers={[restrictToWindowEdges]}
             >
-              {/* Timeline utan första kortet. Slots visas bara när man drar. */}
-              <div className={['rounded-2xl p-2 sm:p-3 border transition-shadow',
-                               currentTeamIndex === 0 ? 'shadow-soft' : 'shadow-soft'].join(' ')}>
-                <Timeline
-                  timeline={team.timeline.slice(1)}
-                  showSlots={phase === 'DRAWN'}
-                  size="md"
-                />
+              {/* ⬇️ StartCard är nu första kortet i SAMMA scroll-rad som resten */}
+              <div
+                className={[
+                  'rounded-2xl p-2 sm:p-3 border transition-shadow',
+                  currentTeamIndex === 0 ? 'shadow-soft' : 'shadow-soft',
+                ].join(' ')}
+              >
+                <div className="flex gap-3 items-start overflow-x-auto">
+                  {team.timeline[0] && (
+                    <div className="flex-shrink-0 animate-in slide-in-from-left-3">
+                      <StartCard
+                        year={yy(team.timeline[0])}
+                        artist={aa(team.timeline[0])}
+                        title={tt(team.timeline[0])}
+                        playerName={team.name}
+                        className="w-full h-full"
+                      />
+                    </div>
+                  )}
+
+                  {/* resten av tidslinjen (utan första kortet) + slots vid drag */}
+                  <Timeline
+                    timeline={team.timeline.slice(1)}
+                    showSlots={phase === 'DRAWN'}
+                    size="md"
+                  />
+                </div>
               </div>
 
               {/* Drag-kandidat (hemlig) */}
@@ -133,14 +144,14 @@ export const GameBoard: React.FC = () => {
                 </div>
               )}
 
-              {/* Overlay-preview (fri drag i hela viewporten) */}
+              {/* Overlay-preview */}
               <DragOverlay>
                 {isDragging && currentCard ? <CurrentCardPreview card={currentCard} /> : null}
               </DragOverlay>
             </DndContext>
           </div>
 
-          {/* Feedback vid fel */}
+          {/* Feedback vid fel – oförändrat */}
           {phase === 'PLACED_WRONG' && (
             <div
               role="status"
@@ -153,7 +164,7 @@ export const GameBoard: React.FC = () => {
             </div>
           )}
 
-          {/* Kontroller */}
+          {/* Kontroller – oförändrat */}
           <div className="flex flex-wrap gap-3 pt-1">
             {phase === 'TURN_START' && (
               <Button onClick={startTurn} className="animate-in zoom-in-95">Draw</Button>

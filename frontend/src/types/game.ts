@@ -1,8 +1,8 @@
 export type TrackCard = {
-  id: string
-  title: string
-  artist: string
-  year: number
+  _id: string
+  trackTitle: string
+  trackArtist: string
+  releaseYear: number
   previewUrl?: string
   imageUrl?: string
 }
