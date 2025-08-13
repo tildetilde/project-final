@@ -1,6 +1,10 @@
 import { config } from '../config/environment';
+import { mockBackendTracks } from './spotifyMock'; // backend-formatet du visade
+import { toTrackCard, type TrackCard } from './normalize'; // mapper till UI-formatet
 
-// Spotify API base URL
+const useMock = import.meta.env.VITE_USE_SPOTIFY_MOCK === '1';
+
+// Spotify API base URL (sparas om du behöver senare)
 const SPOTIFY_API_BASE = 'https://api.spotify.com/v1';
 
 // Interface for playback request
@@ -39,27 +43,81 @@ interface PlaybackState {
   device: Device;
 }
 
+/* ---------------------------
+   Mock helpers (lokala)
+---------------------------- */
+const mockDevice: Device = {
+  id: 'mock-device-1',
+  name: 'Mock Web Player',
+  type: 'Computer',
+  is_active: true,
+  is_private_session: false,
+  is_restricted: false,
+};
+
+const first = mockBackendTracks[0];
+const mockPlaybackState: PlaybackState = {
+  is_playing: false,
+  progress_ms: 0,
+  item: first
+    ? {
+        id: first.trackId,
+        name: first.trackTitle,
+        artists: [{ name: first.trackArtist }],
+        album: { name: 'Mock Album' },
+      }
+    : null,
+  device: mockDevice,
+};
+
+/* ---------------------------
+   High-level data getters
+---------------------------- */
+
+export async function getUserProfile() {
+  if (useMock) {
+    return { id: 'dev', display_name: 'Mock User' };
+  }
+  const r = await fetch(`${config.backendUrl}/user-profile`, { credentials: 'include' });
+  if (!r.ok) throw new Error(`Failed to fetch user profile (${r.status})`);
+  return await r.json();
+}
+
+export async function getUserTracks(): Promise<TrackCard[]> {
+  if (useMock) {
+    // backend -> UI
+    return mockBackendTracks.map(toTrackCard);
+  }
+  const r = await fetch(`${config.backendUrl}/tracks`, { credentials: 'include' });
+  if (!r.ok) throw new Error(`Failed to fetch user tracks (${r.status})`);
+  const data = await r.json(); // BackendTrack[]
+  return (data as any[]).map(toTrackCard);
+}
+
+/* ---------------------------
+   Playback controls
+---------------------------- */
+
 /**
  * Start or resume playback on the user's active device
- * @param request - Playback configuration
- * @returns Promise<boolean> - Success status
  */
 export async function startPlayback(request: PlaybackRequest): Promise<boolean> {
+  if (useMock) {
+    console.info('[MOCK] startPlayback', request);
+    return true;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/play`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify(request),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to start playback');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to start playback');
     }
-
     return true;
   } catch (error) {
     console.error('Error starting playback:', error);
@@ -69,25 +127,24 @@ export async function startPlayback(request: PlaybackRequest): Promise<boolean> 
 
 /**
  * Pause playback on the user's active device
- * @param deviceId - Optional device ID
- * @returns Promise<boolean> - Success status
  */
 export async function pausePlayback(deviceId?: string): Promise<boolean> {
+  if (useMock) {
+    console.info('[MOCK] pausePlayback', { deviceId });
+    return true;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/pause`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({ deviceId }),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to pause playback');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to pause playback');
     }
-
     return true;
   } catch (error) {
     console.error('Error pausing playback:', error);
@@ -97,25 +154,24 @@ export async function pausePlayback(deviceId?: string): Promise<boolean> {
 
 /**
  * Skip to next track
- * @param deviceId - Optional device ID
- * @returns Promise<boolean> - Success status
  */
 export async function skipToNext(deviceId?: string): Promise<boolean> {
+  if (useMock) {
+    console.info('[MOCK] skipToNext', { deviceId });
+    return true;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/next`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({ deviceId }),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to skip to next track');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to skip to next track');
     }
-
     return true;
   } catch (error) {
     console.error('Error skipping to next track:', error);
@@ -125,25 +181,24 @@ export async function skipToNext(deviceId?: string): Promise<boolean> {
 
 /**
  * Skip to previous track
- * @param deviceId - Optional device ID
- * @returns Promise<boolean> - Success status
  */
 export async function skipToPrevious(deviceId?: string): Promise<boolean> {
+  if (useMock) {
+    console.info('[MOCK] skipToPrevious', { deviceId });
+    return true;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/previous`, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({ deviceId }),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to skip to previous track');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to skip to previous track');
     }
-
     return true;
   } catch (error) {
     console.error('Error skipping to previous track:', error);
@@ -153,17 +208,19 @@ export async function skipToPrevious(deviceId?: string): Promise<boolean> {
 
 /**
  * Get available devices
- * @returns Promise<Device[]> - List of available devices
  */
 export async function getAvailableDevices(): Promise<Device[]> {
+  if (useMock) {
+    return [mockDevice];
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/devices`, {
       credentials: 'include',
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to get devices');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to get devices');
     }
 
     const data = await response.json();
@@ -176,9 +233,11 @@ export async function getAvailableDevices(): Promise<Device[]> {
 
 /**
  * Get current playback state
- * @returns Promise<PlaybackState | null> - Current playback state or null if not playing
  */
 export async function getCurrentPlaybackState(): Promise<PlaybackState | null> {
+  if (useMock) {
+    return mockPlaybackState;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/playback-state`, {
       credentials: 'include',
@@ -186,11 +245,10 @@ export async function getCurrentPlaybackState(): Promise<PlaybackState | null> {
 
     if (!response.ok) {
       if (response.status === 204) {
-        // No content - user not playing anything
         return null;
       }
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to get playback state');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to get playback state');
     }
 
     return await response.json();
@@ -202,29 +260,39 @@ export async function getCurrentPlaybackState(): Promise<PlaybackState | null> {
 
 /**
  * Transfer playback to a specific device
- * @param deviceId - Device ID to transfer to
- * @param play - Whether to start playing after transfer
- * @returns Promise<boolean> - Success status
  */
 export async function transferPlayback(deviceId: string, play: boolean = false): Promise<boolean> {
+  if (useMock) {
+    console.info('[MOCK] transferPlayback', { deviceId, play });
+    return true;
+  }
   try {
     const response = await fetch(`${config.backendUrl}/spotify/transfer`, {
       method: 'PUT',
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: { 'Content-Type': 'application/json' },
       credentials: 'include',
       body: JSON.stringify({ deviceId, play }),
     });
 
     if (!response.ok) {
-      const error = await response.json();
-      throw new Error(error.error || 'Failed to transfer playback');
+      const error = await safeJson(response);
+      throw new Error((error as any)?.error || 'Failed to transfer playback');
     }
 
     return true;
   } catch (error) {
     console.error('Error transferring playback:', error);
     throw error;
+  }
+}
+
+/* ---------------------------
+   utils
+---------------------------- */
+async function safeJson(r: Response) {
+  try {
+    return await r.json();
+  } catch {
+    return {};
   }
 }
