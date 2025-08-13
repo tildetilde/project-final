@@ -17,9 +17,9 @@ export const CurrentCard: React.FC<{ card: TrackCard; dragging?: boolean }> = ({
       style={style}
       {...listeners}
       {...attributes}
-      className={`cursor-grab active:cursor-grabbing select-none ${dragging ? 'opacity-0' : ''}`}
+      className={`w-[136px] cursor-grab active:cursor-grabbing select-none ${dragging ? 'opacity-0' : ''}`}
     >
-      <Card className="w-[136px] h-[180px] sm:w-60 sm:h-80 overflow-hidden shadow-medium border-2 border-primary/30">
+      <Card className=" h-[180px] sm:w-60 sm:h-80 overflow-hidden shadow-medium border-2 border-primary/30">
         <CardHeader className="pt-4 pb-2">
           <div className="text-xs uppercase text-muted-foreground tracking-wide">Place in timeline</div>
         </CardHeader>
