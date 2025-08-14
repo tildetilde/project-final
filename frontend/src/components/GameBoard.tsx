@@ -15,11 +15,10 @@ import { restrictToWindowEdges } from '@dnd-kit/modifiers'
 import { useGame } from '../store/game'
 import { Heading, Button } from '../ui'
 import { ErrorMessage } from '../ui/ErrorMessage'
-import { StartCard } from './StartCard'
 import { TimeLineCard } from './TimeLineCard'
 import { CurrentCard, CurrentCardPreview } from './CurrentCard'
 
-// --- små helpers så vi klarar både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
+// helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
 const Y = (c: any) => c?.year ?? c?.releaseYear
 const T = (c: any) => c?.title ?? c?.trackTitle
 const A = (c: any) => c?.artist ?? c?.trackArtist
@@ -40,7 +39,7 @@ const TeamPill: React.FC<{ label: string; active?: boolean; score: number }> = (
   </span>
 )
 
-// En minimal dropp-slot (synlig bara när show = true)
+// dropp-slot
 const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
   const { setNodeRef, isOver } = useDroppable({ id })
   if (!show) return null
@@ -67,14 +66,16 @@ export const GameBoard: React.FC = () => {
     placeAt,
     drawAnother,
     lockIn,
+    confirmPlacement,       // <— från store
     loading,
     error,
     clearError,
+    pendingIndex,           // <— från store
+    lastPlacementCorrect,
   } = useGame()
 
   const team = teams[currentTeamIndex]
 
-  // Viktigt: PointerSensor utan axis-lås + DragOverlay ger fri drag över viewporten
   const sensors = useSensors(useSensor(PointerSensor, { activationConstraint: { distance: 6 } }))
   const [isDragging, setIsDragging] = React.useState(false)
 
@@ -86,71 +87,65 @@ export const GameBoard: React.FC = () => {
     setIsDragging(false)
     const overId = e.over?.id as string | undefined
     if (!overId) return
-
-    if (overId === 'slot-0') {
-      // lägg FÖRE första kortet
-      placeAt(0)
-      return
-    }
-    if (overId.startsWith('slot-')) {
-      const n = Number(overId.slice(5))
-      if (Number.isFinite(n)) {
-        placeAt(n) // generellt: slot-i => index i i hela timeline
-      }
-    }
+    if (!overId.startsWith('slot-')) return
+    const n = Number(overId.slice(5))
+    if (Number.isFinite(n)) placeAt(n)
   }
 
-  // bygger en lista av slots: före första, mellan varje, efter sista
-  const renderCenteredTimeline = () => {
-    const tl = team.timeline
-    const showSlots = phase === 'DRAWN'
-
-    // Inget startkort ännu (bör inte hända i TURN_START … men defensivt)
-    if (tl.length === 0) return null
+  // render timeline, inkl. pending-kort som ser EXAKT ut som drag-kortet
+  const renderTimeline = () => {
+    const base = team.timeline
+    const showSlots = phase === 'DRAWN' || phase === 'PLACED_PENDING'
 
     const children: React.ReactNode[] = []
-
-    // slot före första = index 0
+    // Slot före första
     children.push(<DropSlot key="slot-0" id="slot-0" show={showSlots} />)
 
-    // rendera första som StartCard (men samma stil som säkra kort i din design)
-    children.push(
-      <div key={tl[0]._id} className="flex-shrink-0">
-        <StartCard
-          year={Y(tl[0])}
-          artist={A(tl[0])}
-          title={T(tl[0])}
-          playerName={team.name}
-          className="w-full h-full"
-        />
-      </div>
-    )
+    for (let i = 0; i < base.length; i++) {
+      // visa pending-kortet *mellan* slot-i och card-i
+      if (phase === 'PLACED_PENDING' && pendingIndex === i && currentCard) {
+        children.push(
+          <div key="pending-preview" className="flex-shrink-0">
+            <CurrentCardPreview card={currentCard} />
+          </div>
+        )
+      }
 
-    // för varje efterföljande kort: slot mellan + kortet
-    for (let i = 1; i < tl.length; i++) {
-      // slot mellan i-1 och i => index i
-      children.push(<DropSlot key={`slot-${i}`} id={`slot-${i}`} show={showSlots} />)
+      const c = base[i]
       children.push(
-        <div key={tl[i]._id} className="flex-shrink-0">
+        <div key={(c as any)._id ?? (c as any).trackId ?? i} className="flex-shrink-0">
           <TimeLineCard
-            year={Y(tl[i])}
-            artist={A(tl[i])}
-            title={T(tl[i])}
+            year={Y(c)}
+            artist={A(c)}
+            title={T(c)}
             isRevealed
           />
         </div>
       )
+
+      // slot efter card-i  => id "slot-(i+1)"
+      children.push(<DropSlot key={`slot-${i + 1}`} id={`slot-${i + 1}`} show={showSlots} />)
     }
 
-    // slot efter sista => index = tl.length
-    children.push(<DropSlot key={`slot-${tl.length}`} id={`slot-${tl.length}`} show={showSlots} />)
+    // om pending ska ligga sist
+    if (phase === 'PLACED_PENDING' && pendingIndex === base.length && currentCard) {
+      children.splice(children.length - 1, 0, // innan sista sloten
+        <div key="pending-preview-last" className="flex-shrink-0">
+          <CurrentCardPreview card={currentCard} />
+        </div>
+      )
+    }
 
     return (
       <div className="rounded-2xl p-2 sm:p-3 border">
-        {/* justify-center => första kortet hamnar mitt i raden när listan är kort */}
         <div className="flex gap-3 items-start justify-center overflow-visible">
           {children}
         </div>
+        {phase === 'PLACED_PENDING' && (
+          <div className="flex justify-center pt-2">
+            <Button size="sm" onClick={confirmPlacement}>Confirm placement</Button>
+          </div>
+        )}
       </div>
     )
   }
@@ -186,32 +181,33 @@ export const GameBoard: React.FC = () => {
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             collisionDetection={closestCenter}
-            modifiers={[restrictToWindowEdges]} // låt drag flyga men stanna inom viewportkanterna
+            modifiers={[restrictToWindowEdges]}
           >
             <Heading level={3} className="text-lg sm:text-xl">Timeline</Heading>
-            {renderCenteredTimeline()}
+            {renderTimeline()}
 
-            {/* Drag-kortet (källan) – ligger utanför scroll för fri drag */}
-            {phase === 'DRAWN' && currentCard && (
+            {/* Drag-kortet får ligga kvar i DRAWN och även i PLACED_PENDING (så man kan flytta igen) */}
+            {(phase === 'DRAWN' || phase === 'PLACED_PENDING') && currentCard && (
               <div className="pt-2">
                 <CurrentCard card={currentCard} dragging={isDragging} />
               </div>
             )}
 
-            {/* Overlay över hela viewporten */}
             <DragOverlay>
               {isDragging && currentCard ? <CurrentCardPreview card={currentCard} /> : null}
             </DragOverlay>
           </DndContext>
 
-          {/* Kontroller */}
+          {/* Kontroller efter rätt svar */}
           <div className="flex flex-wrap gap-3 pt-1">
             {phase === 'TURN_START' && <Button onClick={startTurn}>Draw</Button>}
+
             {phase === 'DRAWN' && (
               <div className="text-sm text-muted-foreground">
                 Drag the card and drop it between two cards in the timeline.
               </div>
             )}
+
             {phase === 'CHOICE_AFTER_CORRECT' && (
               <>
                 <Button variant="primary" onClick={drawAnother}>Draw another</Button>
