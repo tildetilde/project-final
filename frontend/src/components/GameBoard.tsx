@@ -71,6 +71,7 @@ export const GameBoard: React.FC = () => {
     error,
     clearError,
     pendingIndex,
+    lastPlacementCorrect
   } = useGame()
 
   const team = teams[currentTeamIndex]
@@ -111,6 +112,10 @@ export const GameBoard: React.FC = () => {
       }
 
       const c = base[i]
+
+      const isLastPlaced = lastPlacementCorrect !== null && pendingIndex !== null && i === pendingIndex
+
+
       children.push(
         <div key={(c as any)._id ?? (c as any).trackId ?? i} className="flex-shrink-0">
           <TimeLineCard
@@ -118,6 +123,7 @@ export const GameBoard: React.FC = () => {
             artist={A(c)}
             title={T(c)}
             isRevealed
+            isCorrect={isLastPlaced ? lastPlacementCorrect : undefined}  
           />
         </div>
       )
@@ -139,6 +145,16 @@ export const GameBoard: React.FC = () => {
         <div className="flex gap-3 items-start justify-center overflow-visible">
           {children}
         </div>
+        {lastPlacementCorrect === true && (
+  <div className="text-green-600 font-semibold text-center mt-2">
+    ✅ Yes! Correct!
+  </div>
+)}
+{lastPlacementCorrect === false && (
+  <div className="text-red-600 font-semibold text-center mt-2">
+    ❌ Oh no, wrong answer! Your turn is over
+  </div>
+)}
         {phase === 'PLACED_PENDING' && (
           <div className="flex justify-center pt-2">
             <Button size="sm" onClick={confirmPlacement}>Confirm placement</Button>
