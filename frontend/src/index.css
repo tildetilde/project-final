@@ -15,16 +15,16 @@
   --color-base-900: #e1c09e;
 
   /* Accent scale colors */
-  --color-accent-100: #934D56;
-  --color-accent-200: #86464E;
-  --color-accent-300: #783F46;
-  --color-accent-400: #6B383E;
+  --color-accent-100: #934d56;
+  --color-accent-200: #86464e;
+  --color-accent-300: #783f46;
+  --color-accent-400: #6b383e;
   --color-accent-500: #5d3136;
-  --color-accent-600: #502A2F;
+  --color-accent-600: #502a2f;
   --color-accent-700: #432327;
-  --color-accent-800: #351C1F;
+  --color-accent-800: #351c1f;
   --color-accent-900: #281517;
-  --color-accent-950: #1B0E0F;
+  --color-accent-950: #1b0e0f;
 
   /* Semantic colors */
   --color-primary: #5d3136;
@@ -52,26 +52,39 @@
   --radius-2xl: 1rem;
   --radius-3xl: 1.5rem;
 
-    /* Spacing*/
+  /* Spacing*/
   --spacing-18: 4.5rem;
   --spacing-22: 5.5rem;
   --spacing-26: 6.5rem;
   --spacing-30: 7.5rem;
 
   /* Font sizes */
-   --font-size-xs: 0.75rem;   --leading-xs: 1rem;
-  --font-size-sm: 0.875rem;  --leading-sm: 1.25rem;
-  --font-size-base: 1rem;    --leading-base: 1.5rem;
-  --font-size-lg: 1.125rem;  --leading-lg: 1.75rem;
-  --font-size-xl: 1.25rem;   --leading-xl: 1.75rem;
-  --font-size-2xl: 1.5rem;   --leading-2xl: 2rem;
-  --font-size-3xl: 1.875rem; --leading-3xl: 2.25rem;
-  --font-size-4xl: 2.25rem;  --leading-4xl: 2.5rem;
-  --font-size-5xl: 3rem;     --leading-5xl: 1;
-  --font-size-6xl: 3.75rem;  --leading-6xl: 1;
-  --font-size-7xl: 4.5rem;   --leading-7xl: 1;
-  --font-size-8xl: 6rem;     --leading-8xl: 1;
-  --font-size-9xl: 8rem;     --leading-9xl: 1;
+  --font-size-xs: 0.75rem;
+  --leading-xs: 1rem;
+  --font-size-sm: 0.875rem;
+  --leading-sm: 1.25rem;
+  --font-size-base: 1rem;
+  --leading-base: 1.5rem;
+  --font-size-lg: 1.125rem;
+  --leading-lg: 1.75rem;
+  --font-size-xl: 1.25rem;
+  --leading-xl: 1.75rem;
+  --font-size-2xl: 1.5rem;
+  --leading-2xl: 2rem;
+  --font-size-3xl: 1.875rem;
+  --leading-3xl: 2.25rem;
+  --font-size-4xl: 2.25rem;
+  --leading-4xl: 2.5rem;
+  --font-size-5xl: 3rem;
+  --leading-5xl: 1;
+  --font-size-6xl: 3.75rem;
+  --leading-6xl: 1;
+  --font-size-7xl: 4.5rem;
+  --leading-7xl: 1;
+  --font-size-8xl: 6rem;
+  --leading-8xl: 1;
+  --font-size-9xl: 8rem;
+  --leading-9xl: 1;
 }
 
 html {
@@ -81,5 +94,165 @@ html {
 @media (max-width: 640px) {
   html {
     font-size: 14px;
+  }
+}
+
+@keyframes logo-in {
+  0% {
+    opacity: 0;
+    transform: scale(0.96);
+    filter: blur(3px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.01);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes seed-sweep {
+  0% {
+    transform: translateX(-20vw) rotate(-10deg) scale(0.9);
+  }
+  50% {
+    transform: translateX(15vw) rotate(6deg) scale(1.08);
+  }
+  100% {
+    transform: translateX(50vw) rotate(0deg) scale(1);
+  }
+}
+
+@keyframes tagline-in {
+  0% {
+    opacity: 0;
+    transform: translateY(0.75rem);
+    letter-spacing: 0.12em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0;
+  }
+}
+
+@keyframes particle-float {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 0.65;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-120vw) translateY(-10vh) rotate(14deg);
+    opacity: 0;
+  }
+}
+
+@keyframes letter-in {
+  0% {
+    opacity: 0;
+    transform: translateY(1.6rem) scale(0.98);
+    filter: blur(2px);
+  }
+  55% {
+    opacity: 1;
+    transform: translateY(0) scale(1.02);
+    filter: blur(0);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes tagline-in {
+  0% {
+    opacity: 0;
+    transform: translateY(0.8rem);
+    letter-spacing: 0.14em;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+    letter-spacing: 0;
+  }
+}
+
+@keyframes crt-flicker {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.92;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* retro bananas i stället för prickar */
+@keyframes banana-float {
+  0% {
+    transform: translateX(0) translateY(0) rotate(0deg);
+    opacity: 0.7;
+  }
+  70% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: translateX(-120vw) translateY(-10vh) rotate(18deg);
+    opacity: 0;
+  }
+}
+
+@keyframes banana-fly {
+  0% {
+    transform: translateY(-30vh) rotate(0deg); /* nära ovanför skärmen */
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.8;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(120vh) rotate(20deg);
+    opacity: 0;
+  }
+}
+
+@keyframes logo-bounce-in {
+  0% {
+    transform: scale(8) translateY(-50vh);
+    opacity: 0;
+  }
+  40% {
+    transform: scale(1.8) translateY(0);
+    opacity: 1;
+  }
+  55% {
+    transform: scale(1.65);
+  }
+  70% {
+    transform: scale(1.85);
+  }
+  85% {
+    transform: scale(1.75);
+  }
+  100% {
+    transform: scale(1.8);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation: none !important;
+    transition: none !important;
   }
 }
