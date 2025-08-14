@@ -5,6 +5,7 @@ export type TrackCard = {
   releaseYear: number
   previewUrl?: string
   imageUrl?: string
+  isStart?: boolean
 }
 
 export type Team = {
