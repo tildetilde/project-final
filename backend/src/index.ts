@@ -127,6 +127,26 @@ const generateRandomString = (length: number): string => {
     return text;
 };
 
+// Utility function to handle Spotify API errors
+const handleSpotifyError = (err: unknown, res: Response, operation: string) => {
+    console.error(`Error during ${operation}:`, err);
+    
+    if (err && typeof err === 'object' && 'statusCode' in err) {
+        const statusCode = (err as { statusCode: number }).statusCode;
+        if (statusCode === 403) {
+            res.status(403).json({ error: 'Premium account required for playback control.' });
+        } else if (statusCode === 404) {
+            res.status(404).json({ error: 'Device not found or not available.' });
+        } else if (statusCode === 429) {
+            res.status(429).json({ error: 'Rate limit exceeded. Please try again later.' });
+        } else {
+            res.status(500).json({ error: `Could not ${operation}.` });
+        }
+    } else {
+        res.status(500).json({ error: `Could not ${operation}.` });
+    }
+};
+
 // --- Authentication routes (for the user to log in with Spotify) ---
 
 // 1. Log in with Spotify
@@ -355,23 +375,7 @@ app.put('/spotify/play', async (req: Request, res: Response) => {
         await spotifyApi.play(playOptions);
         res.status(204).send(); // Spotify returns 204 for successful playback start
     } catch (err: unknown) {
-        console.error('Error during playback:', err);
-        
-        // Handle specific Spotify API errors
-        if (err && typeof err === 'object' && 'statusCode' in err) {
-            const statusCode = (err as { statusCode: number }).statusCode;
-            if (statusCode === 403) {
-                res.status(403).json({ error: 'Premium account required for playback control.' });
-            } else if (statusCode === 404) {
-                res.status(404).json({ error: 'Device not found or not available.' });
-            } else if (statusCode === 429) {
-                res.status(429).json({ error: 'Rate limit exceeded. Please try again later.' });
-            } else {
-                res.status(500).json({ error: 'Could not start playback.' });
-            }
-        } else {
-            res.status(500).json({ error: 'Could not start playback.' });
-        }
+        handleSpotifyError(err, res, 'start playback');
     }
 });
 
@@ -395,20 +399,7 @@ app.put('/spotify/pause', async (req: Request, res: Response) => {
         await spotifyApi.pause(pauseOptions);
         res.status(204).send();
     } catch (err: unknown) {
-        console.error('Error during pause:', err);
-        
-        if (err && typeof err === 'object' && 'statusCode' in err) {
-            const statusCode = (err as { statusCode: number }).statusCode;
-            if (statusCode === 403) {
-                res.status(403).json({ error: 'Premium account required for playback control.' });
-            } else if (statusCode === 404) {
-                res.status(404).json({ error: 'Device not found or not available.' });
-            } else {
-                res.status(500).json({ error: 'Could not pause playback.' });
-            }
-        } else {
-            res.status(500).json({ error: 'Could not pause playback.' });
-        }
+        handleSpotifyError(err, res, 'pause playback');
     }
 });
 
@@ -432,20 +423,7 @@ app.post('/spotify/next', async (req: Request, res: Response) => {
         await spotifyApi.skipToNext(nextOptions);
         res.status(204).send();
     } catch (err: unknown) {
-        console.error('Error skipping to next track:', err);
-        
-        if (err && typeof err === 'object' && 'statusCode' in err) {
-            const statusCode = (err as { statusCode: number }).statusCode;
-            if (statusCode === 403) {
-                res.status(403).json({ error: 'Premium account required for playback control.' });
-            } else if (statusCode === 404) {
-                res.status(404).json({ error: 'Device not found or not available.' });
-            } else {
-                res.status(500).json({ error: 'Could not skip to next track.' });
-            }
-        } else {
-            res.status(500).json({ error: 'Could not skip to next track.' });
-        }
+        handleSpotifyError(err, res, 'skip to next track');
     }
 });
 
@@ -469,20 +447,7 @@ app.post('/spotify/previous', async (req: Request, res: Response) => {
         await spotifyApi.skipToPrevious(previousOptions);
         res.status(204).send();
     } catch (err: unknown) {
-        console.error('Error skipping to previous track:', err);
-        
-        if (err && typeof err === 'object' && 'statusCode' in err) {
-            const statusCode = (err as { statusCode: number }).statusCode;
-            if (statusCode === 403) {
-                res.status(403).json({ error: 'Premium account required for playback control.' });
-            } else if (statusCode === 404) {
-                res.status(404).json({ error: 'Device not found or not available.' });
-            } else {
-                res.status(500).json({ error: 'Could not skip to previous track.' });
-            }
-        } else {
-            res.status(500).json({ error: 'Could not skip to previous track.' });
-        }
+        handleSpotifyError(err, res, 'skip to previous track');
     }
 });
 
@@ -567,25 +532,12 @@ app.put('/spotify/transfer', async (req: Request, res: Response) => {
         
         res.status(204).send();
     } catch (err: unknown) {
-        console.error('Error transferring playback:', err);
-        
-        if (err && typeof err === 'object' && 'statusCode' in err) {
-            const statusCode = (err as { statusCode: number }).statusCode;
-            if (statusCode === 403) {
-                res.status(403).json({ error: 'Premium account required for playback control.' });
-            } else if (statusCode === 404) {
-                res.status(404).json({ error: 'Device not found or not available.' });
-            } else {
-                res.status(500).json({ error: 'Could not transfer playback.' });
-            }
-        } else {
-            res.status(500).json({ error: 'Could not transfer playback.' });
-        }
+        handleSpotifyError(err, res, 'transfer playback');
     }
 });
 
-// --- MongoDB Model (Quiz Questions) ---
-// This model defines how your quiz questions are stored in the database.
+// --- MongoDB Model (Quiz) ---
+// This model defines how the quiz are stored in the database.
 // `trackId` is the Spotify Track ID, used to play the song.
 
 // Define an interface for the data model
@@ -727,31 +679,16 @@ app.get('/quiz-questions/random', async (req: Request, res: Response) => {
     }
 });
 
-// --- **NEW ROUTE TO VIEW RAW DATA FROM THE SPOTIFY API** ---
-// Use this route to verify that fetching the playlist works.
-// You can then remove it once you have tested it.
-app.get('/raw-playlist-data', async (req: Request, res: Response) => {
-    const playlistId = '6YHoO8ETcwxgq5WTjDpyAQ'; // Your playlist
-
-    try {
-        const data = await spotifyApi.clientCredentialsGrant();
-        spotifyApi.setAccessToken(data.body['access_token']);
-
-        const playlistData = await spotifyApi.getPlaylistTracks(playlistId);
-        res.json(playlistData.body); // Send the entire raw data
-    } catch (err) {
-        console.error('Error fetching raw data from Spotify:', err);
-        res.status(500).json({ error: 'Could not fetch raw data.' });
-    }
-});
-
 // --- Function to add quiz questions from a specific playlist ---
 // Use this function to populate your MongoDB database with questions from your playlist.
 // It fetches an app-specific access token, so it does not require a logged-in user.
 
+// Configuration constants
+const PLAYLIST_ID = '6YHoO8ETcwxgq5WTjDpyAQ';
+
 async function populateQuizQuestionsFromPlaylist() {
     // ID for the playlist you want to fetch tracks from.
-    const playlistId = '6YHoO8ETcwxgq5WTjDpyAQ';
+    const playlistId = PLAYLIST_ID;
 
     try {
         // Check if mongoose is connected before proceeding
