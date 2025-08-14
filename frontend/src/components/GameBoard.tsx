@@ -17,7 +17,6 @@ import { Heading, Button } from '../ui'
 import { ErrorMessage } from '../ui/ErrorMessage'
 import { TimeLineCard } from './TimeLineCard'
 import { CurrentCard, CurrentCardPreview } from './CurrentCard'
-import { StartCard } from './StartCard'
 
 // helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
 const Y = (c: any) => c?.year ?? c?.releaseYear
@@ -67,12 +66,11 @@ export const GameBoard: React.FC = () => {
     placeAt,
     drawAnother,
     lockIn,
-    confirmPlacement,       // <— från store
+    confirmPlacement,
     loading,
     error,
     clearError,
-    pendingIndex,           // <— från store
-    lastPlacementCorrect,
+    pendingIndex,
   } = useGame()
 
   const team = teams[currentTeamIndex]
@@ -84,30 +82,30 @@ export const GameBoard: React.FC = () => {
     if (e.active.id === 'current-card') setIsDragging(true)
   }
 
+  // När man släpper över en slot: markera pending (flytta inte currentCard till timeline ännu)
   const onDragEnd = (e: DragEndEvent) => {
     setIsDragging(false)
     const overId = e.over?.id as string | undefined
-    if (!overId) return
-    if (!overId.startsWith('slot-')) return
+    if (!overId || !overId.startsWith('slot-')) return
     const n = Number(overId.slice(5))
-    if (Number.isFinite(n)) placeAt(n)
+    if (!Number.isFinite(n)) return
+    if (!currentCard) return
+    placeAt(n) // sätter pendingIndex + phase: 'PLACED_PENDING'
   }
 
-  // render timeline, inkl. pending-kort som ser EXAKT ut som drag-kortet
+  // timeline: rendera vita kortet *inne i* timeline på pendingIndex, annars reveal:ade kort
   const renderTimeline = () => {
     const base = team.timeline
     const showSlots = phase === 'DRAWN' || phase === 'PLACED_PENDING'
 
     const children: React.ReactNode[] = []
-    // Slot före första
     children.push(<DropSlot key="slot-0" id="slot-0" show={showSlots} />)
 
     for (let i = 0; i < base.length; i++) {
-      // visa pending-kortet *mellan* slot-i och card-i
       if (phase === 'PLACED_PENDING' && pendingIndex === i && currentCard) {
         children.push(
-          <div key="pending-preview" className="flex-shrink-0">
-            <CurrentCardPreview card={currentCard} />
+          <div key="pending-card" className="flex-shrink-0">
+            <CurrentCard card={currentCard} dragging={isDragging} />
           </div>
         )
       }
@@ -124,15 +122,14 @@ export const GameBoard: React.FC = () => {
         </div>
       )
 
-      // slot efter card-i  => id "slot-(i+1)"
       children.push(<DropSlot key={`slot-${i + 1}`} id={`slot-${i + 1}`} show={showSlots} />)
     }
 
-    // om pending ska ligga sist
+    // pending sist
     if (phase === 'PLACED_PENDING' && pendingIndex === base.length && currentCard) {
-      children.splice(children.length - 1, 0, // innan sista sloten
-        <div key="pending-preview-last" className="flex-shrink-0">
-          <CurrentCardPreview card={currentCard} />
+      children.splice(children.length - 1, 0,
+        <div key="pending-last" className="flex-shrink-0">
+          <CurrentCard card={currentCard} dragging={isDragging} />
         </div>
       )
     }
@@ -187,8 +184,8 @@ export const GameBoard: React.FC = () => {
             <Heading level={3} className="text-lg sm:text-xl">Timeline</Heading>
             {renderTimeline()}
 
-            {/* Drag-kortet får ligga kvar i DRAWN och även i PLACED_PENDING (så man kan flytta igen) */}
-            {(phase === 'DRAWN' || phase === 'PLACED_PENDING') && currentCard && (
+            {/* Det vita kortet visas UTANFÖR tidslinjen bara när vi är i DRAWN */}
+            {phase === 'DRAWN' && currentCard && (
               <div className="pt-2">
                 <CurrentCard card={currentCard} dragging={isDragging} />
               </div>
