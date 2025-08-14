@@ -17,6 +17,7 @@ import { Heading, Button } from '../ui'
 import { ErrorMessage } from '../ui/ErrorMessage'
 import { TimeLineCard } from './TimeLineCard'
 import { CurrentCard, CurrentCardPreview } from './CurrentCard'
+import { StartCard } from './StartCard'
 
 // helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
 const Y = (c: any) => c?.year ?? c?.releaseYear
