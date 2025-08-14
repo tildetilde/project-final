@@ -18,6 +18,7 @@ export type Phase =
   | 'SETUP'
   | 'TURN_START'
   | 'DRAWN'
+  | 'PLACED_PENDING' 
   | 'WAITING_PLACEMENT'
   | 'CHOICE_AFTER_CORRECT'
   | 'PLACED_WRONG'
@@ -25,9 +26,11 @@ export type Phase =
 export type GameState = {
   deck: TrackCard[]
   discard: TrackCard[]
-  teams: [Team, Team]
+  teams: Team []
   currentTeamIndex: 0 | 1
   currentCard?: TrackCard
-  roundBaselineTimeline: TrackCard[] // snapshot i början av rundan
-  phase: Phase
+  roundBaselineTimeline: TrackCard[];pendingIndex: number | null;
+  lastPlacementCorrect: boolean | null;
+
+  phase: Phase;
 }

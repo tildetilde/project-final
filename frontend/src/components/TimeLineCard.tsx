@@ -30,11 +30,11 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
     </div>
 
-    <CardHeader className="relative z-10 pt-4 sm:pt-8 pb-2 sm:pb-4">
-      <div className="text-4xl sm:text-6xl font-bold text-base-100 leading-none tracking-tight">
-        {year}
-      </div>
-    </CardHeader>
+<CardHeader className="relative z-10 pt-4 sm:pt-8 pb-2 sm:pb-4">
+  <div className="text-4xl sm:text-6xl font-bold text-base-100 leading-none tracking-tight">
+    {isRevealed ? year : '??'}
+  </div>
+</CardHeader>
 
     <CardContent className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 pb-4 sm:pb-8">
       <div className="space-y-2 sm:space-y-4 text-center">
