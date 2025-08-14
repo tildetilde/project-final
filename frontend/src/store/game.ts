@@ -1,9 +1,8 @@
-// src/store/game.ts
 import { create } from "zustand"
 import type { TrackCard, GameState } from "../types/game"
 import { fetchTracks } from "../services/tracks"
 
-// ------- helpers -------
+// ---------- helpers ----------
 const insertAt = (arr: TrackCard[], item: TrackCard, idx: number) => {
   const copy = arr.slice()
   copy.splice(idx, 0, item)
@@ -18,18 +17,19 @@ const isPlacementCorrect = (timeline: TrackCard[], card: TrackCard, i: number) =
 }
 const drawOne = (pool: TrackCard[]) => {
   const i = Math.floor(Math.random() * pool.length)
-  // splice tar ut OCH tar bort från poolen
   return pool.splice(i, 1)[0]
 }
 
-// ------- lokalt UI-state + actions -------
-type UIState = { 
+// ---------- extra UI-state ----------
+type UIState = {
   loading: boolean
   error: string | null
   lastPlacementCorrect: boolean | null
   pendingIndex: number | null
   roundBaselineTimeline: TrackCard[]
 }
+
+// ---------- actions ----------
 type Actions = {
   clearError: () => void
   startGame: () => Promise<void>
@@ -41,9 +41,8 @@ type Actions = {
   nextTeam: () => void
 }
 
-// ------- store -------
 export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
-  // GameState (grunden)
+  // --- GameState baseline ---
   deck: [],
   discard: [],
   teams: [
@@ -54,30 +53,23 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
   currentCard: undefined,
   phase: "SETUP",
 
-  // UIState
+  // --- UIState ---
   loading: false,
   error: null,
   lastPlacementCorrect: null,
   pendingIndex: null,
   roundBaselineTimeline: [],
 
-  // ----- helpers -----
   clearError: () => set({ error: null }),
 
-  // ----- game flow -----
+  // --- start game: ge varje lag ett unikt startkort ---
   startGame: async () => {
     set({ loading: true, error: null })
     try {
-      // hämta en rejäl lek
-      const deck = await fetchTracks(100)
-      if (!deck || deck.length < 2) {
-        throw new Error("Not enough tracks")
-      }
+      const deck = await fetchTracks(120)
+      if (!deck || deck.length < 2) throw new Error("Not enough tracks")
 
-      // gör en kopia att dra ur
       const pool = deck.slice()
-
-      // ett startkort till varje lag, tas bort från poolen
       const startA = drawOne(pool)
       const startB = drawOne(pool)
 
@@ -102,30 +94,30 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     }
   },
 
+  // --- börja en tur: dra ett kort till handen ---
   startTurn: async () => {
     const s = get()
 
-    // om leken är slut – hämta en ny och fortsätt (enkelt fallback)
     if (!s.deck.length) {
+      // om leken tog slut – starta om snabbt
       await get().startGame()
     }
-
     const s2 = get()
     if (!s2.deck.length) return
 
-    // dra ett kort från toppen (poolen är redan slumpad via fetch eller startGame)
     const [card, ...rest] = s2.deck
+
     set({
       deck: rest,
       currentCard: card,
-      roundBaselineTimeline: s2.teams[s2.currentTeamIndex].timeline.slice(),
+      roundBaselineTimeline: s2.teams[s2.currentTeamIndex].timeline.slice(), // snapshot
       pendingIndex: null,
       lastPlacementCorrect: null,
       phase: "DRAWN",
     })
   },
 
-  // sätter bara "pending" – ingen bedömning än
+  // --- välj slot: *endast* pending, rör inte timeline än ---
   placeAt: (slotIndex: number) => {
     const s = get()
     if (!s.currentCard) return
@@ -135,7 +127,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     })
   },
 
-  // bekräfta placeringen och avgör rätt/fel nu
+  // --- bekräfta: bedöm mot snapshot och committa till timeline ---
   confirmPlacement: () => {
     const s = get()
     const teamIdx = s.currentTeamIndex
@@ -150,23 +142,23 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     if (correct) {
       const committed = insertAt(base, card, i)
       set({
-        teams: s.teams.map((t, idx) =>
-          idx === teamIdx ? { ...t, timeline: committed } : t
-        ) as any,
+        teams: s.teams.map((team, idx) =>
+          idx === teamIdx ? { ...team, timeline: committed } : team
+        ) as GameState["teams"],
         currentCard: undefined,
-        lastPlacementCorrect: true,
         pendingIndex: null,
+        lastPlacementCorrect: true,
         phase: "CHOICE_AFTER_CORRECT",
       })
     } else {
-      // fel: nollställ och byt lag
+      // fel gissning → återställ och byt lag
       set({
-        teams: s.teams.map((t, idx) =>
-          idx === teamIdx ? { ...t, timeline: s.roundBaselineTimeline } : t
-        ) as any,
+        teams: s.teams.map((team, idx) =>
+          idx === teamIdx ? { ...team, timeline: s.roundBaselineTimeline } : team
+        ) as GameState["teams"],
         currentCard: undefined,
-        lastPlacementCorrect: false,
         pendingIndex: null,
+        lastPlacementCorrect: false,
         phase: "TURN_START",
       })
       get().nextTeam()
@@ -185,7 +177,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     set({
       teams: s.teams.map((t, i) =>
         i === tIdx ? { ...t, score: t.score + gained } : t
-      ) as any,
+      ) as GameState["teams"],
       phase: "TURN_START",
       lastPlacementCorrect: null,
     })
@@ -199,6 +191,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       currentTeamIndex: (s.currentTeamIndex === 0 ? 1 : 0) as 0 | 1,
       currentCard: undefined,
       pendingIndex: null,
+      roundBaselineTimeline: [],
       phase: "TURN_START",
     })
   },
