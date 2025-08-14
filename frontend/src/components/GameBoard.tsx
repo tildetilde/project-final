@@ -96,7 +96,10 @@ export const GameBoard: React.FC = () => {
 
   // timeline: rendera vita kortet *inne i* timeline på pendingIndex, annars reveal:ade kort
   const renderTimeline = () => {
-    const base = team.timeline
+const base = (phase === 'DRAWN' || phase === 'PLACED_PENDING' || phase === 'CHOICE_AFTER_CORRECT')
+  ? useGame.getState().turnTimeline
+  : team.timeline
+  
     const showSlots = phase === 'DRAWN' || phase === 'PLACED_PENDING'
 
     const children: React.ReactNode[] = []
@@ -170,8 +173,8 @@ export const GameBoard: React.FC = () => {
       <div className="flex items-center justify-between">
         <Heading level={1} className="text-2xl sm:text-3xl">Game Mode</Heading>
         <div className="flex items-center gap-2 sm:gap-3">
-          <TeamPill label="Team A" score={teams[0].score} active={currentTeamIndex === 0} />
-          <TeamPill label="Team B" score={teams[1].score} active={currentTeamIndex === 1} />
+<TeamPill label="Team A" score={teams[0].timeline.length} active={currentTeamIndex === 0} />
+<TeamPill label="Team B" score={teams[1].timeline.length} active={currentTeamIndex === 1} />
         </div>
       </div>
 
