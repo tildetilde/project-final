@@ -1,4 +1,5 @@
-import type { TrackCard } from '../types/game';
+import type { GameItem } from "../types/game";
+import type { GameCategory } from "../types/game";
 
 export interface BackendTrack {
   _id: string;
@@ -12,7 +13,7 @@ export interface BackendTrack {
 }
 
 // Mappa backend -> ditt UI-format (TrackCard från types/game.ts)
-export function toTrackCard(t: BackendTrack): TrackCard {
+export function toTrackCard(t: BackendTrack): GameItem {
   return {
     _id: t._id,
     trackId: t.trackId,
