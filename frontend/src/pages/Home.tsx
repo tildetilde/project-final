@@ -22,11 +22,10 @@ export const Home = () => {
           introDone ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
-        <main className="min-h-screen relative overflow-hidden bg-accent-800 text-base-100">
-          {/* mjuka glows */}
+        <main className="min-h-screen relative overflow-hidden bg-[#2a0d0d] text-white">
           <div className="pointer-events-none absolute inset-0">
-            <div className="absolute -left-16 top-1/4 w-72 h-72 rounded-full bg-accent-400/20 blur-3xl" />
-            <div className="absolute -right-10 bottom-1/5 w-96 h-96 rounded-full bg-accent-200/20 blur-3xl" />
+            <div className="absolute -left-20 top-1/3 w-72 h-72 rounded-full bg-white/5 blur-3xl" />
+            <div className="absolute -right-16 bottom-1/4 w-80 h-80 rounded-full bg-white/5 blur-3xl" />
           </div>
 
           <section
@@ -34,14 +33,13 @@ export const Home = () => {
               ready ? "opacity-100 scale-100" : "opacity-0 scale-95"
             }`}
           >
-            <div className="w-full max-w-6xl mx-auto px-6 text-center">
-              <p className="mb-6 tracking-[.25em] text-[10px] md:text-xs text-base-100/70 animate-[tagline-in_1s_ease-out]">
+            <div className="text-center px-6">
+              <p className="mb-6 tracking-[.25em] text-[10px] md:text-xs text-white/70">
                 WHEN THE BANGERS ARE TOO GOOD… YOU JUST NEED TO
               </p>
-
               <Heading
                 level={1}
-                className="font-black tracking-wider text-base-100 text-[16vw] leading-[0.9] md:text-9xl animate-[logo-in_1s_ease-out]"
+                className="text-5xl md:text-7xl font-black tracking-wider"
               >
                 BANGANZA
               </Heading>
