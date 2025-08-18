@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { 
-  startPlayback, 
-  pausePlayback, 
-  skipToNext, 
+import React, { useState, useEffect } from "react";
+import {
+  startPlayback,
+  pausePlayback,
+  skipToNext,
   skipToPrevious,
   getAvailableDevices,
   getCurrentPlaybackState,
-  transferPlayback
-} from '../services/spotifyApi';
-import { Button } from '../ui/Button';
+  transferPlayback,
+} from "../services/spotifyApi";
+import { Button } from "../ui/Button";
 
 interface Device {
   id: string;
@@ -31,8 +31,10 @@ interface PlaybackState {
 
 export const SpotifyPlayer: React.FC = () => {
   const [devices, setDevices] = useState<Device[]>([]);
-  const [selectedDevice, setSelectedDevice] = useState<string>('');
-  const [playbackState, setPlaybackState] = useState<PlaybackState | null>(null);
+  const [selectedDevice, setSelectedDevice] = useState<string>("");
+  const [playbackState, setPlaybackState] = useState<PlaybackState | null>(
+    null
+  );
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -40,7 +42,7 @@ export const SpotifyPlayer: React.FC = () => {
   useEffect(() => {
     loadDevices();
     loadPlaybackState();
-    
+
     // Poll for playback state updates
     const interval = setInterval(loadPlaybackState, 5000);
     return () => clearInterval(interval);
@@ -50,17 +52,17 @@ export const SpotifyPlayer: React.FC = () => {
     try {
       const deviceList = await getAvailableDevices();
       setDevices(deviceList);
-      
+
       // Auto-select active device or first available device
-      const activeDevice = deviceList.find(d => d.is_active);
+      const activeDevice = deviceList.find((d) => d.is_active);
       if (activeDevice) {
         setSelectedDevice(activeDevice.id);
       } else if (deviceList.length > 0) {
         setSelectedDevice(deviceList[0].id);
       }
     } catch (err) {
-      setError('Failed to load devices');
-      console.error('Error loading devices:', err);
+      setError("Failed to load devices");
+      console.error("Error loading devices:", err);
     }
   };
 
@@ -70,13 +72,13 @@ export const SpotifyPlayer: React.FC = () => {
       setPlaybackState(state);
     } catch (err) {
       // Don't show error for playback state, just log it
-      console.error('Error loading playback state:', err);
+      console.error("Error loading playback state:", err);
     }
   };
 
   const handlePlay = async () => {
     if (!selectedDevice) {
-      setError('Please select a device first');
+      setError("Please select a device first");
       return;
     }
 
@@ -86,14 +88,14 @@ export const SpotifyPlayer: React.FC = () => {
     try {
       // Example: Play a specific track (you can modify this)
       await startPlayback({
-        trackId: '4iV5W9uYEdYUVa79Axb7Rh', // Example track ID
-        deviceId: selectedDevice
+        trackId: "4iV5W9uYEdYUVa79Axb7Rh", // Example track ID
+        deviceId: selectedDevice,
       });
-      
+
       // Refresh playback state
       await loadPlaybackState();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to start playback');
+      setError(err instanceof Error ? err.message : "Failed to start playback");
     } finally {
       setIsLoading(false);
     }
@@ -101,7 +103,7 @@ export const SpotifyPlayer: React.FC = () => {
 
   const handlePause = async () => {
     if (!selectedDevice) {
-      setError('Please select a device first');
+      setError("Please select a device first");
       return;
     }
 
@@ -112,7 +114,7 @@ export const SpotifyPlayer: React.FC = () => {
       await pausePlayback(selectedDevice);
       await loadPlaybackState();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to pause playback');
+      setError(err instanceof Error ? err.message : "Failed to pause playback");
     } finally {
       setIsLoading(false);
     }
@@ -120,7 +122,7 @@ export const SpotifyPlayer: React.FC = () => {
 
   const handleNext = async () => {
     if (!selectedDevice) {
-      setError('Please select a device first');
+      setError("Please select a device first");
       return;
     }
 
@@ -131,7 +133,9 @@ export const SpotifyPlayer: React.FC = () => {
       await skipToNext(selectedDevice);
       await loadPlaybackState();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to skip to next track');
+      setError(
+        err instanceof Error ? err.message : "Failed to skip to next track"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -139,7 +143,7 @@ export const SpotifyPlayer: React.FC = () => {
 
   const handlePrevious = async () => {
     if (!selectedDevice) {
-      setError('Please select a device first');
+      setError("Please select a device first");
       return;
     }
 
@@ -150,7 +154,9 @@ export const SpotifyPlayer: React.FC = () => {
       await skipToPrevious(selectedDevice);
       await loadPlaybackState();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to skip to previous track');
+      setError(
+        err instanceof Error ? err.message : "Failed to skip to previous track"
+      );
     } finally {
       setIsLoading(false);
     }
@@ -158,20 +164,20 @@ export const SpotifyPlayer: React.FC = () => {
 
   const handleDeviceChange = async (deviceId: string) => {
     setSelectedDevice(deviceId);
-    
+
     try {
       // Transfer playback to the selected device
       await transferPlayback(deviceId, false);
       await loadPlaybackState();
     } catch (err) {
-      console.error('Error transferring playback:', err);
+      console.error("Error transferring playback:", err);
       // Don't show error for device transfer
     }
   };
 
   const handlePlayContext = async (contextUri: string) => {
     if (!selectedDevice) {
-      setError('Please select a device first');
+      setError("Please select a device first");
       return;
     }
 
@@ -181,12 +187,12 @@ export const SpotifyPlayer: React.FC = () => {
     try {
       await startPlayback({
         contextUri,
-        deviceId: selectedDevice
+        deviceId: selectedDevice,
       });
-      
+
       await loadPlaybackState();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Failed to start playback');
+      setError(err instanceof Error ? err.message : "Failed to start playback");
     } finally {
       setIsLoading(false);
     }
@@ -195,7 +201,7 @@ export const SpotifyPlayer: React.FC = () => {
   return (
     <div className="p-6 bg-white rounded-lg shadow-lg max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-center">Spotify Player</h2>
-      
+
       {/* Device Selection */}
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -208,7 +214,7 @@ export const SpotifyPlayer: React.FC = () => {
         >
           {devices.map((device) => (
             <option key={device.id} value={device.id}>
-              {device.name} ({device.type}) {device.is_active ? '(Active)' : ''}
+              {device.name} ({device.type}) {device.is_active ? "(Active)" : ""}
             </option>
           ))}
         </select>
@@ -219,8 +225,12 @@ export const SpotifyPlayer: React.FC = () => {
         <div className="mb-4 p-3 bg-gray-50 rounded-md">
           <h3 className="font-medium text-gray-900">Now Playing</h3>
           <p className="text-sm text-gray-700">{playbackState.item.name}</p>
-          <p className="text-sm text-gray-600">{playbackState.item.artists[0]?.name}</p>
-          <p className="text-xs text-gray-500">{playbackState.item.album.name}</p>
+          <p className="text-sm text-gray-600">
+            {playbackState.item.artists[0]?.name}
+          </p>
+          <p className="text-xs text-gray-500">
+            {playbackState.item.album.name}
+          </p>
         </div>
       )}
 
@@ -234,7 +244,7 @@ export const SpotifyPlayer: React.FC = () => {
         >
           ⏮
         </Button>
-        
+
         {playbackState?.is_playing ? (
           <Button
             onClick={handlePause}
@@ -254,7 +264,7 @@ export const SpotifyPlayer: React.FC = () => {
             ▶
           </Button>
         )}
-        
+
         <Button
           onClick={handleNext}
           disabled={isLoading || !selectedDevice}
@@ -267,10 +277,14 @@ export const SpotifyPlayer: React.FC = () => {
 
       {/* Quick Play Examples */}
       <div className="mb-4">
-        <h3 className="text-sm font-medium text-gray-700 mb-2">Quick Play Examples</h3>
+        <h3 className="text-sm font-medium text-gray-700 mb-2">
+          Quick Play Examples
+        </h3>
         <div className="space-y-2">
           <Button
-            onClick={() => handlePlayContext('spotify:album:5ht7ItJgpBH7W6vJ5BqpPr')}
+            onClick={() =>
+              handlePlayContext("spotify:album:5ht7ItJgpBH7W6vJ5BqpPr")
+            }
             disabled={isLoading || !selectedDevice}
             variant="outline"
             size="sm"
@@ -279,7 +293,9 @@ export const SpotifyPlayer: React.FC = () => {
             Play Album
           </Button>
           <Button
-            onClick={() => handlePlayContext('spotify:playlist:6YHoO8ETcwxgq5WTjDpyAQ')}
+            onClick={() =>
+              handlePlayContext("spotify:playlist:6YHoO8ETcwxgq5WTjDpyAQ")
+            }
             disabled={isLoading || !selectedDevice}
             variant="outline"
             size="sm"
@@ -299,9 +315,7 @@ export const SpotifyPlayer: React.FC = () => {
 
       {/* Loading State */}
       {isLoading && (
-        <div className="text-center text-sm text-gray-500">
-          Loading...
-        </div>
+        <div className="text-center text-sm text-gray-500">Loading...</div>
       )}
 
       {/* Refresh Button */}
