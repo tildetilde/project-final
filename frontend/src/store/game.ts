@@ -1,50 +1,66 @@
 // src/store/game.ts
-import { create } from "zustand"
-import type { TrackCard, GameState } from "../types/game"
-import { fetchTracks } from "../services/tracks"
+import { create } from "zustand";
+import type { TrackCard, GameState } from "../types/game";
+import type { GameItem } from "../types/game";
+import { animalsItems } from "../services/animalsMock";
 
 // ---------- helpers ----------
+const toTrackCard = (it: GameItem): TrackCard =>
+  ({
+    // behåll legacy-fält för nycklar i UI
+    _id: it.id,
+    trackId: it.id,
+    year: it.value,
+    artist: it.name,
+    title: it.label ?? it.name,
+  } as unknown as TrackCard);
+
 const insertAt = (arr: TrackCard[], item: TrackCard, idx: number) => {
-  const copy = arr.slice()
-  copy.splice(idx, 0, item)
-  return copy
-}
-const Y = (c: any) => c?.year ?? c?.releaseYear
-const isPlacementCorrect = (timeline: TrackCard[], card: TrackCard, i: number) => {
-  const y = Y(card)
-  const left  = i - 1 >= 0 ? Y(timeline[i - 1]) : undefined
-  const right = i < timeline.length ? Y(timeline[i]) : undefined
-  return (left === undefined || y >= left) && (right === undefined || y <= right)
-}
+  const copy = arr.slice();
+  copy.splice(idx, 0, item);
+  return copy;
+};
+const Y = (c: any) => c?.year ?? c?.releaseYear;
+const isPlacementCorrect = (
+  timeline: TrackCard[],
+  card: TrackCard,
+  i: number
+) => {
+  const y = Y(card);
+  const left = i - 1 >= 0 ? Y(timeline[i - 1]) : undefined;
+  const right = i < timeline.length ? Y(timeline[i]) : undefined;
+  return (
+    (left === undefined || y >= left) && (right === undefined || y <= right)
+  );
+};
 const drawOne = (pool: TrackCard[]) => {
-  const i = Math.floor(Math.random() * pool.length)
-  return pool.splice(i, 1)[0]
-}
+  const i = Math.floor(Math.random() * pool.length);
+  return pool.splice(i, 1)[0];
+};
 
 // ---------- extra UI-state ----------
 type UIState = {
-  loading: boolean
-  error: string | null
-  lastPlacementCorrect: boolean | null
-  pendingIndex: number | null
-  roundBaselineTimeline: TrackCard[]   // lagets timeline vid rundans start
-  turnTimeline: TrackCard[]            // temporär timeline under pågående runda
-}
+  loading: boolean;
+  error: string | null;
+  lastPlacementCorrect: boolean | null;
+  pendingIndex: number | null;
+  roundBaselineTimeline: TrackCard[];
+  turnTimeline: TrackCard[];
+};
 
 // ---------- actions ----------
 type Actions = {
-  clearError: () => void
-  startGame: () => Promise<void>
-  startTurn: () => Promise<void>
-  placeAt: (slotIndex: number) => void
-  confirmPlacement: () => void
-  drawAnother: () => Promise<void>
-  lockIn: () => void
-  nextTeam: () => void
-}
+  clearError: () => void;
+  startGame: () => Promise<void>;
+  startTurn: () => Promise<void>;
+  placeAt: (slotIndex: number) => void;
+  confirmPlacement: () => void;
+  drawAnother: () => Promise<void>;
+  lockIn: () => void;
+  nextTeam: () => void;
+};
 
 export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
-  // --- GameState baseline ---
   deck: [],
   discard: [],
   teams: [
@@ -55,7 +71,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
   currentCard: undefined,
   phase: "SETUP",
 
-  // --- UIState ---
   loading: false,
   error: null,
   lastPlacementCorrect: null,
@@ -65,16 +80,16 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
 
   clearError: () => set({ error: null }),
 
-  // --- start game: ge varje lag ett unikt startkort ---
+  // endast bytt datakälla -> animalsItems
   startGame: async () => {
-    set({ loading: true, error: null })
+    set({ loading: true, error: null });
     try {
-      const deck = await fetchTracks(120)
-      if (!deck || deck.length < 2) throw new Error("Not enough tracks")
+      const deck: TrackCard[] = animalsItems.map(toTrackCard);
+      if (!deck || deck.length < 2) throw new Error("Not enough items");
 
-      const pool = deck.slice()
-      const startA = drawOne(pool)
-      const startB = drawOne(pool)
+      const pool = deck.slice();
+      const startA = drawOne(pool);
+      const startB = drawOne(pool);
 
       set({
         deck: pool,
@@ -90,30 +105,24 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
         pendingIndex: null,
         lastPlacementCorrect: null,
         phase: "TURN_START",
-      })
+      });
     } catch (e: any) {
-      set({ error: e?.message ?? "Failed to load tracks" })
+      set({ error: e?.message ?? "Failed to load items" });
     } finally {
-      set({ loading: false })
+      set({ loading: false });
     }
   },
 
-  // --- börja en tur / dra ett kort ---
   startTurn: async () => {
-    const s = get()
-
-    // Om leken är slut – starta om snabbt
+    const s = get();
     if (!s.deck.length) {
-      await get().startGame()
+      await get().startGame();
     }
-    const s2 = get()
-    if (!s2.deck.length) return
+    const s2 = get();
+    if (!s2.deck.length) return;
 
-    const [card, ...rest] = s2.deck
-
-    // Om vi kommer från TURN_START initierar vi baseline och turnTimeline.
-    // Om vi kommer från CHOICE_AFTER_CORRECT (Draw another) så behåller vi turnTimeline.
-    const startingNewRound = s2.phase === "TURN_START"
+    const [card, ...rest] = s2.deck;
+    const startingNewRound = s2.phase === "TURN_START";
 
     set({
       deck: rest,
@@ -127,62 +136,56 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       pendingIndex: null,
       lastPlacementCorrect: null,
       phase: "DRAWN",
-    })
+    });
   },
 
-  // --- välj slot: *endast* pending, rör inte turnTimeline än ---
   placeAt: (slotIndex: number) => {
-    const s = get()
-    if (!s.currentCard) return
+    const s = get();
+    if (!s.currentCard) return;
     set({
       pendingIndex: slotIndex,
       phase: "PLACED_PENDING",
-    })
+    });
   },
 
-  // --- bekräfta: bedöm mot turnTimeline (staged lista) och uppdatera turnTimeline vid rätt ---
   confirmPlacement: () => {
-    const s = get()
-    const card = s.currentCard
-    const i = s.pendingIndex
+    const s = get();
+    const card = s.currentCard;
+    const i = s.pendingIndex;
+    if (!card || i == null) return;
 
-    if (!card || i == null) return
-
-    // Bedöm mot nuvarande staged lista (så flera korrekta i rad funkar)
-    const base = s.turnTimeline
-    const correct = isPlacementCorrect(base, card, i)
+    const base = s.turnTimeline;
+    const correct = isPlacementCorrect(base, card, i);
 
     if (correct) {
-      const staged = insertAt(base, card, i)
+      const staged = insertAt(base, card, i);
       set({
-        turnTimeline: staged,          // bygg upp rundans tillfälliga timeline
+        turnTimeline: staged,
         currentCard: undefined,
         pendingIndex: null,
         lastPlacementCorrect: true,
-        phase: "CHOICE_AFTER_CORRECT", // välj: Draw another eller Lock in
-      })
+        phase: "CHOICE_AFTER_CORRECT",
+      });
     } else {
-      // FEL: kasta hela rundans jobb och gå tillbaka till baseline
       set({
         turnTimeline: s.roundBaselineTimeline.slice(),
         currentCard: undefined,
         pendingIndex: null,
         lastPlacementCorrect: false,
         phase: "TURN_START",
-      })
-      get().nextTeam()
+      });
+      get().nextTeam();
     }
   },
 
   drawAnother: async () => {
-    await get().startTurn()
+    await get().startTurn();
   },
 
-  // --- lock in: committa rundans temporära lista till lagets permanenta timeline ---
   lockIn: () => {
-    const s = get()
-    const tIdx = s.currentTeamIndex
-    const committed = s.turnTimeline
+    const s = get();
+    const tIdx = s.currentTeamIndex;
+    const committed = s.turnTimeline;
 
     set({
       teams: s.teams.map((t, i) =>
@@ -190,20 +193,18 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       ) as GameState["teams"],
       phase: "TURN_START",
       lastPlacementCorrect: null,
-      // behåll turnTimeline/baseline tills nästa startTurn initierar dem igen
-    })
+    });
 
-    get().nextTeam()
+    get().nextTeam();
   },
 
   nextTeam: () => {
-    const s = get()
+    const s = get();
     set({
       currentTeamIndex: (s.currentTeamIndex === 0 ? 1 : 0) as 0 | 1,
       currentCard: undefined,
       pendingIndex: null,
-      // låt baseline/turnTimeline vara – de sätts korrekt i startTurn
       phase: "TURN_START",
-    })
+    });
   },
-}))
+}));

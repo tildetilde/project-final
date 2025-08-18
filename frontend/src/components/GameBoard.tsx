@@ -59,9 +59,7 @@ const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
       ref={setNodeRef}
       className={[
         "h-[180px] sm:h-80 w-6 sm:w-8 flex-shrink-0 rounded-lg transition-all",
-        isOver
-          ? "bg-primary/30 outline outline-2 outline-primary/50"
-          : "bg-transparent",
+        isOver ? "bg-primary/30 outline outline-primary/50" : "bg-transparent",
       ].join(" ")}
       aria-label="Drop here"
     />
