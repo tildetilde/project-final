@@ -1,43 +1,53 @@
-import React from "react"
-import { useAuth } from "../hooks/useAuth"
-import { Button } from "../ui/Button"
+import React from "react";
+import { useAuth } from "../hooks/useAuth";
+import { Button } from "../ui/Button";
 
 export const LoginForm: React.FC = () => {
-  const { login, isLoading, error: authError } = useAuth(false)
-  
+  const { login, isLoading, error: authError } = useAuth(false);
+
   // Get error from URL parameters
   const urlParams = new URLSearchParams(window.location.search);
-  const urlError = urlParams.get('error');
-  
+  const urlError = urlParams.get("error");
+
   // Use URL error if available, otherwise use auth error
   const error = urlError || authError;
 
   const handleSpotifyLogin = () => {
-    login()
-  }
+    login();
+  };
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="text-center space-y-8">
         <div className="space-y-4">
-<h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground">Music Game Name</h1>
-<p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto">
-  Build your music timeline and guess the years in this exciting music game
-</p>
+          <h1 className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground">
+            Music Game Name
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-md mx-auto">
+            Build your music timeline and guess the years in this exciting music
+            game
+          </p>
         </div>
 
         {/* Error display */}
         {error && (
           <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
-            {error === 'state_mismatch' && 'Authentication failed. Please try again.'}
-            {error === 'invalid_token' && 'Authentication failed. Please try again.'}
-            {error === 'authentication_failed' && 'Authentication failed. Please try again.'}
-            {!['state_mismatch', 'invalid_token', 'authentication_failed'].includes(error) && error}
+            {error === "state_mismatch" &&
+              "Authentication failed. Please try again."}
+            {error === "invalid_token" &&
+              "Authentication failed. Please try again."}
+            {error === "authentication_failed" &&
+              "Authentication failed. Please try again."}
+            {![
+              "state_mismatch",
+              "invalid_token",
+              "authentication_failed",
+            ].includes(error) && error}
           </div>
         )}
 
-        <Button 
-          onClick={handleSpotifyLogin} 
+        <Button
+          onClick={handleSpotifyLogin}
           className="px-8 py-3 text-lg bg-[#1DB954] hover:bg-[#1ed760] border-[#1DB954] text-white hover:text-white"
           disabled={isLoading}
         >
@@ -55,7 +65,7 @@ export const LoginForm: React.FC = () => {
             </div>
           )}
         </Button>
-        
+
         {/* Game info */}
         <div className="mt-6 p-4 bg-muted/30 rounded-xl border border-border-muted max-w-md mx-auto">
           <div className="flex items-start space-x-3">
@@ -66,11 +76,14 @@ export const LoginForm: React.FC = () => {
             </div>
             <div className="text-sm text-muted-foreground leading-relaxed">
               <p className="font-medium text-foreground mb-1">Ready to play?</p>
-              <p>Connect with Spotify to start your music timeline game. Only one player needs to log in.</p>
+              <p>
+                Connect with Spotify to start your music timeline game. Only one
+                player needs to log in.
+              </p>
             </div>
           </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
