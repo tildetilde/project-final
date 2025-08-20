@@ -200,25 +200,6 @@ export const GameBoard: React.FC = () => {
 
   return (
     <div className="space-y-5 sm:space-y-8 animate-in fade-in-50">
-      {/* Header */}
-      <div className="flex items-center justify-between">
-        <Heading level={1} className="text-2xl sm:text-3xl">
-          Game Mode
-        </Heading>
-        <div className="flex items-center gap-2 sm:gap-3">
-          <TeamPill
-            label="Team A"
-            score={teams[0].timeline.length}
-            active={currentTeamIndex === 0}
-          />
-          <TeamPill
-            label="Team B"
-            score={teams[1].timeline.length}
-            active={currentTeamIndex === 1}
-          />
-        </div>
-      </div>
-
       {/* Errors / loading */}
       {loading && (
         <div className="text-sm text-muted-foreground">Loading items…</div>
@@ -238,7 +219,11 @@ export const GameBoard: React.FC = () => {
       )}
 
       {/* Start-knapp */}
-      {phase === "SETUP" && <Button onClick={startGame}>Start Game</Button>}
+      {phase === "SETUP" && (
+        <div className="flex justify-center">
+          <Button onClick={startGame}>Start Game</Button>
+        </div>
+      )}
 
       {/* Bräde */}
       {phase !== "SETUP" && (

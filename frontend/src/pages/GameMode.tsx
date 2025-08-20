@@ -1,11 +1,10 @@
-// src/pages/GameMode.tsx
 import React from "react";
 import { OrientationGuard } from "../components/OrientationGuard";
 import { GameBoard } from "../components/GameBoard";
 import { Heading, DotPattern } from "../ui";
+import { useGame } from "../store/game";
 
 export default function GameMode() {
-  // justera fritt
   const teamLabel = "Team";
   const teamValue = "A vs B";
   const categoryLabel = "Category";
@@ -15,12 +14,16 @@ export default function GameMode() {
   const modeLabel = "Mode";
   const modeValue = "Timeline";
 
+  const { teams, currentTeamIndex } = useGame();
+  const scoreA = teams[0]?.timeline.length ?? 0;
+  const scoreB = teams[1]?.timeline.length ?? 0;
+
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen bg-background flex flex-col">
       <OrientationGuard minWidth={600} />
 
       {/* REPORT-lik hero utan vit ruta */}
-      <section className="relative mx-auto max-w-7xl px-4 sm:px-8 mt-6 sm:mt-10 pb-8 flex-grow">
+      <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
         {/* subtilt mönster */}
         <div className="absolute inset-0 pointer-events-none opacity-70">
           <DotPattern variant="diagonal" size="lg" />
@@ -28,44 +31,39 @@ export default function GameMode() {
 
         {/* hörnmarkörer */}
         <div className="relative z-10">
-          {/* top-left */}
+          {/* top-left – CATEGORY */}
           <div className="absolute -top-2 sm:-top-3 -left-1 sm:-left-2 flex items-center gap-2">
             <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
-            <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
-              {teamLabel}:{" "}
-              <span className="text-foreground font-semibold">{teamValue}</span>
-            </div>
-          </div>
-          {/* top-right */}
-          <div className="absolute -top-2 sm:-top-3 -right-1 sm:-right-2 flex items-center gap-2">
             <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
               {categoryLabel}:{" "}
               <span className="text-foreground font-semibold">
                 {categoryValue}
               </span>
             </div>
-            <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
           </div>
-          {/* bottom-left */}
-          <div className="absolute -bottom-2 sm:-bottom-3 -left-1 sm:-left-2 flex items-center gap-2">
-            <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
-            <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
-              {roundLabel}:{" "}
-              <span className="text-foreground font-semibold">
-                {roundValue}
-              </span>
-            </div>
-          </div>
-          {/* bottom-right */}
-          <div className="absolute -bottom-2 sm:-bottom-3 -right-1 sm:-right-2 flex items-center gap-2">
-            <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
-              {modeLabel}:{" "}
-              <span className="text-foreground font-semibold">{modeValue}</span>
+
+          {/* top-right – A Team / B Team */}
+          <div className="absolute -top-2 sm:-top-3 -right-1 sm:-right-2 flex items-center gap-2">
+            <div className="flex gap-2">
+              <div
+                className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground"
+                aria-current={currentTeamIndex === 0 ? "true" : "false"}
+              >
+                A Team{" "}
+                <span className="text-foreground font-semibold">{scoreA}</span>
+              </div>
+              <div
+                className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground"
+                aria-current={currentTeamIndex === 1 ? "true" : "false"}
+              >
+                B Team{" "}
+                <span className="text-foreground font-semibold">{scoreB}</span>
+              </div>
             </div>
             <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
           </div>
 
-          {/* själva rubriken + tagline */}
+          {/* rubrik + tagline */}
           <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
             <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
               Game Question
@@ -75,7 +73,7 @@ export default function GameMode() {
               level={1}
               className="leading-[0.95] text-foreground"
               style={{
-                fontSize: "clamp(2.5rem, 7vw, 6rem)",
+                fontSize: "clamp(2rem, 6vw, 4.5rem)",
                 letterSpacing: "-0.02em",
               }}
             >
@@ -90,10 +88,31 @@ export default function GameMode() {
         </div>
       </section>
 
-      {/* SPEL-VYN – exakt som innan */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-8">
+      {/* SPEL-VYN */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
         <GameBoard />
       </div>
+
+      {/* Footer med Round (vänster) och Mode (höger) */}
+      <footer className="mx-auto max-w-7xl w-full px-4 sm:px-8 mt-auto pb-6 sm:pb-8 flex justify-between items-center">
+        {/* Round vänster */}
+        <div className="flex items-center gap-2">
+          <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
+          <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
+            {roundLabel}:{" "}
+            <span className="text-foreground font-semibold">{roundValue}</span>
+          </div>
+        </div>
+
+        {/* Mode höger */}
+        <div className="flex items-center gap-2">
+          <div className="px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground">
+            {modeLabel}:{" "}
+            <span className="text-foreground font-semibold">{modeValue}</span>
+          </div>
+          <span className="inline-block w-2 h-2 rounded-sm bg-primary shadow-soft" />
+        </div>
+      </footer>
     </div>
   );
 }
