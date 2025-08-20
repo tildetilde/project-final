@@ -1,3 +1,4 @@
+// src/components/GameBoard.tsx
 import React from "react";
 import {
   DndContext,
@@ -13,60 +14,34 @@ import {
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 
 import { useGame } from "../store/game";
-import { Heading, Button } from "../ui";
+import { Button } from "../ui";
 import { ErrorMessage } from "../ui/ErrorMessage";
 import { TimeLineCard } from "./TimeLineCard";
 import { CurrentCard, CurrentCardPreview } from "./CurrentCard";
 
-// helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
+// Helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
 const Y = (c: any) => c?.year ?? c?.releaseYear;
 const T = (c: any) => c?.title ?? c?.trackTitle;
 const A = (c: any) => c?.artist ?? c?.trackArtist;
 
-const TeamPill: React.FC<{
-  label: string;
-  active?: boolean;
-  score: number;
-}> = ({ label, active, score }) => (
-  <span
-    className={[
-      "inline-flex items-center gap-2 px-3 py-1 rounded-full border transition-all",
-      active
-        ? "bg-primary text-base-100 border-primary shadow-sm"
-        : "bg-muted text-foreground border-border",
-      "animate-in fade-in-0 zoom-in-95",
-    ].join(" ")}
-    aria-current={active ? "true" : "false"}
-  >
-    <span className="font-medium">{label}</span>
-    <span
-      className={[
-        "text-xs px-1.5 py-0.5 rounded-md",
-        active ? "bg-base-100/20" : "bg-foreground/5",
-      ].join(" ")}
-    >
-      {score}
-    </span>
-  </span>
-);
-
-// dropp-slot
+/** Smalare och lägre “drop slots” för kompakt timeline */
 const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
   if (!show) return null;
+
   return (
     <div
       ref={setNodeRef}
       className={[
-        "h-[180px] sm:h-80 w-6 sm:w-8 flex-shrink-0 rounded-lg transition-all",
-        isOver ? "bg-primary/30 outline outline-primary/50" : "bg-transparent",
+        "h-[96px] sm:h-[120px] w-1 sm:w-2 flex-shrink-0 rounded-md transition-all",
+        isOver ? "bg-primary/40 outline outline-primary/50" : "bg-primary/20",
       ].join(" ")}
       aria-label="Drop here"
     />
   );
 };
 
-export const GameBoard: React.FC = () => {
+export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const {
     teams,
     currentTeamIndex,
@@ -96,7 +71,6 @@ export const GameBoard: React.FC = () => {
     if (e.active.id === "current-card") setIsDragging(true);
   };
 
-  // När man släpper över en slot: markera pending (flytta inte currentCard till timeline ännu)
   const onDragEnd = (e: DragEndEvent) => {
     setIsDragging(false);
     const overId = e.over?.id as string | undefined;
@@ -104,10 +78,10 @@ export const GameBoard: React.FC = () => {
     const n = Number(overId.slice(5));
     if (!Number.isFinite(n)) return;
     if (!currentCard) return;
-    placeAt(n); // sätter pendingIndex + phase: 'PLACED_PENDING'
+    placeAt(n);
   };
 
-  // timeline: rendera vita kortet *inne i* timeline på pendingIndex, annars reveal:ade kort
+  /** Timeline i liten skala; kort växer på hover */
   const renderTimeline = () => {
     const base =
       phase === "DRAWN" ||
@@ -122,16 +96,18 @@ export const GameBoard: React.FC = () => {
     children.push(<DropSlot key="slot-0" id="slot-0" show={showSlots} />);
 
     for (let i = 0; i < base.length; i++) {
+      // Pending-kortet renderas i samma lilla skala, precis som övriga
       if (phase === "PLACED_PENDING" && pendingIndex === i && currentCard) {
         children.push(
-          <div key="pending-card" className="flex-shrink-0">
-            <CurrentCard card={currentCard} dragging={isDragging} />
+          <div key="pending-card" className="group relative flex-shrink-0">
+            <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+              <CurrentCard card={currentCard} dragging={isDragging} />
+            </div>
           </div>
         );
       }
 
       const c = base[i];
-
       const isLastPlaced =
         lastPlacementCorrect !== null &&
         pendingIndex !== null &&
@@ -140,15 +116,18 @@ export const GameBoard: React.FC = () => {
       children.push(
         <div
           key={(c as any)._id ?? (c as any).trackId ?? i}
-          className="flex-shrink-0"
+          className="group relative flex-shrink-0"
         >
-          <TimeLineCard
-            year={Y(c)}
-            artist={A(c)}
-            title={T(c)}
-            isRevealed
-            isCorrect={isLastPlaced ? lastPlacementCorrect : undefined}
-          />
+          {/* Bas: ~60% storlek. Hover: ~90%. Origin i botten så den “poppar uppåt”. */}
+          <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+            <TimeLineCard
+              year={Y(c)}
+              artist={A(c)}
+              title={T(c)}
+              isRevealed
+              isCorrect={isLastPlaced ? lastPlacementCorrect : undefined}
+            />
+          </div>
         </div>
       );
 
@@ -157,7 +136,6 @@ export const GameBoard: React.FC = () => {
       );
     }
 
-    // pending sist
     if (
       phase === "PLACED_PENDING" &&
       pendingIndex === base.length &&
@@ -166,17 +144,21 @@ export const GameBoard: React.FC = () => {
       children.splice(
         children.length - 1,
         0,
-        <div key="pending-last" className="flex-shrink-0">
-          <CurrentCard card={currentCard} dragging={isDragging} />
+        <div key="pending-last" className="group relative flex-shrink-0">
+          <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+            <CurrentCard card={currentCard} dragging={isDragging} />
+          </div>
         </div>
       );
     }
 
     return (
-      <div className="rounded-2xl p-2 sm:p-3 border border-border">
-        <div className="flex gap-3 items-start justify-center overflow-visible">
+      <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60">
+        {/* overflow-y visible krävs för att hovrade kort kan växa utanför raden */}
+        <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-2 sm:gap-3">
           {children}
         </div>
+
         {lastPlacementCorrect === true && (
           <div className="text-green-600 font-semibold text-center mt-2">
             ✅ Yes! Correct!
@@ -199,13 +181,13 @@ export const GameBoard: React.FC = () => {
   };
 
   return (
-    <div className="space-y-5 sm:space-y-8 animate-in fade-in-50">
+    <div className={["animate-in fade-in-50", className].join(" ")}>
       {/* Errors / loading */}
       {loading && (
         <div className="text-sm text-muted-foreground">Loading items…</div>
       )}
       {error && (
-        <div>
+        <div className="mb-3">
           <ErrorMessage message={error} dismissible onDismiss={clearError} />
           <Button
             variant="outline"
@@ -220,12 +202,22 @@ export const GameBoard: React.FC = () => {
 
       {/* Start-knapp */}
       {phase === "SETUP" && (
-        <div className="flex justify-center">
-          <Button onClick={startGame}>Draw first card!</Button>
+        <div className="fixed inset-0 flex items-center justify-center z-50">
+          <Button
+            onClick={startGame}
+            size="lg"
+            className="relative px-8 py-4 rounded-2xl font-semibold text-lg shadow-xl 
+                 bg-gradient-to-r from-primary via-primary/90 to-primary 
+                 text-base-100 transition-transform duration-200 hover:scale-105 
+                 focus:outline-none focus:ring-4 focus:ring-primary/40"
+          >
+            <span className="relative z-10">Draw first card!</span>
+            <span className="absolute inset-0 rounded-2xl bg-primary/50 blur-xl opacity-70 animate-pulse" />
+          </Button>
         </div>
       )}
 
-      {/* Bräde */}
+      {/* Board */}
       {phase !== "SETUP" && (
         <>
           <DndContext
@@ -235,17 +227,20 @@ export const GameBoard: React.FC = () => {
             collisionDetection={closestCenter}
             modifiers={[restrictToWindowEdges]}
           >
-            <Heading level={3} className="text-lg sm:text-xl">
-              Timeline
-            </Heading>
-            {renderTimeline()}
+            {/* Ny layout: tidslinjen överst, current card *under* tidslinjen */}
+            <div className="flex flex-col items-stretch gap-4 sm:gap-6">
+              <div className="min-h-[140px]">{renderTimeline()}</div>
 
-            {/* Det vita kortet visas UTANFÖR tidslinjen bara när vi är i DRAWN */}
-            {phase === "DRAWN" && currentCard && (
-              <div className="pt-2">
-                <CurrentCard card={currentCard} dragging={isDragging} />
-              </div>
-            )}
+              {/* Current card alltid placerat under tidslinjen */}
+              {phase === "DRAWN" && currentCard && (
+                <div className="flex justify-center">
+                  {/* Gör kortet något större för tydlighet */}
+                  <div className="origin-top scale-110 sm:scale-125">
+                    <CurrentCard card={currentCard} dragging={isDragging} />
+                  </div>
+                </div>
+              )}
+            </div>
 
             <DragOverlay>
               {isDragging && currentCard ? (
@@ -254,15 +249,15 @@ export const GameBoard: React.FC = () => {
             </DragOverlay>
           </DndContext>
 
-          {/* Kontroller efter rätt svar */}
-          <div className="flex flex-wrap gap-3 pt-1">
+          {/* Kontroller */}
+          <div className="flex flex-wrap gap-3 pt-3">
             {phase === "TURN_START" && (
               <Button onClick={startTurn}>Draw</Button>
             )}
 
             {phase === "DRAWN" && (
               <div className="text-sm text-muted-foreground">
-                Drag the card and drop it between two cards in the timeline.
+                Drag the card and drop it between two cards.
               </div>
             )}
 
