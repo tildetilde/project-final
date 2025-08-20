@@ -173,7 +173,7 @@ export const GameBoard: React.FC = () => {
     }
 
     return (
-      <div className="rounded-2xl p-2 sm:p-3 border">
+      <div className="rounded-2xl p-2 sm:p-3 border border-border">
         <div className="flex gap-3 items-start justify-center overflow-visible">
           {children}
         </div>
