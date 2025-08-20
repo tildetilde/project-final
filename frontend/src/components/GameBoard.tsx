@@ -221,7 +221,7 @@ export const GameBoard: React.FC = () => {
       {/* Start-knapp */}
       {phase === "SETUP" && (
         <div className="flex justify-center">
-          <Button onClick={startGame}>Start Game</Button>
+          <Button onClick={startGame}>Draw first card!</Button>
         </div>
       )}
 
