@@ -1,0 +1,14 @@
+{
+  "id": "animals.weight",
+  "name": "Animal Weight",
+  "description": "Quiz about animal weights in kilograms",
+  "question": "Which animal weighs the most?",
+  "unit": "kg",
+  "unitVisible": true,
+  "sort": "desc",
+  "source": {
+    "name": "Wikipedia (largest animals, species pages)",
+    "url": "https://en.wikipedia.org/wiki/List_of_largest_organisms"
+  },
+  "version": 1
+}
