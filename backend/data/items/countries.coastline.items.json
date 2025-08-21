@@ -1,0 +1,2004 @@
+[
+  {
+    "id": "country-afghanistan",
+    "name": "Afghanistan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-albania",
+    "name": "Albania",
+    "label": "Coastline 362 km",
+    "value": 362.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-algeria",
+    "name": "Algeria",
+    "label": "Coastline 998 km",
+    "value": 998.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-angola",
+    "name": "Angola",
+    "label": "Coastline 1600 km",
+    "value": 1600.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-antigua-and-barbuda",
+    "name": "Antigua and Barbuda",
+    "label": "Coastline 153 km",
+    "value": 153.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-argentina",
+    "name": "Argentina",
+    "label": "Coastline 4989 km",
+    "value": 4989.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-armenia",
+    "name": "Armenia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-australia",
+    "name": "Australia",
+    "label": "Coastline 25760 km",
+    "value": 25760.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-austria",
+    "name": "Austria",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-azerbaijan",
+    "name": "Azerbaijan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bahamas",
+    "name": "Bahamas",
+    "label": "Coastline 3542 km",
+    "value": 3542.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bahrain",
+    "name": "Bahrain",
+    "label": "Coastline 161 km",
+    "value": 161.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bangladesh",
+    "name": "Bangladesh",
+    "label": "Coastline 580 km",
+    "value": 580.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-barbados",
+    "name": "Barbados",
+    "label": "Coastline 97 km",
+    "value": 97.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-belarus",
+    "name": "Belarus",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-belgium",
+    "name": "Belgium",
+    "label": "Coastline 66.5 km",
+    "value": 66.5,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-belize",
+    "name": "Belize",
+    "label": "Coastline 386 km",
+    "value": 386.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-benin",
+    "name": "Benin",
+    "label": "Coastline 121 km",
+    "value": 121.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bhutan",
+    "name": "Bhutan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bolivia",
+    "name": "Bolivia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bosnia-and-herzegovina",
+    "name": "Bosnia and Herzegovina",
+    "label": "Coastline 20 km",
+    "value": 20.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-botswana",
+    "name": "Botswana",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-brazil",
+    "name": "Brazil",
+    "label": "Coastline 7491 km",
+    "value": 7491.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-brunei",
+    "name": "Brunei",
+    "label": "Coastline 161 km",
+    "value": 161.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-bulgaria",
+    "name": "Bulgaria",
+    "label": "Coastline 354 km",
+    "value": 354.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-burkina-faso",
+    "name": "Burkina Faso",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-burundi",
+    "name": "Burundi",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cabo-verde",
+    "name": "Cabo Verde",
+    "label": "Coastline 965 km",
+    "value": 965.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cambodia",
+    "name": "Cambodia",
+    "label": "Coastline 443 km",
+    "value": 443.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cameroon",
+    "name": "Cameroon",
+    "label": "Coastline 402 km",
+    "value": 402.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-canada",
+    "name": "Canada",
+    "label": "Coastline 202080 km",
+    "value": 202080.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-central-african-republic",
+    "name": "Central African Republic",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-chad",
+    "name": "Chad",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-chile",
+    "name": "Chile",
+    "label": "Coastline 6435 km",
+    "value": 6435.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-china",
+    "name": "China",
+    "label": "Coastline 14500 km",
+    "value": 14500.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-colombia",
+    "name": "Colombia",
+    "label": "Coastline 3208 km",
+    "value": 3208.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-comoros",
+    "name": "Comoros",
+    "label": "Coastline 340 km",
+    "value": 340.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-congo-democratic-republic-of-the",
+    "name": "Congo, Democratic Republic of the",
+    "label": "Coastline 37 km",
+    "value": 37.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-congo-republic-of-the",
+    "name": "Congo, Republic of the",
+    "label": "Coastline 169 km",
+    "value": 169.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-costa-rica",
+    "name": "Costa Rica",
+    "label": "Coastline 1290 km",
+    "value": 1290.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cote-d-ivoire",
+    "name": "Cote d'Ivoire",
+    "label": "Coastline 515 km",
+    "value": 515.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-croatia",
+    "name": "Croatia",
+    "label": "Coastline 5835 km",
+    "value": 5835.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cuba",
+    "name": "Cuba",
+    "label": "Coastline 3735 km",
+    "value": 3735.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-cyprus",
+    "name": "Cyprus",
+    "label": "Coastline 648 km",
+    "value": 648.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-czechia",
+    "name": "Czechia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-denmark",
+    "name": "Denmark",
+    "label": "Coastline 7314 km",
+    "value": 7314.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-djibouti",
+    "name": "Djibouti",
+    "label": "Coastline 314 km",
+    "value": 314.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-dominica",
+    "name": "Dominica",
+    "label": "Coastline 148 km",
+    "value": 148.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-dominican-republic",
+    "name": "Dominican Republic",
+    "label": "Coastline 1288 km",
+    "value": 1288.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-ecuador",
+    "name": "Ecuador",
+    "label": "Coastline 2237 km",
+    "value": 2237.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-egypt",
+    "name": "Egypt",
+    "label": "Coastline 2450 km",
+    "value": 2450.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-equatorial-guinea",
+    "name": "Equatorial Guinea",
+    "label": "Coastline 296 km",
+    "value": 296.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-eritrea",
+    "name": "Eritrea",
+    "label": "Coastline 2234 km",
+    "value": 2234.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-estonia",
+    "name": "Estonia",
+    "label": "Coastline 3794 km",
+    "value": 3794.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-eswatini",
+    "name": "Eswatini",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-ethiopia",
+    "name": "Ethiopia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-germany",
+    "name": "Germany",
+    "label": "Coastline 2389 km",
+    "value": 2389.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-ghana",
+    "name": "Ghana",
+    "label": "Coastline 539 km",
+    "value": 539.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-greece",
+    "name": "Greece",
+    "label": "Coastline 13676 km",
+    "value": 13676.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-grenada",
+    "name": "Grenada",
+    "label": "Coastline 121 km",
+    "value": 121.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-guatemala",
+    "name": "Guatemala",
+    "label": "Coastline 400 km",
+    "value": 400.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-guinea",
+    "name": "Guinea",
+    "label": "Coastline 320 km",
+    "value": 320.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-guinea-bissau",
+    "name": "Guinea-Bissau",
+    "label": "Coastline 350 km",
+    "value": 350.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-guyana",
+    "name": "Guyana",
+    "label": "Coastline 459 km",
+    "value": 459.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-haiti",
+    "name": "Haiti",
+    "label": "Coastline 1771 km",
+    "value": 1771.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-honduras",
+    "name": "Honduras",
+    "label": "Coastline 823 km",
+    "value": 823.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-hungary",
+    "name": "Hungary",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-iceland",
+    "name": "Iceland",
+    "label": "Coastline 4970 km",
+    "value": 4970.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-india",
+    "name": "India",
+    "label": "Coastline 7000 km",
+    "value": 7000.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-indonesia",
+    "name": "Indonesia",
+    "label": "Coastline 54716 km",
+    "value": 54716.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-iran",
+    "name": "Iran",
+    "label": "Coastline 2440 km",
+    "value": 2440.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-iraq",
+    "name": "Iraq",
+    "label": "Coastline 58 km",
+    "value": 58.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-ireland",
+    "name": "Ireland",
+    "label": "Coastline 1448 km",
+    "value": 1448.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-israel",
+    "name": "Israel",
+    "label": "Coastline 273 km",
+    "value": 273.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-italy",
+    "name": "Italy",
+    "label": "Coastline 7600 km",
+    "value": 7600.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-jamaica",
+    "name": "Jamaica",
+    "label": "Coastline 1022 km",
+    "value": 1022.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-japan",
+    "name": "Japan",
+    "label": "Coastline 29751 km",
+    "value": 29751.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-jordan",
+    "name": "Jordan",
+    "label": "Coastline 26 km",
+    "value": 26.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-kazakhstan",
+    "name": "Kazakhstan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-kenya",
+    "name": "Kenya",
+    "label": "Coastline 536 km",
+    "value": 536.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-kiribati",
+    "name": "Kiribati",
+    "label": "Coastline 1143 km",
+    "value": 1143.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-korea-north",
+    "name": "Korea, North",
+    "label": "Coastline 2495 km",
+    "value": 2495.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-korea-south",
+    "name": "Korea, South",
+    "label": "Coastline 2413 km",
+    "value": 2413.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-kuwait",
+    "name": "Kuwait",
+    "label": "Coastline 499 km",
+    "value": 499.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-kyrgyzstan",
+    "name": "Kyrgyzstan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-laos",
+    "name": "Laos",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-latvia",
+    "name": "Latvia",
+    "label": "Coastline 498 km",
+    "value": 498.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-lebanon",
+    "name": "Lebanon",
+    "label": "Coastline 225 km",
+    "value": 225.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-lesotho",
+    "name": "Lesotho",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-liberia",
+    "name": "Liberia",
+    "label": "Coastline 579 km",
+    "value": 579.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-libya",
+    "name": "Libya",
+    "label": "Coastline 1770 km",
+    "value": 1770.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-liechtenstein",
+    "name": "Liechtenstein",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-lithuania",
+    "name": "Lithuania",
+    "label": "Coastline 90 km",
+    "value": 90.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-luxembourg",
+    "name": "Luxembourg",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-madagascar",
+    "name": "Madagascar",
+    "label": "Coastline 4828 km",
+    "value": 4828.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-malawi",
+    "name": "Malawi",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-malaysia",
+    "name": "Malaysia",
+    "label": "Coastline 4675 km",
+    "value": 4675.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-maldives",
+    "name": "Maldives",
+    "label": "Coastline 644 km",
+    "value": 644.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mali",
+    "name": "Mali",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-malta",
+    "name": "Malta",
+    "label": "Coastline 196.8 km",
+    "value": 196.8,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-marshall-islands",
+    "name": "Marshall Islands",
+    "label": "Coastline 370.4 km",
+    "value": 370.4,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mauritania",
+    "name": "Mauritania",
+    "label": "Coastline 754 km",
+    "value": 754.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mauritius",
+    "name": "Mauritius",
+    "label": "Coastline 177 km",
+    "value": 177.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mexico",
+    "name": "Mexico",
+    "label": "Coastline 9330 km",
+    "value": 9330.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-micronesia-federated-states-of",
+    "name": "Micronesia, Federated States of",
+    "label": "Coastline 6112 km",
+    "value": 6112.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-moldova",
+    "name": "Moldova",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-monaco",
+    "name": "Monaco",
+    "label": "Coastline 4.1 km",
+    "value": 4.1,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mongolia",
+    "name": "Mongolia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-montenegro",
+    "name": "Montenegro",
+    "label": "Coastline 293.5 km",
+    "value": 293.5,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-morocco",
+    "name": "Morocco",
+    "label": "Coastline 2945 km",
+    "value": 2945.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-mozambique",
+    "name": "Mozambique",
+    "label": "Coastline 2470 km",
+    "value": 2470.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-namibia",
+    "name": "Namibia",
+    "label": "Coastline 1572 km",
+    "value": 1572.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-nauru",
+    "name": "Nauru",
+    "label": "Coastline 30 km",
+    "value": 30.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-nepal",
+    "name": "Nepal",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-netherlands",
+    "name": "Netherlands",
+    "label": "Coastline 451 km",
+    "value": 451.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-new-zealand",
+    "name": "New Zealand",
+    "label": "Coastline 15134 km",
+    "value": 15134.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-nicaragua",
+    "name": "Nicaragua",
+    "label": "Coastline 910 km",
+    "value": 910.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-niger",
+    "name": "Niger",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-nigeria",
+    "name": "Nigeria",
+    "label": "Coastline 853 km",
+    "value": 853.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-north-macedonia",
+    "name": "North Macedonia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-norway",
+    "name": "Norway",
+    "label": "Coastline 25148 km",
+    "value": 25148.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-oman",
+    "name": "Oman",
+    "label": "Coastline 2092 km",
+    "value": 2092.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-pakistan",
+    "name": "Pakistan",
+    "label": "Coastline 1046 km",
+    "value": 1046.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-palau",
+    "name": "Palau",
+    "label": "Coastline 1519 km",
+    "value": 1519.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-panama",
+    "name": "Panama",
+    "label": "Coastline 2490 km",
+    "value": 2490.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-papua-new-guinea",
+    "name": "Papua New Guinea",
+    "label": "Coastline 5152 km",
+    "value": 5152.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-paraguay",
+    "name": "Paraguay",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-peru",
+    "name": "Peru",
+    "label": "Coastline 2414 km",
+    "value": 2414.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-philippines",
+    "name": "Philippines",
+    "label": "Coastline 36289 km",
+    "value": 36289.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-poland",
+    "name": "Poland",
+    "label": "Coastline 440 km",
+    "value": 440.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-portugal",
+    "name": "Portugal",
+    "label": "Coastline 1793 km",
+    "value": 1793.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-qatar",
+    "name": "Qatar",
+    "label": "Coastline 563 km",
+    "value": 563.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-romania",
+    "name": "Romania",
+    "label": "Coastline 225 km",
+    "value": 225.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-russia",
+    "name": "Russia",
+    "label": "Coastline 37653 km",
+    "value": 37653.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-rwanda",
+    "name": "Rwanda",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-saint-kitts-and-nevis",
+    "name": "Saint Kitts and Nevis",
+    "label": "Coastline 135 km",
+    "value": 135.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-saint-lucia",
+    "name": "Saint Lucia",
+    "label": "Coastline 158 km",
+    "value": 158.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-saint-vincent-and-the-grenadines",
+    "name": "Saint Vincent and the Grenadines",
+    "label": "Coastline 84 km",
+    "value": 84.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-samoa",
+    "name": "Samoa",
+    "label": "Coastline 403 km",
+    "value": 403.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-sao-tome-and-principe",
+    "name": "Sao Tome and Principe",
+    "label": "Coastline 209 km",
+    "value": 209.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-saudi-arabia",
+    "name": "Saudi Arabia",
+    "label": "Coastline 2640 km",
+    "value": 2640.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-senegal",
+    "name": "Senegal",
+    "label": "Coastline 531 km",
+    "value": 531.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-serbia",
+    "name": "Serbia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-seychelles",
+    "name": "Seychelles",
+    "label": "Coastline 491 km",
+    "value": 491.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-sierra-leone",
+    "name": "Sierra Leone",
+    "label": "Coastline 402 km",
+    "value": 402.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-singapore",
+    "name": "Singapore",
+    "label": "Coastline 193 km",
+    "value": 193.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-slovakia",
+    "name": "Slovakia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-slovenia",
+    "name": "Slovenia",
+    "label": "Coastline 46.6 km",
+    "value": 46.6,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-solomon-islands",
+    "name": "Solomon Islands",
+    "label": "Coastline 5313 km",
+    "value": 5313.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-somalia",
+    "name": "Somalia",
+    "label": "Coastline 3025 km",
+    "value": 3025.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-south-africa",
+    "name": "South Africa",
+    "label": "Coastline 2798 km",
+    "value": 2798.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-south-sudan",
+    "name": "South Sudan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-spain",
+    "name": "Spain",
+    "label": "Coastline 4964 km",
+    "value": 4964.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-sri-lanka",
+    "name": "Sri Lanka",
+    "label": "Coastline 1340 km",
+    "value": 1340.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-sudan",
+    "name": "Sudan",
+    "label": "Coastline 853 km",
+    "value": 853.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-suriname",
+    "name": "Suriname",
+    "label": "Coastline 386 km",
+    "value": 386.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-sweden",
+    "name": "Sweden",
+    "label": "Coastline 3218 km",
+    "value": 3218.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-switzerland",
+    "name": "Switzerland",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-syria",
+    "name": "Syria",
+    "label": "Coastline 193 km",
+    "value": 193.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-taiwan",
+    "name": "Taiwan",
+    "label": "Coastline 1566.3 km",
+    "value": 1566.3,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-tajikistan",
+    "name": "Tajikistan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-tanzania",
+    "name": "Tanzania",
+    "label": "Coastline 1424 km",
+    "value": 1424.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-thailand",
+    "name": "Thailand",
+    "label": "Coastline 3219 km",
+    "value": 3219.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-timor-leste",
+    "name": "Timor-Leste",
+    "label": "Coastline 706 km",
+    "value": 706.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-togo",
+    "name": "Togo",
+    "label": "Coastline 56 km",
+    "value": 56.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-tonga",
+    "name": "Tonga",
+    "label": "Coastline 419 km",
+    "value": 419.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-trinidad-and-tobago",
+    "name": "Trinidad and Tobago",
+    "label": "Coastline 362 km",
+    "value": 362.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-tunisia",
+    "name": "Tunisia",
+    "label": "Coastline 1148 km",
+    "value": 1148.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-turkey-turkiye",
+    "name": "Turkey (Turkiye)",
+    "label": "Coastline 7200 km",
+    "value": 7200.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-turkmenistan",
+    "name": "Turkmenistan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-uganda",
+    "name": "Uganda",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-ukraine",
+    "name": "Ukraine",
+    "label": "Coastline 2782 km",
+    "value": 2782.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-united-arab-emirates",
+    "name": "United Arab Emirates",
+    "label": "Coastline 1318 km",
+    "value": 1318.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-united-kingdom",
+    "name": "United Kingdom",
+    "label": "Coastline 12429 km",
+    "value": 12429.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-united-states",
+    "name": "United States",
+    "label": "Coastline 19924 km",
+    "value": 19924.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-uruguay",
+    "name": "Uruguay",
+    "label": "Coastline 660 km",
+    "value": 660.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-uzbekistan",
+    "name": "Uzbekistan",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-vanuatu",
+    "name": "Vanuatu",
+    "label": "Coastline 2528 km",
+    "value": 2528.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-venezuela",
+    "name": "Venezuela",
+    "label": "Coastline 2800 km",
+    "value": 2800.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-vietnam",
+    "name": "Vietnam",
+    "label": "Coastline 3444 km",
+    "value": 3444.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-zambia",
+    "name": "Zambia",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  },
+  {
+    "id": "country-zimbabwe",
+    "name": "Zimbabwe",
+    "label": "Coastline 0.0 km",
+    "value": 0.0,
+    "unit": "km",
+    "categoryId": "countries.coastline",
+    "source": {
+      "name": "CIA World Factbook"
+    }
+  }
+]

@@ -1,0 +1,14 @@
+{
+  "id": "countries.coastline",
+  "name": "Countries by Coastline",
+  "description": "Quiz about coastline lengths (km) for sovereign countries (CIA World Factbook methodology)",
+  "question": "Which country has the longest coastline?",
+  "unit": "km",
+  "unitVisible": true,
+  "sort": "desc",
+  "source": {
+    "name": "CIA World Factbook (2023 archive)",
+    "url": "https://www.cia.gov/the-world-factbook/about/archives/2023/field/coastline"
+  },
+  "version": 1
+}
