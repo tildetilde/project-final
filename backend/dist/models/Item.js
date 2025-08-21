@@ -6,7 +6,7 @@ const ItemSchema = new Schema({
     label: { type: String, required: true },
     categoryId: { type: String, required: true },
     source: {
-        name: { type: String, required: true }
+        name: { type: String, required: false }
     }
 });
 export const Item = model('Item', ItemSchema);

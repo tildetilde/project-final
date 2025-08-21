@@ -1,5 +1,6 @@
 // src/pages/GameMode.tsx
 import React from "react";
+import { Link } from "react-router-dom";
 import { OrientationGuard } from "../components/OrientationGuard";
 import { GameBoard } from "../components/GameBoard";
 import { CategorySelector } from "../components/CategorySelector";
@@ -10,11 +11,9 @@ export default function GameMode() {
   const { teams, currentTeamIndex, selectedCategory, phase } = useGame();
   
   const categoryLabel = "Category";
-  const categoryValue = selectedCategory?.question || "Select Category";
+  const categoryValue = selectedCategory?.name || "Select Category";
   const roundLabel = "Round";
   const roundValue = "1";
-  const modeLabel = "Mode";
-  const modeValue = "Timeline";
 
   const scoreA = teams[0]?.timeline.length ?? 0;
   const scoreB = teams[1]?.timeline.length ?? 0;
@@ -67,14 +66,13 @@ export default function GameMode() {
     <div className="min-h-screen bg-background flex flex-col">
       <OrientationGuard minWidth={600} />
 
-      {/* Top-left: Category */}
-      <div className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2">
+      {/* Top-left: Home */}
+      <Link to="/" className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity">
         <span className={dot} />
         <div className={chip}>
-          {categoryLabel}:{" "}
-          <span className="text-foreground font-semibold">{categoryValue}</span>
+          <span className="text-foreground font-semibold">Home</span>
         </div>
-      </div>
+      </Link>
 
       {/* Top-right: A/B Team */}
       <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
@@ -108,9 +106,9 @@ export default function GameMode() {
 
       {/* Bottom-right: Mode */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 right-3 sm:right-6 flex items-center gap-2">
-        <div className={chip}>
-          {modeLabel}:{" "}
-          <span className="text-foreground font-semibold">{modeValue}</span>
+      <div className={chip}>
+          {categoryLabel}:{" "}
+          <span className="text-foreground font-semibold">{categoryValue}</span>
         </div>
         <span className={dot} />
       </div>

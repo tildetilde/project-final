@@ -22,10 +22,10 @@ const TOKENS: Record<
   xs: {
     wrapper: "w-[100px] h-[140px]",
     value: "text-2xl",
-    name: "text-[11px] font-semibold",
+    name: "text-xs font-semibold",
     label: "text-[10px]",
     badge: "w-5 h-5 text-[10px]",
-    padHeader: "pt-3 pb-1",
+    padHeader: "pt-2 pb-1 px-2",
     padContent: "px-2 pb-2",
     vspace: "space-y-1",
   },
@@ -35,18 +35,18 @@ const TOKENS: Record<
     name: "text-sm font-semibold",
     label: "text-xs",
     badge: "w-6 h-6 text-xs",
-    padHeader: "pt-4 pb-2",
+    padHeader: "pt-3 pb-2 px-3",
     padContent: "px-3 pb-3",
     vspace: "space-y-2",
   },
   md: {
     wrapper: "w-60 h-80",
     value: "text-6xl",
-    name: "text-2xl font-semibold",
-    label: "text-xl",
+    name: "text-4xl font-semibold",
+    label: "text-3xl font-medium",
     badge: "w-8 h-8 text-lg",
-    padHeader: "pt-8 pb-4",
-    padContent: "px-6 pb-8",
+    padHeader: "pt-6 pb-4 px-6",
+    padContent: "px-6 pb-6",
     vspace: "space-y-4",
   },
 };
@@ -77,13 +77,12 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
 }) => {
   const t = TOKENS[size];
   const unit = category?.unit;
-  const valueText = isRevealed ? formatValue(item.value, unit) : "??";
 
   return (
     <Card
       className={cn(
         t.wrapper,
-        "flex-shrink-0 flex flex-col relative overflow-hidden",
+        "flex-shrink-0 flex flex-col relative overflow-hidden p-0",
         "bg-gradient-to-br from-accent-200 via-accent-300 to-accent-500",
         "border-accent-400 text-base-100 shadow-medium",
         isRevealed ? "" : "bg-gradient-to-br from-accent-600 to-accent-800",
@@ -96,19 +95,9 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
       </div>
 
-      {/* VALUE högst upp */}
-      <CardHeader className={cn("relative z-10", t.padHeader)}>
-        <div
-          className={cn(
-            t.value,
-            "font-bold text-base-100 leading-none tracking-tight"
-          )}
-        >
-          {valueText}
-        </div>
-      </CardHeader>
 
-      {/* NAMN + LABEL i mitten */}
+
+      {/* NAMN i mitten */}
       <CardContent
         className={cn(
           "relative z-10 flex-1 flex flex-col justify-center",
@@ -116,14 +105,15 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         )}
       >
         <div className={cn(t.vspace, "text-center")}>
+          {/* VALUE + UNIT */}
+          <div className={cn(t.value, "text-base-100 leading-tight font-bold")}>
+            {isRevealed ? formatValue(item.value, unit) : "??"}
+          </div>
+          
+          {/* NAME */}
           <div className={cn(t.name, "text-base-100 leading-tight")}>
             {item.name}
           </div>
-          {item.label && (
-            <div className={cn(t.label, "text-base-100/90 leading-snug")}>
-              {item.label}
-            </div>
-          )}
         </div>
       </CardContent>
 

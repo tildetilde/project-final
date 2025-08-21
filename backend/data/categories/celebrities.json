@@ -1,9 +1,9 @@
 {
     "id": "celebrities.age",
-    "name": "Celebrities Age",
+    "name": "Celebrities",
     "description": "Oldest to Youngest Celebrities",
     "question": "Which celebrity is the oldest?",
-    "unit": "years",
+    "unit": "year",
     "unitVisible": true,
     "sort": "desc",
     "source": {
