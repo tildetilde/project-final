@@ -133,10 +133,6 @@ export default function GameMode() {
             >
               {selectedCategory.question}
             </Heading>
-            <p className="mt-3 sm:mt-4 text-muted-foreground max-w-2xl">
-              Arrange cards on the timeline and place the highest value at the right end.
-              Unit: {selectedCategory.unit}
-            </p>
           </div>
 
           <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
