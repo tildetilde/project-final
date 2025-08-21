@@ -2,7 +2,7 @@
     "id": "celebrities.age",
     "name": "Celebrities",
     "description": "Oldest to Youngest Celebrities",
-    "question": "Which celebrity is the oldest?",
+    "question": "What year was the celebrity born in?",
     "unit": "year",
     "unitVisible": true,
     "sort": "desc",

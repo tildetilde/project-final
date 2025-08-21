@@ -1,6 +1,6 @@
 {
   "id": "animals.weight",
-  "name": "Animal Weight",
+  "name": "Animals",
   "description": "Quiz about animal weights in kilograms",
   "question": "Which animal weighs the most?",
   "unit": "kg",
