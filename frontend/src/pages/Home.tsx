@@ -1,16 +1,23 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button, Heading } from "../ui";
 import BanganzaIntro from "../components/BanganzaIntro";
+import { CategorySelector } from "../components/CategorySelector";
 
 export const Home = () => {
   const [introDone, setIntroDone] = useState(false);
   const [ready, setReady] = useState(false);
+  const catsRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 250);
     return () => clearTimeout(t);
   }, []);
+
+  const scrollToCategories = () => {
+    catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
 
   return (
     <div className="min-h-screen">
@@ -44,20 +51,28 @@ export const Home = () => {
                 BANGANZA
               </Heading>
 
-              <div className="mt-10 flex items-center justify-center">
-                <Link to="/gamemode">
-                  <Button
-                    variant="primary"
-                    size="lg"
-                    className="rounded-full px-10 py-6 text-xl"
-                  >
-                    Start Game
-                  </Button>
-                </Link>
-              </div>
+ {/* 🔽 Diskret scroll-hint i stället för Start Game */}
+              <button
+                type="button"
+                onClick={scrollToCategories}
+                className="mt-10 text-white/70 hover:text-white transition-colors text-sm tracking-wide"
+                aria-label="Scroll to categories"
+              >
+                See categories ↓
+              </button>
             </div>
           </section>
         </main>
+
+        {/* Kategorierna under (hintas genom negativ margin) */}
+        <section
+          ref={catsRef}
+          className="bg-background text-foreground -mt-10 pt-12 pb-16"
+        >
+          <div className="mx-auto max-w-5xl px-4">
+            <CategorySelector />
+          </div>
+        </section>
       </div>
     </div>
   );

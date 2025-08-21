@@ -2,9 +2,12 @@ import React, { useEffect } from 'react';
 import { useGame } from '../store/game';
 import { Card } from '../ui/Card';
 import { Button } from '../ui/Button';
+import { useNavigate } from 'react-router-dom';
 
 export const CategorySelector: React.FC = () => {
   const { categories, loading, error, loadCategories, selectCategory, selectedCategory, startGame } = useGame();
+
+  const navigate =useNavigate();
 
   useEffect(() => {
     loadCategories();
@@ -13,6 +16,7 @@ export const CategorySelector: React.FC = () => {
   const handleStartGame = async () => {
     if (selectedCategory) {
       await startGame();
+      navigate('/gamemode'); // Navigera till spelet direkt efter start
     }
   };
 
@@ -48,7 +52,11 @@ export const CategorySelector: React.FC = () => {
                 ? 'ring-2 ring-primary bg-primary/10' 
                 : 'hover:bg-card'
             }`}
-            onClick={() => selectCategory(category)}
+  onClick={async () => {
+    selectCategory(category);
+    await startGame();
+    navigate('/gamemode'); // Navigera till spelet direkt efter val
+  }}
           >
             <div className="space-y-3">
               <h3 className="font-semibold text-lg text-foreground">
