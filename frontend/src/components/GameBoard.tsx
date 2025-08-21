@@ -19,11 +19,6 @@ import { ErrorMessage } from "../ui/ErrorMessage";
 import { TimeLineCard } from "./TimeLineCard";
 import { CurrentCard, CurrentCardPreview } from "./CurrentCard";
 
-// Helpers som tål både {title,artist,year} och {trackTitle,trackArtist,releaseYear}
-const Y = (c: any) => c?.year ?? c?.releaseYear;
-const T = (c: any) => c?.title ?? c?.trackTitle;
-const A = (c: any) => c?.artist ?? c?.trackArtist;
-
 /** Smalare och lägre “drop slots” för kompakt timeline */
 const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
@@ -107,7 +102,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         );
       }
 
-      const c = base[i];
+      const c = base[i] as any;
       const isLastPlaced =
         lastPlacementCorrect !== null &&
         pendingIndex !== null &&
@@ -115,15 +110,14 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
       children.push(
         <div
-          key={(c as any)._id ?? (c as any).trackId ?? i}
+          key={c?._id ?? c?.id ?? i}
           className="group relative flex-shrink-0"
         >
           {/* Bas: ~60% storlek. Hover: ~90%. Origin i botten så den “poppar uppåt”. */}
           <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
             <TimeLineCard
-              year={Y(c)}
-              artist={A(c)}
-              title={T(c)}
+              item={base[i]}
+              size={"sm"}
               isRevealed
               isCorrect={isLastPlaced ? lastPlacementCorrect : undefined}
             />

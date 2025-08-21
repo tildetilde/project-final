@@ -1,29 +1,16 @@
 // src/store/game.ts
 import { create } from "zustand";
-import type { TrackCard, GameState } from "../types/game";
-import type { GameItem } from "../types/game";
-import { animalsItems } from "../services/animalsMock";
+import type { GameItem, GameState } from "../types/game";
 
-// ---------- helpers ----------
-const toTrackCard = (it: GameItem): TrackCard =>
-  ({
-    // behåll legacy-fält för nycklar i UI
-    _id: it.id,
-    trackId: it.id,
-    year: it.value,
-    artist: it.name,
-    title: it.label ?? it.name,
-  } as unknown as TrackCard);
-
-const insertAt = (arr: TrackCard[], item: TrackCard, idx: number) => {
+const insertAt = (arr: GameItem[], item: GameItem, idx: number) => {
   const copy = arr.slice();
   copy.splice(idx, 0, item);
   return copy;
 };
-const Y = (c: any) => c?.year ?? c?.releaseYear;
+const Y = (c: GameItem | undefined) => c?.value;
 const isPlacementCorrect = (
-  timeline: TrackCard[],
-  card: TrackCard,
+  timeline: GameItem[],
+  card: GameItem,
   i: number
 ) => {
   const y = Y(card);
@@ -33,7 +20,7 @@ const isPlacementCorrect = (
     (left === undefined || y >= left) && (right === undefined || y <= right)
   );
 };
-const drawOne = (pool: TrackCard[]) => {
+const drawOne = (pool: GameItem[]) => {
   const i = Math.floor(Math.random() * pool.length);
   return pool.splice(i, 1)[0];
 };
@@ -44,8 +31,8 @@ type UIState = {
   error: string | null;
   lastPlacementCorrect: boolean | null;
   pendingIndex: number | null;
-  roundBaselineTimeline: TrackCard[];
-  turnTimeline: TrackCard[];
+  roundBaselineTimeline: GameItem[];
+  turnTimeline: GameItem[];
 };
 
 // ---------- actions ----------
@@ -84,7 +71,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
   startGame: async () => {
     set({ loading: true, error: null });
     try {
-      const deck: TrackCard[] = animalsItems.map(toTrackCard);
+      const deck: GameItem[] = [];
       if (!deck || deck.length < 2) throw new Error("Not enough items");
 
       const pool = deck.slice();
