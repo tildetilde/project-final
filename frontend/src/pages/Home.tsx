@@ -1,6 +1,7 @@
 import { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { Button, Heading } from "../ui";
+import { useLocation } from "react-router-dom";
 import BanganzaIntro from "../components/BanganzaIntro";
 import { CategorySelector } from "../components/CategorySelector";
 
@@ -8,11 +9,20 @@ export const Home = () => {
   const [introDone, setIntroDone] = useState(false);
   const [ready, setReady] = useState(false);
   const catsRef = useRef<HTMLDivElement | null>(null);
+  const location = useLocation();
+
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 250);
     return () => clearTimeout(t);
   }, []);
+
+    useEffect(() => {
+    if ((location.state as any)?.scrollTo === "categories") {
+      catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState({}, ""); // rensa state så det inte triggas igen
+    }
+  }, [location.state]);
 
   const scrollToCategories = () => {
     catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
