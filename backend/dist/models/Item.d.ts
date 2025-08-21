@@ -1,9 +1,6 @@
 import { Document } from 'mongoose';
-export interface IItem extends Document {
-    name: string;
-    value: number;
-    label: string;
-    categoryId: string;
+import { QuizItem } from '../types/quiz.js';
+export interface IItem extends Document, Omit<QuizItem, '_id' | 'id'> {
 }
 export declare const Item: import("mongoose").Model<IItem, {}, {}, {}, Document<unknown, {}, IItem, {}, {}> & IItem & Required<{
     _id: unknown;

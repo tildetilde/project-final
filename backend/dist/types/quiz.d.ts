@@ -13,22 +13,29 @@ export interface QuizCategory {
     _id: string;
     id: string;
     name: string;
-    question: string;
+    description?: string;
+    question?: string;
     unit: string;
-    unitVisible: boolean;
-    sort: 'asc' | 'desc';
-    source: {
+    unitVisible?: boolean;
+    sort?: 'asc' | 'desc';
+    source?: {
         name: string;
         url: string;
     };
-    version: number;
+    version?: number;
+}
+export interface QuizItemsResponse {
+    question: string;
+    unit: string;
+    unitVisible: boolean;
+    items: Omit<QuizItem, 'value' | 'categoryId' | 'source'>[];
 }
 export interface QuizAnswer {
     userAnswers: string[];
 }
 export interface QuizResponse {
     success: boolean;
-    data?: any;
+    data?: QuizItemsResponse | QuizCheckResult;
     error?: {
         message: string;
         stack?: string;
