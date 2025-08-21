@@ -44,6 +44,7 @@ class ApiService {
     return categories.map(cat => ({
       _id: cat._id,
       id: cat.id,
+      name: cat.name,
       question: cat.question || cat.description || `Which ${cat.name} is the most?`,
       unit: cat.unit,
       source: cat.source,

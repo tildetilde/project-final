@@ -53,6 +53,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     clearError,
     pendingIndex,
     lastPlacementCorrect,
+    selectedCategory,
   } = useGame();
 
   const team = teams[currentTeamIndex];
@@ -117,6 +118,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
             <TimeLineCard
               item={base[i]}
+              category={selectedCategory || undefined}
               size={"sm"}
               isRevealed
               isCorrect={isLastPlaced ? lastPlacementCorrect : undefined}

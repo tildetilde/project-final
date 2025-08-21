@@ -9,11 +9,4 @@ export const config = {
   // App name
   appName: "Banganza",
 
-  // Spotify OAuth scopes
-  spotifyScopes: [
-    "user-read-private",
-    "user-read-email",
-    "user-read-playback-state",
-    "user-modify-playback-state",
-  ],
 };

@@ -12,6 +12,7 @@ export type GameItem = {
 export type GameCategory = {
   _id?: string; // mongodb ID
   id: string;
+  name: string; // "Animals", "Celebrities", etc.
   question: string; // "Which animal weighs the most?"
   unit: string;
   source?: { name: string; url?: string };

@@ -1,6 +1,6 @@
 {
   "id": "countries.coastline",
-  "name": "Countries by Coastline",
+  "name": "Coastlines",
   "description": "Quiz about coastline lengths (km) for sovereign countries (CIA World Factbook methodology)",
   "question": "Which country has the longest coastline?",
   "unit": "km",

@@ -2,7 +2,7 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { TimeLineCard } from "./TimeLineCard";
-import type { GameItem } from "../types/game";
+import type { GameItem, GameCategory } from "../types/game";
 
 type Size = "xs" | "sm" | "md";
 const SIZES: Record<
@@ -27,6 +27,7 @@ const SIZES: Record<
 
 type TimelineProps = {
   timeline: GameItem[];
+  category?: GameCategory;
   showSlots?: boolean;
   size?: Size;
   className?: string;
@@ -52,6 +53,7 @@ const Slot: React.FC<{ id: string; className: string }> = ({
 
 export const Timeline: React.FC<TimelineProps> = ({
   timeline,
+  category,
   showSlots = true,
   size = "xs",
   className,
@@ -75,6 +77,7 @@ export const Timeline: React.FC<TimelineProps> = ({
             <div className={`shrink-0 ${sz.card}`}>
               <TimeLineCard
                 item={timeline[i]}
+                category={category}
                 size={sz.cardSize}
                 isRevealed
                 className="w-full h-full"

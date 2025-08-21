@@ -15,11 +15,6 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
     ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
     : undefined;
 
-  const secondary =
-    card.label && card.label.trim() !== "" && card.label !== card.name
-      ? card.label
-      : undefined;
-
   return (
     <div
       ref={setNodeRef}
@@ -36,12 +31,9 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
             Place in timeline
           </div>
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col items-center justify-center gap-1">
-          <div className="text-center text-base sm:text-xl font-semibold text-primary">
-            {card.name}
-          </div>
-          <div className="text-center text-sm sm:text-base text-muted-foreground">
-            {secondary}
+        <CardContent className="flex-1 flex flex-col items-center justify-center gap-1 px-2">
+          <div className="text-center text-base sm:text-3xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
+            <span className="text-center">{card.name}</span>
           </div>
           <div className="mt-2 text-3xl sm:text-5xl font-bold text-primary/30">
             ?
@@ -61,9 +53,9 @@ export const CurrentCardPreview: React.FC<{ card: GameItem }> = ({ card }) => (
           Place in timeline
         </div>
       </CardHeader>
-      <CardContent className="flex-1 flex flex-col items-center justify-center gap-1">
-        <div className="text-center text-base sm:text-xl font-semibold text-primary">
-          {card.name}
+      <CardContent className="flex-1 flex flex-col items-center justify-center gap-1 px-2">
+        <div className="text-center text-base sm:text-3xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
+          <span className="text-center">{card.name}</span>
         </div>
         <div className="mt-2 text-3xl sm:text-5xl font-bold text-primary/30">
           ?
