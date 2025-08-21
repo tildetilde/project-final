@@ -98,12 +98,12 @@ export default function GameMode() {
               end.
             </p>
           </div>
+
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
+            <GameBoard />
+          </div>
         </div>
       </section>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
-        <GameBoard />
-      </div>
     </div>
   );
 }
