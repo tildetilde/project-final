@@ -25,6 +25,30 @@ export const getCategories = async (req, res) => {
         });
     }
 };
+// Get all items for a category (with values for game use)
+export const getCategoryItems = async (req, res) => {
+    const { categoryId } = req.params;
+    try {
+        const items = await Item.find({ categoryId }).sort({ value: 1 });
+        if (items.length === 0) {
+            return res.status(404).json({
+                success: false,
+                error: { message: 'No items found for this category.' }
+            });
+        }
+        res.status(200).json({
+            success: true,
+            data: items
+        });
+    }
+    catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+        res.status(500).json({
+            success: false,
+            error: { message: 'Error fetching category items', details: errorMessage }
+        });
+    }
+};
 // Get a random set of quiz items for a category
 export const getQuizItems = async (req, res) => {
     const { categoryId } = req.params;

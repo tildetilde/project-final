@@ -1,0 +1,802 @@
+[
+    {
+      "id": "celeb-1",
+      "name": "Morgan Freeman",
+      "label": "Born 1937",
+      "value": 1937,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-2",
+      "name": "Betty White",
+      "label": "Born 1922",
+      "value": 1922,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-3",
+      "name": "Clint Eastwood",
+      "label": "Born 1930",
+      "value": 1930,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-4",
+      "name": "Judi Dench",
+      "label": "Born 1934",
+      "value": 1934,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-5",
+      "name": "Jack Nicholson",
+      "label": "Born 1937",
+      "value": 1937,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-6",
+      "name": "Sophia Loren",
+      "label": "Born 1934",
+      "value": 1934,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-7",
+      "name": "Robert Redford",
+      "label": "Born 1936",
+      "value": 1936,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-8",
+      "name": "Jane Fonda",
+      "label": "Born 1937",
+      "value": 1937,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-9",
+      "name": "Dustin Hoffman",
+      "label": "Born 1937",
+      "value": 1937,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-10",
+      "name": "Al Pacino",
+      "label": "Born 1940",
+      "value": 1940,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-11",
+      "name": "Harrison Ford",
+      "label": "Born 1942",
+      "value": 1942,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-12",
+      "name": "Michael Caine",
+      "label": "Born 1933",
+      "value": 1933,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-13",
+      "name": "Julie Andrews",
+      "label": "Born 1935",
+      "value": 1935,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-14",
+      "name": "Anthony Hopkins",
+      "label": "Born 1937",
+      "value": 1937,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-15",
+      "name": "Helen Mirren",
+      "label": "Born 1945",
+      "value": 1945,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-16",
+      "name": "Meryl Streep",
+      "label": "Born 1949",
+      "value": 1949,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-17",
+      "name": "Denzel Washington",
+      "label": "Born 1954",
+      "value": 1954,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-18",
+      "name": "Tom Hanks",
+      "label": "Born 1956",
+      "value": 1956,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-19",
+      "name": "George Clooney",
+      "label": "Born 1961",
+      "value": 1961,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-20",
+      "name": "Brad Pitt",
+      "label": "Born 1963",
+      "value": 1963,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-21",
+      "name": "Sandra Bullock",
+      "label": "Born 1964",
+      "value": 1964,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-22",
+      "name": "Johnny Depp",
+      "label": "Born 1963",
+      "value": 1963,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-23",
+      "name": "Leonardo DiCaprio",
+      "label": "Born 1974",
+      "value": 1974,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-24",
+      "name": "Angelina Jolie",
+      "label": "Born 1975",
+      "value": 1975,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-25",
+      "name": "Kate Winslet",
+      "label": "Born 1975",
+      "value": 1975,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-26",
+      "name": "Ryan Reynolds",
+      "label": "Born 1976",
+      "value": 1976,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-27",
+      "name": "Chris Evans",
+      "label": "Born 1981",
+      "value": 1981,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-28",
+      "name": "Anne Hathaway",
+      "label": "Born 1982",
+      "value": 1982,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-29",
+      "name": "Chris Pratt",
+      "label": "Born 1979",
+      "value": 1979,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-30",
+      "name": "Scarlett Johansson",
+      "label": "Born 1984",
+      "value": 1984,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-31",
+      "name": "Bradley Cooper",
+      "label": "Born 1975",
+      "value": 1975,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-32",
+      "name": "Jennifer Lawrence",
+      "label": "Born 1990",
+      "value": 1990,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-33",
+      "name": "Emma Watson",
+      "label": "Born 1990",
+      "value": 1990,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-34",
+      "name": "Tom Holland",
+      "label": "Born 1996",
+      "value": 1996,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-35",
+      "name": "Zendaya",
+      "label": "Born 1996",
+      "value": 1996,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-36",
+      "name": "Michael B. Jordan",
+      "label": "Born 1987",
+      "value": 1987,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-37",
+      "name": "Gal Gadot",
+      "label": "Born 1985",
+      "value": 1985,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-38",
+      "name": "Dwayne Johnson",
+      "label": "Born 1972",
+      "value": 1972,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-39",
+      "name": "Jennifer Aniston",
+      "label": "Born 1969",
+      "value": 1969,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-40",
+      "name": "Tom Cruise",
+      "label": "Born 1962",
+      "value": 1962,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-41",
+      "name": "Julia Roberts",
+      "label": "Born 1967",
+      "value": 1967,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-42",
+      "name": "Will Smith",
+      "label": "Born 1968",
+      "value": 1968,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-43",
+      "name": "Matt Damon",
+      "label": "Born 1970",
+      "value": 1970,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-44",
+      "name": "Ben Affleck",
+      "label": "Born 1972",
+      "value": 1972,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-45",
+      "name": "Kate Blanchett",
+      "label": "Born 1969",
+      "value": 1969,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-46",
+      "name": "Naomi Watts",
+      "label": "Born 1968",
+      "value": 1968,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-47",
+      "name": "Gwyneth Paltrow",
+      "label": "Born 1972",
+      "value": 1972,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-48",
+      "name": "Ryan Gosling",
+      "label": "Born 1980",
+      "value": 1980,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-49",
+      "name": "Emma Stone",
+      "label": "Born 1988",
+      "value": 1988,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-50",
+      "name": "Channing Tatum",
+      "label": "Born 1980",
+      "value": 1980,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-51",
+      "name": "Jennifer Lopez",
+      "label": "Born 1969",
+      "value": 1969,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-52",
+      "name": "Beyoncé",
+      "label": "Born 1981",
+      "value": 1981,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-53",
+      "name": "Taylor Swift",
+      "label": "Born 1989",
+      "value": 1989,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-54",
+      "name": "Adele",
+      "label": "Born 1988",
+      "value": 1988,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-55",
+      "name": "Ed Sheeran",
+      "label": "Born 1991",
+      "value": 1991,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-56",
+      "name": "Rihanna",
+      "label": "Born 1988",
+      "value": 1988,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-57",
+      "name": "Lady Gaga",
+      "label": "Born 1986",
+      "value": 1986,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-58",
+      "name": "Bruno Mars",
+      "label": "Born 1985",
+      "value": 1985,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-59",
+      "name": "Justin Timberlake",
+      "label": "Born 1981",
+      "value": 1981,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-60",
+      "name": "Katy Perry",
+      "label": "Born 1984",
+      "value": 1984,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-61",
+      "name": "Drake",
+      "label": "Born 1986",
+      "value": 1986,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-62",
+      "name": "The Weeknd",
+      "label": "Born 1990",
+      "value": 1990,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-63",
+      "name": "Billie Eilish",
+      "label": "Born 2001",
+      "value": 2001,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-64",
+      "name": "Harry Styles",
+      "label": "Born 1994",
+      "value": 1994,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-65",
+      "name": "Ariana Grande",
+      "label": "Born 1993",
+      "value": 1993,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-66",
+      "name": "Kanye West",
+      "label": "Born 1977",
+      "value": 1977,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-67",
+      "name": "Eminem",
+      "label": "Born 1972",
+      "value": 1972,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-68",
+      "name": "Mariah Carey",
+      "label": "Born 1969",
+      "value": 1969,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-69",
+      "name": "Celine Dion",
+      "label": "Born 1968",
+      "value": 1968,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-70",
+      "name": "Madonna",
+      "label": "Born 1958",
+      "value": 1958,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-71",
+      "name": "Sting",
+      "label": "Born 1951",
+      "value": 1951,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-72",
+      "name": "Elton John",
+      "label": "Born 1947",
+      "value": 1947,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-73",
+      "name": "Paul McCartney",
+      "label": "Born 1942",
+      "value": 1942,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-74",
+      "name": "Bob Dylan",
+      "label": "Born 1941",
+      "value": 1941,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-75",
+      "name": "Stevie Wonder",
+      "label": "Born 1950",
+      "value": 1950,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-76",
+      "name": "Bruce Springsteen",
+      "label": "Born 1949",
+      "value": 1949,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-77",
+      "name": "Will Ferrell",
+      "label": "Born 1967",
+      "value": 1967,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-78",
+      "name": "Adam Sandler",
+      "label": "Born 1966",
+      "value": 1966,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-79",
+      "name": "Jim Carrey",
+      "label": "Born 1962",
+      "value": 1962,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-80",
+      "name": "Steve Martin",
+      "label": "Born 1945",
+      "value": 1945,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-81",
+      "name": "Tina Fey",
+      "label": "Born 1970",
+      "value": 1970,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-82",
+      "name": "Amy Poehler",
+      "label": "Born 1971",
+      "value": 1971,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-83",
+      "name": "Kevin Hart",
+      "label": "Born 1979",
+      "value": 1979,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-84",
+      "name": "Dwayne Johnson",
+      "label": "Born 1972",
+      "value": 1972,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-85",
+      "name": "Jonah Hill",
+      "label": "Born 1983",
+      "value": 1983,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-86",
+      "name": "Seth Rogen",
+      "label": "Born 1982",
+      "value": 1982,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-87",
+      "name": "Ellen DeGeneres",
+      "label": "Born 1958",
+      "value": 1958,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-88",
+      "name": "Oprah Winfrey",
+      "label": "Born 1954",
+      "value": 1954,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-89",
+      "name": "Gordon Ramsay",
+      "label": "Born 1966",
+      "value": 1966,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-90",
+      "name": "Stephen King",
+      "label": "Born 1947",
+      "value": 1947,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-91",
+      "name": "George Lucas",
+      "label": "Born 1944",
+      "value": 1944,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-92",
+      "name": "Steven Spielberg",
+      "label": "Born 1946",
+      "value": 1946,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-93",
+      "name": "Quentin Tarantino",
+      "label": "Born 1963",
+      "value": 1963,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-94",
+      "name": "Martin Scorsese",
+      "label": "Born 1942",
+      "value": 1942,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-95",
+      "name": "Stanley Kubrick",
+      "label": "Born 1928",
+      "value": 1928,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-96",
+      "name": "Alfred Hitchcock",
+      "label": "Born 1899",
+      "value": 1899,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-97",
+      "name": "Jackie Chan",
+      "label": "Born 1954",
+      "value": 1954,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-98",
+      "name": "Jet Li",
+      "label": "Born 1963",
+      "value": 1963,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-99",
+      "name": "Bruce Lee",
+      "label": "Born 1940",
+      "value": 1940,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    },
+    {
+      "id": "celeb-100",
+      "name": "Chuck Norris",
+      "label": "Born 1940",
+      "value": 1940,
+      "categoryId": "celebrities.age",
+      "source": { "name": "" }
+    }
+  ]
