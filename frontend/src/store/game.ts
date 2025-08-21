@@ -2,6 +2,7 @@
 import { create } from "zustand";
 import type { GameItem, GameState, GameCategory } from "../types/game";
 import { apiService } from "../services/api";
+import { shuffle } from "../lib/shuffle";
 
 const insertAt = (arr: GameItem[], item: GameItem, idx: number) => {
   const copy = arr.slice();
@@ -102,7 +103,10 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       const deck = await apiService.getItemsWithValues(state.selectedCategory.id);
       if (!deck || deck.length < 2) throw new Error("Not enough items");
 
-      const pool = deck.slice();
+      // Shuffle the deck to randomize the order of items
+      const shuffledDeck = shuffle(deck);
+      
+      const pool = shuffledDeck.slice();
       const startA = drawOne(pool);
       const startB = drawOne(pool);
 
