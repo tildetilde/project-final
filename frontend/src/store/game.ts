@@ -1,6 +1,7 @@
 // src/store/game.ts
 import { create } from "zustand";
-import type { GameItem, GameState } from "../types/game";
+import type { GameItem, GameState, GameCategory } from "../types/game";
+import { apiService } from "../services/api";
 
 const insertAt = (arr: GameItem[], item: GameItem, idx: number) => {
   const copy = arr.slice();
@@ -14,6 +15,8 @@ const isPlacementCorrect = (
   i: number
 ) => {
   const y = Y(card);
+  if (y === undefined) return false;
+  
   const left = i - 1 >= 0 ? Y(timeline[i - 1]) : undefined;
   const right = i < timeline.length ? Y(timeline[i]) : undefined;
   return (
@@ -33,11 +36,15 @@ type UIState = {
   pendingIndex: number | null;
   roundBaselineTimeline: GameItem[];
   turnTimeline: GameItem[];
+  categories: GameCategory[];
+  selectedCategory: GameCategory | null;
 };
 
 // ---------- actions ----------
 type Actions = {
   clearError: () => void;
+  loadCategories: () => Promise<void>;
+  selectCategory: (category: GameCategory) => void;
   startGame: () => Promise<void>;
   startTurn: () => Promise<void>;
   placeAt: (slotIndex: number) => void;
@@ -64,14 +71,35 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
   pendingIndex: null,
   roundBaselineTimeline: [],
   turnTimeline: [],
+  categories: [],
+  selectedCategory: null,
 
   clearError: () => set({ error: null }),
 
-  // endast bytt datakälla -> animalsItems
-  startGame: async () => {
+  loadCategories: async () => {
     set({ loading: true, error: null });
     try {
-      const deck: GameItem[] = [];
+      const categories = await apiService.getCategories();
+      set({ categories, loading: false });
+    } catch (error: any) {
+      set({ error: error?.message ?? "Failed to load categories", loading: false });
+    }
+  },
+
+  selectCategory: (category: GameCategory) => {
+    set({ selectedCategory: category });
+  },
+
+  startGame: async () => {
+    const state = get();
+    if (!state.selectedCategory) {
+      set({ error: "Please select a category first" });
+      return;
+    }
+
+    set({ loading: true, error: null });
+    try {
+      const deck = await apiService.getItemsWithValues(state.selectedCategory.id);
       if (!deck || deck.length < 2) throw new Error("Not enough items");
 
       const pool = deck.slice();
