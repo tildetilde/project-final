@@ -6,6 +6,7 @@ import { GameBoard } from "../components/GameBoard";
 import { CategorySelector } from "../components/CategorySelector";
 import { Heading, DotPattern } from "../ui";
 import { useGame } from "../store/game";
+import { GameSettings } from "../components/GameSettings";
 
 export default function GameMode() {
   const { teams, currentTeamIndex, selectedCategory, phase } = useGame();
@@ -23,44 +24,45 @@ export default function GameMode() {
   const dot = "inline-block w-2 h-2 rounded-sm bg-primary shadow-soft";
 
   // If no category is selected or we're in setup phase, show category selection
-  if (!selectedCategory || phase === "SETUP") {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <OrientationGuard minWidth={600} />
-        
-        <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-          <div className="absolute inset-0 pointer-events-none opacity-70">
-            <DotPattern variant="diagonal" size="lg" />
+if (!selectedCategory || phase === "SETUP") {
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <OrientationGuard minWidth={600} />
+      
+      <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
+        <div className="absolute inset-0 pointer-events-none opacity-70">
+          <DotPattern variant="diagonal" size="lg" />
+        </div>
+
+        <div className="relative z-10">
+          <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
+            <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+              Choose Your Game
+            </div>
+            <Heading
+              level={1}
+              className="leading-[0.95] text-foreground"
+              style={{
+                fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                letterSpacing: "-0.02em",
+              }}
+            >
+              Select a Category
+            </Heading>
+            <p className="mt-3 sm:mt-4 text-muted-foreground max-w-2xl">
+              Choose a category to start playing the timeline game.
+            </p>
           </div>
 
-          <div className="relative z-10">
-            <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
-              <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
-                Choose Your Game
-              </div>
-              <Heading
-                level={1}
-                className="leading-[0.95] text-foreground"
-                style={{
-                  fontSize: "clamp(2rem, 6vw, 4.5rem)",
-                  letterSpacing: "-0.02em",
-                }}
-              >
-                Select a Category
-              </Heading>
-              <p className="mt-3 sm:mt-4 text-muted-foreground max-w-2xl">
-                Choose a category to start playing the timeline game.
-              </p>
-            </div>
-
-            <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
-              <CategorySelector />
-            </div>
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
+            {/* 🔽 Bytt ut CategorySelector mot GameSettings */}
+            <GameSettings />
           </div>
-        </section>
-      </div>
-    );
-  }
+        </div>
+      </section>
+    </div>
+  );
+}
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
