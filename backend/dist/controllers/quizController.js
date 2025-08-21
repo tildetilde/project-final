@@ -29,7 +29,17 @@ export const getCategories = async (req, res) => {
 export const getQuizItems = async (req, res) => {
     const { categoryId } = req.params;
     try {
-        const items = await Item.find({ categoryId });
+        // Fetch both the category and items
+        const [category, items] = await Promise.all([
+            Category.findOne({ id: categoryId }),
+            Item.find({ categoryId })
+        ]);
+        if (!category) {
+            return res.status(404).json({
+                success: false,
+                error: { message: 'Category not found.' }
+            });
+        }
         if (items.length < 5) {
             return res.status(404).json({
                 success: false,
@@ -40,14 +50,20 @@ export const getQuizItems = async (req, res) => {
         const quizItems = shuffledItems.slice(0, 5); // Take 5 random items
         // Remove the 'value' before sending to the client
         const sanitizedItems = quizItems.map(item => ({
-            _id: item._id,
+            _id: item._id?.toString() || '',
             id: item.id,
             name: item.name,
             label: item.label
         }));
+        const responseData = {
+            unit: category.unit,
+            items: sanitizedItems,
+            question: category.get('question') || '',
+            unitVisible: category.get('unitVisible') || false,
+        };
         res.status(200).json({
             success: true,
-            data: sanitizedItems
+            data: responseData
         });
     }
     catch (error) {

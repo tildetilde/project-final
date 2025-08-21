@@ -38,7 +38,7 @@ const seedData = async () => {
         for (const file of categoryFiles) {
             const categoryData = readJsonFile(path.join(categoriesPath, file));
             if (categoryData) {
-                await Category.create(categoryData);
+                await mongoose.connection.collection('categories').insertOne(categoryData);
                 console.log(`Category "${categoryData.name}" seeded.`);
             }
         }
@@ -52,7 +52,7 @@ const seedData = async () => {
                 console.log(`Items from file "${file}" seeded.`);
             }
         }
-        console.log('Database seeding complete! 🌱');
+        console.log('Database seeding complete!');
         mongoose.connection.close();
     }
     catch (error) {
