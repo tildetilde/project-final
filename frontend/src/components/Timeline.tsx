@@ -2,7 +2,7 @@
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { TimeLineCard } from "./TimeLineCard";
-import type { TrackCard } from "@/types/game";
+import type { GameItem } from "../types/game";
 
 type Size = "xs" | "sm" | "md";
 const SIZES: Record<
@@ -26,7 +26,7 @@ const SIZES: Record<
 };
 
 type TimelineProps = {
-  timeline: TrackCard[];
+  timeline: GameItem[];
   showSlots?: boolean;
   size?: Size;
   className?: string;
@@ -74,18 +74,8 @@ export const Timeline: React.FC<TimelineProps> = ({
           {i < timeline.length && (
             <div className={`shrink-0 ${sz.card}`}>
               <TimeLineCard
-                year={
-                  (timeline[i] as any).year ?? (timeline[i] as any).releaseYear
-                }
-                artist={
-                  (timeline[i] as any).artist ??
-                  (timeline[i] as any).trackArtist
-                }
-                title={
-                  (timeline[i] as any).title ?? (timeline[i] as any).trackTitle
-                }
+                item={timeline[i]}
                 size={sz.cardSize}
-                // Är den avslöjad? I tidslinjen vill vi normalt visa årtalet.
                 isRevealed
                 className="w-full h-full"
               />

@@ -1,22 +1,28 @@
-import React from 'react';
-import { Card, CardHeader, CardContent } from '../ui';
+import React from "react";
+import { Card, CardHeader, CardContent } from "../ui";
+import type { GameItem, GameCategory } from "../types/game";
 
 interface StartCardProps {
-  year: number;
-  artist: string;
-  title: string;
+  item: GameItem;
   playerName?: string;
   className?: string;
 }
 
-export const StartCard: React.FC<StartCardProps> = ({ 
-  year, 
-  artist, 
-  title, 
+const formatValue = (value: number, unit?: string, revealed = true) =>
+  revealed
+    ? unit
+      ? `${value} ${unit}`
+      : String(value)
+    : unit
+    ? `?? ${unit}`
+    : "??";
+
+export const StartCard: React.FC<StartCardProps> = ({
+  item,
   playerName,
-  className = '',
+  className = "",
 }) => (
- <Card
+  <Card
     className={`
       w-[136px] h-[180px] sm:w-60 sm:h-80 flex-shrink-0 flex flex-col relative overflow-hidden
       bg-gradient-to-br from-base-100 via-base-200 to-base-300
@@ -36,22 +42,27 @@ export const StartCard: React.FC<StartCardProps> = ({
 
     {/* Start-pill */}
     <div className="absolute top-2 right-2 sm:top-4 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-primary rounded-full">
-      <span className="text-[10px] sm:text-xs font-bold text-base-100 uppercase tracking-wide">Start</span>
+      <span className="text-[10px] sm:text-xs font-bold text-base-100 uppercase tracking-wide">
+        Start
+      </span>
     </div>
 
     {/* År */}
     <CardHeader className="relative z-10 pt-4 sm:pt-12 pb-2 sm:pb-6">
       <div className="text-3xl sm:text-5xl font-bold text-primary leading-none tracking-tight">
-        {year}
+        {formatValue(item.value)}
       </div>
       <div className="w-12 sm:w-16 h-0.5 bg-primary/30 mt-2" />
     </CardHeader>
 
-    {/* Artist & titel */}
     <CardContent className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 pb-4 sm:pb-8">
       <div className="space-y-2 sm:space-y-3 text-center">
-        <div className="text-sm sm:text-xl font-semibold text-primary leading-tight">{artist}</div>
-        <div className="text-xs sm:text-lg text-muted-foreground leading-snug">{title}</div>
+        <div className="text-sm sm:text-xl font-semibold text-primary leading-tight">
+          {item.name}
+        </div>
+        <div className="text-xs sm:text-lg text-muted-foreground leading-snug">
+          {playerName}
+        </div>
       </div>
       {playerName && (
         <div className="absolute bottom-2 left-1/2 -translate-x-1/2 text-[10px] sm:text-xs text-muted-foreground">
