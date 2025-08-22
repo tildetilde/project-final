@@ -1,6 +1,6 @@
 // src/store/game.ts
 import { create } from "zustand";
-import type { GameItem, GameState, GameCategory } from "../types/game";
+import type { GameItem, GameState, GameCategory, GameSettings, RevealMode } from "../types/game";
 import { apiService } from "../services/api";
 import { shuffle } from "../lib/shuffle";
 
@@ -30,6 +30,12 @@ const drawOne = (pool: GameItem[]) => {
 };
 
 // ---------- extra UI-state ----------
+type TimerState = {
+  turnDeadline: number | null;
+  secondsLeft: number;
+  timerId: number | null;
+};
+
 type UIState = {
   loading: boolean;
   error: string | null;
@@ -39,6 +45,10 @@ type UIState = {
   turnTimeline: GameItem[];
   categories: GameCategory[];
   selectedCategory: GameCategory | null;
+  settings: GameSettings;
+  timer: TimerState;
+  lastTurnFeedback: { timeUp?: boolean; correct?: boolean | null } | null;
+
 };
 
 // ---------- actions ----------
@@ -53,6 +63,26 @@ type Actions = {
   drawAnother: () => Promise<void>;
   lockIn: () => void;
   nextTeam: () => void;
+  setTeamCount: (count: number) => void;
+  setTeamName: (index: number, name: string) => void;
+  setTurnSeconds: (sec: 30 | 60 | 90) => void;
+  setRevealMode: (mode: RevealMode) => void;
+  applySettings: () => void;
+  startTimer: () => void;
+  stopTimer: () => void;
+  timeUp: () => void;
+};
+
+const initialSettings: GameSettings = {
+  teamNames: ["Team Bang", "Team Ganza"],
+  turnSeconds: 60,
+  revealMode: "hidden",
+};
+
+const initialTimer: TimerState = {
+  turnDeadline: null,
+  secondsLeft: initialSettings.turnSeconds,
+  timerId: null,
 };
 
 export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
@@ -74,6 +104,10 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
   turnTimeline: [],
   categories: [],
   selectedCategory: null,
+  settings: initialSettings,
+  timer: initialTimer,
+
+  lastTurnFeedback: null,
 
   clearError: () => set({ error: null }),
 
@@ -91,7 +125,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     set({ selectedCategory: category });
   },
 
-  startGame: async () => {
+   startGame: async () => {
     const state = get();
     if (!state.selectedCategory) {
       set({ error: "Please select a category first" });
@@ -103,20 +137,19 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       const deck = await apiService.getItemsWithValues(state.selectedCategory.id);
       if (!deck || deck.length < 2) throw new Error("Not enough items");
 
-      // Shuffle the deck to randomize the order of items
       const shuffledDeck = shuffle(deck);
-      
       const pool = shuffledDeck.slice();
-      const startA = drawOne(pool);
-      const startB = drawOne(pool);
+
+      const names = get().settings.teamNames;
+      const teams = names.map((name, i) => {
+        const start = drawOne(pool);
+        return { id: String(i), name, timeline: [start], score: 0 };
+      });
 
       set({
         deck: pool,
         discard: [],
-        teams: [
-          { id: "A", name: "Team A", timeline: [startA], score: 0 },
-          { id: "B", name: "Team B", timeline: [startB], score: 0 },
-        ],
+        teams,
         currentTeamIndex: 0,
         currentCard: undefined,
         roundBaselineTimeline: [],
@@ -154,8 +187,10 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
         : s2.turnTimeline,
       pendingIndex: null,
       lastPlacementCorrect: null,
+      lastTurnFeedback: null,
       phase: "DRAWN",
     });
+    get().startTimer();
   },
 
   placeAt: (slotIndex: number) => {
@@ -166,7 +201,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       phase: "PLACED_PENDING",
     });
   },
-
+  
   confirmPlacement: () => {
     const s = get();
     const card = s.currentCard;
@@ -193,6 +228,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
         lastPlacementCorrect: false,
         phase: "TURN_START",
       });
+      get().stopTimer();
       get().nextTeam();
     }
   },
@@ -205,6 +241,12 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
     const s = get();
     const tIdx = s.currentTeamIndex;
     const committed = s.turnTimeline;
+
+    get().stopTimer();
+
+     // extra explicit reset (syns direkt i UI även om batched)
+ const full = get().settings.turnSeconds;
+  set((state) => ({ timer: { ...state.timer, secondsLeft: full } }));
 
     set({
       teams: s.teams.map((t, i) =>
@@ -219,11 +261,136 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
 
   nextTeam: () => {
     const s = get();
+    const next = (s.currentTeamIndex + 1) % s.teams.length;
     set({
-      currentTeamIndex: (s.currentTeamIndex === 0 ? 1 : 0) as 0 | 1,
+      currentTeamIndex: next,
       currentCard: undefined,
       pendingIndex: null,
       phase: "TURN_START",
     });
   },
+
+  setTeamCount: (count) => {
+    const s = get().settings;
+    const names = s.teamNames.slice(0, count);
+    while (names.length < count) names.push(`Team ${names.length + 1}`);
+    set({ settings: { ...s, teamNames: names } });
+  },
+
+  setTeamName: (index, name) => {
+    const s = get().settings;
+    const names = s.teamNames.slice();
+    names[index] = name;
+    set({ settings: { ...s, teamNames: names } });
+  },
+
+  setTurnSeconds: (sec) => {
+    const s = get().settings;
+    set({
+      settings: { ...s, turnSeconds: sec },
+      timer: { ...get().timer, secondsLeft: sec },
+    });
+  },
+
+  setRevealMode: (mode) => {
+    const s = get().settings;
+    set({ settings: { ...s, revealMode: mode } });
+  },
+
+  applySettings: () => {
+    const { settings, timer } = get();
+    set({ timer: { ...timer, secondsLeft: settings.turnSeconds } });
+  },
+
+timeUp: () => {
+  const s = get();
+
+  // Har spelaren lagt ett kort i en slot (PLACED_PENDING)?
+  if (s.pendingIndex != null && s.currentCard) {
+    const ok = isPlacementCorrect(s.turnTimeline, s.currentCard, s.pendingIndex);
+
+    if (ok) {
+      // ✅ Rätt: lägg in kortet i turnTimeline och låt spelaren välja
+      const staged = insertAt(s.turnTimeline, s.currentCard, s.pendingIndex);
+      set({
+        turnTimeline: staged,
+        currentCard: undefined,
+        pendingIndex: null,
+        lastPlacementCorrect: true,
+        lastTurnFeedback: { timeUp: true, correct: true },
+      });
+      get().stopTimer();                 // stoppa & nollställ klockan
+      set({ phase: "CHOICE_AFTER_CORRECT" }); // stanna i valet (inte lockIn)
+      return;
+    } else {
+      // ❌ Fel: återställ till baseline och avsluta turen
+      set({
+        turnTimeline: s.roundBaselineTimeline.slice(),
+        currentCard: undefined,
+        pendingIndex: null,
+        lastPlacementCorrect: false,
+        lastTurnFeedback: { timeUp: true, correct: false },
+      });
+      get().stopTimer();
+      get().lockIn();                    // commit baseline + nästa lag
+      return;
+    }
+  }
+
+  // ⏱️ Tiden slut utan att något lades (ingen pending)
+  set({
+    lastPlacementCorrect: null,
+    lastTurnFeedback: { timeUp: true, correct: null },
+  });
+  get().stopTimer();
+  get().lockIn();                        // commit nuvarande turnTimeline (baseline) + nästa lag
+},
+
+
+    startTimer: () => {
+    const prev = get().timer.timerId;
+    if (prev) window.clearInterval(prev);
+
+    const { turnSeconds } = get().settings;
+    const deadline = Date.now() + turnSeconds * 1000;
+
+    const id = window.setInterval(() => {
+      const left = Math.max(0, Math.ceil((deadline - Date.now()) / 1000));
+      set({
+        timer: {
+          ...get().timer,
+          secondsLeft: left,
+          turnDeadline: deadline,
+          timerId: id,
+        },
+      });
+      if (left <= 0) {
+  get().timeUp(); 
+      }
+    }, 250);
+
+    set({
+      timer: {
+        ...get().timer,
+        secondsLeft: turnSeconds,
+        turnDeadline: deadline,
+        timerId: id,
+      },
+    });
+  },
+
+  stopTimer: () => {
+    const { timerId } = get().timer;
+    if (timerId) window.clearInterval(timerId);
+    const full = get().settings.turnSeconds;
+    set({
+      timer: {
+        ...get().timer,
+        timerId: null,
+        turnDeadline: null,
+        secondsLeft: full, // reset till max
+      },
+    });
+  },
+
 }));

@@ -37,24 +37,28 @@ const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
 };
 
 export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
-  const {
-    teams,
-    currentTeamIndex,
-    phase,
-    currentCard,
-    startGame,
-    startTurn,
-    placeAt,
-    drawAnother,
-    lockIn,
-    confirmPlacement,
-    loading,
-    error,
-    clearError,
-    pendingIndex,
-    lastPlacementCorrect,
-    selectedCategory,
-  } = useGame();
+  // ---- En hook per fält/action (inga object-literals → inga nya referenser per render)
+  const teams = useGame((s) => s.teams);
+  const currentTeamIndex = useGame((s) => s.currentTeamIndex);
+  const phase = useGame((s) => s.phase);
+  const currentCard = useGame((s) => s.currentCard);
+
+  const startGame = useGame((s) => s.startGame);
+  const startTurn = useGame((s) => s.startTurn);
+  const placeAt = useGame((s) => s.placeAt);
+  const drawAnother = useGame((s) => s.drawAnother);
+  const lockIn = useGame((s) => s.lockIn);
+  const confirmPlacement = useGame((s) => s.confirmPlacement);
+
+  const loading = useGame((s) => s.loading);
+  const error = useGame((s) => s.error);
+  const clearError = useGame((s) => s.clearError);
+
+  const pendingIndex = useGame((s) => s.pendingIndex);
+  const lastPlacementCorrect = useGame((s) => s.lastPlacementCorrect);
+  const selectedCategory = useGame((s) => s.selectedCategory);
+  const lastTurnFeedback = useGame((s) => s.lastTurnFeedback);
+  const turnTimeline = useGame((s) => s.turnTimeline);
 
   const team = teams[currentTeamIndex];
 
@@ -79,12 +83,13 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
   /** Timeline i liten skala; kort växer på hover */
   const renderTimeline = () => {
+    const teamTimeline = team?.timeline ?? [];
     const base =
       phase === "DRAWN" ||
       phase === "PLACED_PENDING" ||
       phase === "CHOICE_AFTER_CORRECT"
-        ? useGame.getState().turnTimeline
-        : team.timeline;
+        ? turnTimeline
+        : teamTimeline;
 
     const showSlots = phase === "DRAWN" || phase === "PLACED_PENDING";
 
@@ -244,6 +249,22 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               ) : null}
             </DragOverlay>
           </DndContext>
+
+          {/* Time's up-feedback (visas mellan turer) */}
+          {lastTurnFeedback?.timeUp && (
+            <div className="mt-2 text-sm text-center" role="status" aria-live="polite">
+              <span className="font-medium">Time’s up.</span>{" "}
+              {lastTurnFeedback.correct === true && (
+                <span className="text-green-700">You were correct!</span>
+              )}
+              {lastTurnFeedback.correct === false && (
+                <span className="text-red-700">That was incorrect.</span>
+              )}
+              {lastTurnFeedback.correct == null && (
+                <span className="text-muted-foreground">No answer placed.</span>
+              )}
+            </div>
+          )}
 
           {/* Kontroller */}
           <div className="flex flex-wrap gap-3 pt-3">

@@ -19,7 +19,7 @@ export type GameCategory = {
 };
 
 export type Team = {
-  id: "A" | "B";
+  id: string;
   name: string;
   timeline: GameItem[];
   score: number;
@@ -34,15 +34,24 @@ export type Phase =
   | "CHOICE_AFTER_CORRECT"
   | "PLACED_WRONG";
 
-export type GameState = {
+export type RevealMode = "hidden" | "shown";
+
+export type GameSettings = {
+  teamNames: string[];
+  turnSeconds: 30 | 60 | 90;
+  revealMode: RevealMode;
+};
+
+  export type GameState = {
   deck: GameItem[];
   discard: GameItem[];
   teams: Team[];
-  currentTeamIndex: 0 | 1;
+  currentTeamIndex: number;
   currentCard?: GameItem;
   roundBaselineTimeline: GameItem[];
   pendingIndex: number | null;
   lastPlacementCorrect: boolean | null;
+
 
   phase: Phase;
 };

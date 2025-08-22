@@ -1,4 +1,3 @@
-// src/components/GameSettings.tsx
 import React from "react";
 import { Card, Button } from "../ui";
 import { useGame } from "../store/game";
@@ -6,18 +5,26 @@ import { useGame } from "../store/game";
 type Props = { onClose?: () => void; onContinue?: () => void };
 
 export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
-  const { selectedCategory } = useGame();
+  const {
+    selectedCategory,
+    settings,
+    setTeamCount,
+    setTeamName,
+    setTurnSeconds,
+    setRevealMode,
+    applySettings,
+  } = useGame();
 
-  const [teamA, setTeamA] = React.useState("Team A");
-  const [teamB, setTeamB] = React.useState("Team B");
-  const [turnTime, setTurnTime] = React.useState<30 | 60 | 90>(60);
-  const [reveal, setReveal] = React.useState<"hidden" | "shown">("hidden");
+  const handleContinue = () => {
+    applySettings();
+    onContinue?.();
+  };
 
   return (
     <div className="space-y-8">
       <header className="flex items-center justify-between">
-        <div className="text-sm text-muted-foreground">
-          Selected: <span className="font-semibold">{selectedCategory?.question}</span>
+        <div className="text-sm text-muted-foreground" aria-live="polite">
+          {settings.teamNames.length} teams • {settings.turnSeconds}s per turn
         </div>
         {onClose && (
           <Button variant="outline" size="sm" onClick={onClose}>
@@ -26,29 +33,43 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         )}
       </header>
 
-      <Card className="p-4 space-y-3">
-        <div className="font-semibold text-foreground">Teams</div>
-        <div className="grid sm:grid-cols-2 gap-3">
-          <input
-            value={teamA}
-            onChange={(e) => setTeamA(e.target.value)}
-            className="w-full rounded-md border border-border bg-card px-3 py-2"
-            placeholder="Team A name"
-          />
-          <input
-            value={teamB}
-            onChange={(e) => setTeamB(e.target.value)}
-            className="w-full rounded-md border border-border bg-card px-3 py-2"
-            placeholder="Team B name"
-          />
+      <Card className="p-4 space-y-4">
+        <div className="font-semibold">Teams</div>
+
+        <div className="flex items-center gap-3">
+          <label htmlFor="teamCount" className="text-sm text-muted-foreground">Number of teams</label>
+          <select
+            id="teamCount"
+            value={settings.teamNames.length}
+            onChange={(e) => setTeamCount(Number(e.target.value))}
+            className="rounded-md border border-border bg-card px-3 py-2"
+          >
+            <option value={2}>2</option>
+            <option value={3}>3</option>
+            <option value={4}>4</option>
+          </select>
+        </div>
+
+        <div className="grid sm:grid-cols-2 gap-3" role="list">
+          {settings.teamNames.map((name, i) => (
+            <input
+              key={i}
+              role="listitem"
+              value={name}
+              onChange={(e) => setTeamName(i, e.target.value)}
+              className="w-full rounded-md border border-border bg-card px-3 py-2"
+              placeholder={`Team ${i + 1} name`}
+            />
+          ))}
         </div>
       </Card>
 
-      <Card className="p-4 space-y-3">
-        <div className="font-semibold text-foreground">Turn time</div>
+      <Card className="p-4 space-y-4">
+        <div className="font-semibold">Turn time</div>
         <select
-          value={turnTime}
-          onChange={(e) => setTurnTime(Number(e.target.value) as 30 | 60 | 90)}
+          aria-label="Turn time in seconds"
+          value={settings.turnSeconds}
+          onChange={(e) => setTurnSeconds(Number(e.target.value) as 30 | 60 | 90)}
           className="w-full sm:w-56 rounded-md border border-border bg-card px-3 py-2"
         >
           <option value={30}>30 seconds</option>
@@ -57,22 +78,32 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         </select>
       </Card>
 
-      <Card className="p-4 space-y-3">
-        <div className="font-semibold text-foreground">Value & unit display</div>
+      <Card className="p-4 space-y-4">
+        <div className="font-semibold">Value & unit display</div>
         <div className="flex gap-4 items-center">
           <label className="flex items-center gap-2">
-            <input type="radio" checked={reveal === "hidden"} onChange={() => setReveal("hidden")} />
+            <input
+              type="radio"
+              name="reveal"
+              checked={settings.revealMode === "hidden"}
+              onChange={() => setRevealMode("hidden")}
+            />
             Hide until placed
           </label>
           <label className="flex items-center gap-2">
-            <input type="radio" checked={reveal === "shown"} onChange={() => setReveal("shown")} />
+            <input
+              type="radio"
+              name="reveal"
+              checked={settings.revealMode === "shown"}
+              onChange={() => setRevealMode("shown")}
+            />
             Always show ({selectedCategory?.unit})
           </label>
         </div>
       </Card>
 
       <div className="pt-2">
-        <Button onClick={onContinue}>Continue to board</Button>
+        <Button onClick={handleContinue}>Continue to board</Button>
       </div>
     </div>
   );
