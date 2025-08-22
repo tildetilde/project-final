@@ -6,7 +6,6 @@ import { CategorySelector } from "../components/CategorySelector";
 import { Heading, DotPattern } from "../ui";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
-import { CategorySelector } from "../components/CategorySelector";
 
 export default function GameMode() {
   const navigate = useNavigate();
