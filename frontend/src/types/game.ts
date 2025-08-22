@@ -13,9 +13,13 @@ export type GameCategory = {
   _id?: string; // mongodb ID
   id: string;
   name: string; // "Animals", "Celebrities", etc.
+  description?: string;
   question: string; // "Which animal weighs the most?"
   unit: string;
+  unitVisible?: boolean;
+  sort?: 'asc' | 'desc';
   source?: { name: string; url?: string };
+  version?: number;
 };
 
 export type Team = {

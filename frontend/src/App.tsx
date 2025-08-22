@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import { Home } from "./pages/Home";
 import GameMode from "./pages/GameMode";
+import AdminPage from "./pages/AdminPage";
 
 export const App = () => {
   return (
@@ -14,6 +15,7 @@ export const App = () => {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/gamemode" element={<GameMode />} />
+        <Route path="/admin" element={<AdminPage />} />
       </Routes>
     </Router>
   );

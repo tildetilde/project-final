@@ -1,32 +1,34 @@
+import { ResponseBuilder } from '../utils/response.js';
 export const validateCategoryId = (req, res, next) => {
     const { categoryId } = req.params;
     if (!categoryId || typeof categoryId !== 'string') {
-        return res.status(400).json({
-            success: false,
-            error: {
-                message: 'Valid categoryId is required'
-            }
-        });
+        const response = ResponseBuilder.validationError('Valid categoryId is required', {
+            received: categoryId,
+            type: typeof categoryId,
+        }, req);
+        res.status(400).json(response);
+        return;
     }
     next();
 };
 export const validateQuizAnswers = (req, res, next) => {
     const { userAnswers } = req.body;
     if (!Array.isArray(userAnswers) || userAnswers.length === 0) {
-        return res.status(400).json({
-            success: false,
-            error: {
-                message: 'userAnswers must be a non-empty array'
-            }
-        });
+        const response = ResponseBuilder.validationError('userAnswers must be a non-empty array', {
+            received: userAnswers,
+            type: typeof userAnswers,
+            length: Array.isArray(userAnswers) ? userAnswers.length : 'not an array',
+        }, req);
+        res.status(400).json(response);
+        return;
     }
-    if (!userAnswers.every(id => typeof id === 'string')) {
-        return res.status(400).json({
-            success: false,
-            error: {
-                message: 'All userAnswers must be strings'
-            }
-        });
+    if (!userAnswers.every((id) => typeof id === 'string')) {
+        const response = ResponseBuilder.validationError('All userAnswers must be strings', {
+            received: userAnswers,
+            invalidTypes: userAnswers.map((id, index) => ({ index, type: typeof id, value: id })),
+        }, req);
+        res.status(400).json(response);
+        return;
     }
     next();
 };

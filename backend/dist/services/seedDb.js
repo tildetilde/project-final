@@ -1,12 +1,12 @@
 // /backend/src/services/seedDb.ts
 import mongoose from 'mongoose';
-import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { Item } from '../models/Item.js';
 import { Category } from '../models/Category.js';
-dotenv.config();
+import { config } from '../config/environment.js';
+import { logger } from '../utils/logger.js';
 // Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -17,21 +17,18 @@ const readJsonFile = (filePath) => {
         return JSON.parse(fileContent);
     }
     catch (error) {
-        console.error(`Error reading or parsing file: ${filePath}`, error);
+        logger.error(`Error reading or parsing file: ${filePath}`, 'SeedDB', error);
         return null;
     }
 };
 const seedData = async () => {
     try {
-        if (!process.env.MONGODB_URI) {
-            throw new Error('MONGODB_URI is not defined in .env file');
-        }
-        await mongoose.connect(process.env.MONGODB_URI);
-        console.log('Connected to MongoDB');
+        await mongoose.connect(config.MONGODB_URI);
+        logger.info('Connected to MongoDB', 'SeedDB');
         // Clear existing data to prevent duplicates on re-seed
         await Item.deleteMany({});
         await Category.deleteMany({});
-        console.log('Existing data cleared.');
+        logger.info('Existing data cleared', 'SeedDB');
         // Step 1: Read and seed Category data from JSON files
         const categoriesPath = path.join(__dirname, '../../data/categories');
         const categoryFiles = fs.readdirSync(categoriesPath).filter(file => file.endsWith('.json'));
@@ -39,7 +36,7 @@ const seedData = async () => {
             const categoryData = readJsonFile(path.join(categoriesPath, file));
             if (categoryData) {
                 await mongoose.connection.collection('categories').insertOne(categoryData);
-                console.log(`Category "${categoryData.name}" seeded.`);
+                logger.info(`Category "${categoryData.name}" seeded`, 'SeedDB');
             }
         }
         // Step 2: Read and seed Item data from JSON files
@@ -49,14 +46,14 @@ const seedData = async () => {
             const itemsData = readJsonFile(path.join(itemsPath, file));
             if (itemsData && Array.isArray(itemsData)) {
                 await Item.insertMany(itemsData);
-                console.log(`Items from file "${file}" seeded.`);
+                logger.info(`Items from file "${file}" seeded`, 'SeedDB');
             }
         }
-        console.log('Database seeding complete!');
+        logger.info('Database seeding complete!', 'SeedDB');
         mongoose.connection.close();
     }
     catch (error) {
-        console.error('Database seeding failed:', error);
+        logger.error('Database seeding failed', 'SeedDB', error);
         mongoose.connection.close();
     }
 };
