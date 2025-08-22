@@ -4,4 +4,3 @@
 - admin login + logik för att redigera spelet
 - mobilvy
 - tillgänglighet
-- back to home

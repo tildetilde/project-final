@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { OrientationGuard } from "../components/OrientationGuard";
 import { GameBoard } from "../components/GameBoard";
-import { CategorySelector } from "../components/CategorySelector";
 import { Heading, DotPattern } from "../ui";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
