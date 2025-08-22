@@ -78,30 +78,6 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         </select>
       </Card>
 
-      <Card className="p-4 space-y-4">
-        <div className="font-semibold">Value & unit display</div>
-        <div className="flex gap-4 items-center">
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="reveal"
-              checked={settings.revealMode === "hidden"}
-              onChange={() => setRevealMode("hidden")}
-            />
-            Hide until placed
-          </label>
-          <label className="flex items-center gap-2">
-            <input
-              type="radio"
-              name="reveal"
-              checked={settings.revealMode === "shown"}
-              onChange={() => setRevealMode("shown")}
-            />
-            Always show ({selectedCategory?.unit})
-          </label>
-        </div>
-      </Card>
-
       <div className="pt-2">
         <Button onClick={handleContinue}>Continue to board</Button>
       </div>

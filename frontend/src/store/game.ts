@@ -190,7 +190,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
       lastTurnFeedback: null,
       phase: "DRAWN",
     });
-    get().startTimer();
+if (startingNewRound) get().startTimer();
   },
 
   placeAt: (slotIndex: number) => {
@@ -213,6 +213,9 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => ({
 
     if (correct) {
       const staged = insertAt(base, card, i);
+  
+      get().stopTimer();
+
       set({
         turnTimeline: staged,
         currentCard: undefined,
