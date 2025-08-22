@@ -17,7 +17,7 @@ export type GameCategory = {
   question: string; // "Which animal weighs the most?"
   unit: string;
   unitVisible?: boolean;
-  sort?: 'asc' | 'desc';
+  sort?: "asc" | "desc";
   source?: { name: string; url?: string };
   version?: number;
 };
@@ -46,7 +46,7 @@ export type GameSettings = {
   revealMode: RevealMode;
 };
 
-  export type GameState = {
+export type GameState = {
   deck: GameItem[];
   discard: GameItem[];
   teams: Team[];
@@ -55,7 +55,6 @@ export type GameSettings = {
   roundBaselineTimeline: GameItem[];
   pendingIndex: number | null;
   lastPlacementCorrect: boolean | null;
-
 
   phase: Phase;
 };
