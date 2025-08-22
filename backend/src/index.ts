@@ -1,41 +1,22 @@
 // server/src/index.ts
-import "dotenv/config";
 import express, { Request, Response } from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import quizRoutes from './routes/quizRoutes.js';
+import adminRoutes from './routes/adminRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import connectDB from './config/database.js';
-
-// Validate that all necessary environment variables exist
-const requiredEnvVars = [
-  "MONGODB_URI",
-  "FRONTEND_URI",
-];
-
-// Log environment info for debugging
-console.log("Environment:", process.env.NODE_ENV || "development");
-console.log(
-  "Frontend URI:",
-  process.env.FRONTEND_URI || "http://127.0.0.1:5173"
-);
-console.log("Backend Port:", process.env.PORT || 8888);
-
-for (const envVar of requiredEnvVars) {
-  if (!process.env[envVar]) {
-    console.error(`Error: The environment variable ${envVar} is missing`);
-    process.exit(1);
-  }
-}
+import { config } from './config/environment.js';
+import { logger } from './utils/logger.js';
 
 const app = express();
-const port = process.env.PORT || 8888;
+const port = config.PORT;
 
 // Middleware
 app.use(
   cors({
     origin: [
-      process.env.FRONTEND_URI || "http://127.0.0.1:5173",
+      config.FRONTEND_URI,
       "https://banganza.netlify.app",
     ],
     credentials: true, // Allow cookies
@@ -50,9 +31,9 @@ app.get("/", (req: Request, res: Response) => {
   res.json({
     message: "Backend server is running!",
     status: "ok",
-    environment: process.env.NODE_ENV || "development",
+    environment: config.NODE_ENV,
     timestamp: new Date().toISOString(),
-    frontend: process.env.FRONTEND_URI || "http://127.0.0.1:5173",
+    frontend: config.FRONTEND_URI,
   });
 });
 
@@ -62,7 +43,7 @@ app.get("/health", (req: Request, res: Response) => {
     status: "ok",
     timestamp: new Date().toISOString(),
     uptime: process.uptime(),
-    environment: process.env.NODE_ENV || "development",
+    environment: config.NODE_ENV,
     database:
       mongoose.connection.readyState === 1 ? "connected" : "disconnected",
   };
@@ -77,6 +58,9 @@ app.get("/health", (req: Request, res: Response) => {
 // Use the new quiz routes
 app.use('/api/quiz', quizRoutes);
 
+// Use admin routes
+app.use('/api/admin', adminRoutes);
+
 // 404 handler
 app.use(notFound);
 
@@ -89,14 +73,14 @@ connectDB();
 // Start the server
 app
   .listen(port, () => {
-    console.log(`Backend server is running on port ${port}`);
-    if (process.env.NODE_ENV === "production") {
-      console.log("Production mode enabled");
+    logger.info(`Backend server is running on port ${port}`, 'Server');
+    if (config.NODE_ENV === "production") {
+      logger.info("Production mode enabled", 'Server');
     } else {
-      console.log(`Development mode: http://127.0.0.1:${port}`);
+      logger.info(`Development mode: http://127.0.0.1:${port}`, 'Server');
     }
   })
   .on("error", (err) => {
-    console.error("Error starting the server:", err);
+    logger.error("Error starting the server", 'Server', err);
     process.exit(1);
   });

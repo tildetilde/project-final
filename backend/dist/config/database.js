@@ -1,28 +1,27 @@
 import mongoose from 'mongoose';
+import { config } from './environment.js';
+import { logger } from '../utils/logger.js';
 const connectDB = async () => {
     try {
-        const mongoURI = process.env.MONGODB_URI;
-        if (!mongoURI) {
-            throw new Error('MONGODB_URI is not defined in environment variables');
-        }
+        const mongoURI = config.MONGODB_URI;
         const conn = await mongoose.connect(mongoURI);
-        console.log(`MongoDB Connected: ${conn.connection.host}`);
+        logger.info(`MongoDB Connected: ${conn.connection.host}`, 'Database');
         // Handle connection events
         mongoose.connection.on('error', (err) => {
-            console.error('MongoDB connection error:', err);
+            logger.error('MongoDB connection error', 'Database', err);
         });
         mongoose.connection.on('disconnected', () => {
-            console.log('MongoDB disconnected');
+            logger.warn('MongoDB disconnected', 'Database');
         });
         // Graceful shutdown
         process.on('SIGINT', async () => {
             await mongoose.connection.close();
-            console.log('MongoDB connection closed through app termination');
+            logger.info('MongoDB connection closed through app termination', 'Database');
             process.exit(0);
         });
     }
     catch (error) {
-        console.error('Error connecting to MongoDB:', error);
+        logger.error('Error connecting to MongoDB', 'Database', error);
         process.exit(1);
     }
 };
