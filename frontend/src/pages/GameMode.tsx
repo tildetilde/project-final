@@ -6,6 +6,7 @@ import { CategorySelector } from "../components/CategorySelector";
 import { Heading, DotPattern } from "../ui";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
+import { CategorySelector } from "../components/CategorySelector";
 
 export default function GameMode() {
   const navigate = useNavigate();
@@ -18,6 +19,13 @@ export default function GameMode() {
 
   const scoreA = teams[0]?.timeline.length ?? 0;
   const scoreB = teams[1]?.timeline.length ?? 0;
+
+const { settings, timer } = useGame();
+const total = settings.turnSeconds;
+const left = timer.secondsLeft;
+const elapsed = total - left;
+const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
+
 
   const chip =
     "px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground";
@@ -69,17 +77,16 @@ export default function GameMode() {
       </Link>
 
       {/* Top-right: A/B Team */}
-      <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
-        <div className="flex gap-2">
-          <div className={chip} aria-current={currentTeamIndex === 0 ? "true" : "false"}>
-            A Team <span className="text-foreground font-semibold">{scoreA}</span>
-          </div>
-          <div className={chip} aria-current={currentTeamIndex === 1 ? "true" : "false"}>
-            B Team <span className="text-foreground font-semibold">{scoreB}</span>
-          </div>
-        </div>
-        <span className={dot} />
+<div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
+  <div className="flex gap-2">
+    {teams.map((t, i) => (
+      <div key={t.id ?? i} className={chip} aria-current={currentTeamIndex === i ? "true" : "false"}>
+        {t.name} <span className="text-foreground font-semibold">{t.timeline?.length ?? 0}</span>
       </div>
+    ))}
+  </div>
+  <span className={dot} />
+</div>
 
       {/* Bottom-left: Round */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
@@ -92,6 +99,24 @@ export default function GameMode() {
         <div className={chip}>{categoryLabel}: <span className="text-foreground font-semibold">{categoryValue}</span></div>
         <span className={dot} />
       </div>
+
+      {/* Timer */}
+{(phase === "DRAWN" || phase === "PLACED_PENDING" || phase === "CHOICE_AFTER_CORRECT") && (
+  <div className="flex items-center gap-3 pt-2 w-full max-w-sm" aria-live="polite">
+    <div className="font-mono tabular-nums text-sm" aria-label="Time left">
+      {String(Math.floor(left / 60)).padStart(2, "0")}:{String(left % 60).padStart(2, "0")}
+    </div>
+    <div
+      className="flex-1 h-2 rounded-full bg-muted relative"
+      role="progressbar"
+      aria-valuemin={0}
+      aria-valuemax={total}
+      aria-valuenow={elapsed}
+    >
+      <div className="h-2 rounded-full bg-primary absolute left-0 top-0" style={{ width: `${pct}%` }} />
+    </div>
+  </div>
+)}
 
       {/* Innehållssektion med DotPattern – växla mellan SETUP (Settings) och Board */}
       <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
