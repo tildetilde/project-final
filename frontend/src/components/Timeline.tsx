@@ -55,7 +55,7 @@ export const Timeline: React.FC<TimelineProps> = ({
   timeline,
   category,
   showSlots = true,
-  size = "xs",
+  size = "md",
   className,
 }) => {
   const sz = SIZES[size];
