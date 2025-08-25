@@ -82,7 +82,7 @@ type Actions = {
 };
 
 const initialSettings: GameSettings = {
-  teamNames: ["Team Bang", "Team Ganza"],
+  teamNames: ["Team Bang", "Team Ganza", "Team Anga", "Team Zaba"],
   turnSeconds: 60,
   revealMode: "hidden",
 };

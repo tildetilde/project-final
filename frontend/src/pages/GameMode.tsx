@@ -77,12 +77,24 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
 
       {/* Top-right: A/B Team */}
 <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
+  <div className="sr-only" aria-live="polite">
+    {teams[currentTeamIndex]?.name} is playing
+  </div>
   <div className="flex gap-2">
-    {teams.map((t, i) => (
-      <div key={t.id ?? i} className={chip} aria-current={currentTeamIndex === i ? "true" : "false"}>
-        {t.name} <span className="text-foreground font-semibold">{t.timeline?.length ?? 0}</span>
-      </div>
-    ))}
+    {teams.map((t, i) => {
+      const active = currentTeamIndex === i;
+      const base = "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
+      const cls = active
+        ? `${base} bg-primary text-base-100 border-primary shadow-soft scale-105`
+        : `${base} bg-primary/10 border-border text-muted-foreground`;
+      return (
+        <div key={t.id ?? i} className={cls} aria-current={active ? "true" : "false"}>
+          {t.name} <span className={active ? "font-semibold" : "text-foreground font-semibold"}>
+            {t.timeline?.length ?? 0}
+          </span>
+        </div>
+      );
+    })}
   </div>
   <span className={dot} />
 </div>
