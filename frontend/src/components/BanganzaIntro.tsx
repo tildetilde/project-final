@@ -11,7 +11,7 @@ export default function BanganzaIntro({ onFinish }: Props) {
     doneRef.current = true;
     setExiting(true);
     // vänta tills mörka overlayn hunnit tona in (matchar duration-500)
-    setTimeout(() => onFinish?.(), 600);
+    setTimeout(() => onFinish?.(), 100);
   }
 
   return (

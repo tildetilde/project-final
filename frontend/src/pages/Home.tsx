@@ -12,7 +12,7 @@ export const Home = () => {
   const [showIntro, setShowIntro] = useState<boolean>(
     () => sessionStorage.getItem("introDone") !== "1"
   ); // ⬅️ nytt
-  const FADE_MS = 600;
+  const FADE_MS = 100;
   const [ready, setReady] = useState(false);
   const catsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
