@@ -6,51 +6,57 @@ import BanganzaIntro from "../components/BanganzaIntro";
 import { CategorySelector } from "../components/CategorySelector";
 
 export const Home = () => {
-const [introDone, setIntroDone] = useState<boolean>(() =>
-  sessionStorage.getItem("introDone") === "1"
-);
+  const [introDone, setIntroDone] = useState<boolean>(
+    () => sessionStorage.getItem("introDone") === "1"
+  );
+  const [showIntro, setShowIntro] = useState<boolean>(
+    () => sessionStorage.getItem("introDone") !== "1"
+  ); // ⬅️ nytt
+  const FADE_MS = 600;
   const [ready, setReady] = useState(false);
   const catsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-
 
   useEffect(() => {
     const t = setTimeout(() => setReady(true), 250);
     return () => clearTimeout(t);
   }, []);
 
-useEffect(() => {
-  const s = (location.state as any) || {};
-  if (s.scrollTo === "categories") {
-    if (!introDone) {
-      setIntroDone(true);
-      sessionStorage.setItem("introDone", "1");
+  useEffect(() => {
+    const s = (location.state as any) || {};
+    if (s.scrollTo === "categories") {
+      if (!introDone) {
+        setIntroDone(true);
+        sessionStorage.setItem("introDone", "1");
+      }
+      catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      window.history.replaceState({}, ""); // rensa state så det inte triggas igen
     }
-    catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.history.replaceState({}, ""); // rensa state så det inte triggas igen
-  }
-}, [location.state, introDone]);
-
+  }, [location.state, introDone]);
 
   const scrollToCategories = () => {
     catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-
   return (
-    <div className="min-h-screen">
-{!introDone && (
-  <BanganzaIntro
-    onFinish={() => {
-      setIntroDone(true);
-      sessionStorage.setItem("introDone", "1");
-    }}
-  />
-)}
+    <div className="min-h-screen bg-[#2a0d0d] text-white relative">
+      {/* INTROT: ligger överst och fadar ut när videon är klar */}
+      {showIntro && (
+        <BanganzaIntro
+          onFinish={() => {
+            // starta Home-fade-in
+            setIntroDone(true);
+            sessionStorage.setItem("introDone", "1");
+            // vänta tills Home är synligt → SEN unmounta introt
+            setTimeout(() => setShowIntro(false), FADE_MS);
+          }}
+        />
+      )}
 
+      {/* HOME: ligger under introt och fadar in */}
       <div
         aria-hidden={!introDone}
-        className={`transition-opacity duration-500 ${
+        className={`transition-opacity duration-[${FADE_MS}ms] ${
           introDone ? "opacity-100" : "opacity-0 pointer-events-none"
         }`}
       >
@@ -67,7 +73,7 @@ useEffect(() => {
           >
             <div className="text-center px-6">
               <p className="mb-6 tracking-[.25em] text-[10px] md:text-xs text-white/70">
-                WHEN THE BANGERS ARE TOO GOOD… YOU JUST NEED TO
+                BEYOND THE ANSWERS… THERE IS
               </p>
               <Heading
                 level={1}
@@ -76,7 +82,7 @@ useEffect(() => {
                 BANGANZA
               </Heading>
 
- {/* 🔽 Diskret scroll-hint i stället för Start Game */}
+              {/* 🔽 Diskret scroll-hint i stället för Start Game */}
               <button
                 type="button"
                 onClick={scrollToCategories}
