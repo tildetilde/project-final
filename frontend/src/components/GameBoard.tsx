@@ -264,7 +264,7 @@ React.useEffect(() => {
           >
             {/* Ny layout: tidslinjen överst, current card *under* tidslinjen */}
             <div className="flex flex-col items-stretch gap-4 sm:gap-6">
-              <div className="min-h-[140px]">{renderTimeline()}</div>
+<div className="min-h-[140px]">{renderTimeline()}</div>
 
               {/* Current card alltid placerat under tidslinjen */}
               {phase === "DRAWN" && currentCard && (

@@ -119,8 +119,8 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
     deck: [],
     discard: [],
     teams: [
-      { id: "A", name: "Team A", timeline: [], score: 0 },
-      { id: "B", name: "Team B", timeline: [], score: 0 },
+      { id: "A", name: "Team Bang", timeline: [], score: 0 },
+      { id: "B", name: "Team Ganza", timeline: [], score: 0 },
     ],
     currentTeamIndex: 0,
     currentCard: undefined,
