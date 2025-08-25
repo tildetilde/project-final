@@ -10,7 +10,14 @@ import { GameSettings } from "../components/GameSettings";
 
 export default function GameMode() {
   const navigate = useNavigate();
-  const { teams, currentTeamIndex, selectedCategory, phase, startGame, resetGame } = useGame();
+  const {
+    teams,
+    currentTeamIndex,
+    selectedCategory,
+    phase,
+    startGame,
+    resetGame,
+  } = useGame();
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
 
   const categoryLabel = "Category";
@@ -21,12 +28,11 @@ export default function GameMode() {
   const scoreA = teams[0]?.timeline.length ?? 0;
   const scoreB = teams[1]?.timeline.length ?? 0;
 
-const { settings, timer } = useGame();
-const total = settings.turnSeconds;
-const left = timer.secondsLeft;
-const elapsed = total - left;
-const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
-
+  const { settings, timer } = useGame();
+  const total = settings.turnSeconds;
+  const left = timer.secondsLeft;
+  const elapsed = total - left;
+  const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
 
   const chip =
     "px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground";
@@ -59,7 +65,10 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
               <Heading
                 level={1}
                 className="leading-[0.95] text-foreground"
-                style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", letterSpacing: "-0.02em" }}
+                style={{
+                  fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                  letterSpacing: "-0.02em",
+                }}
               >
                 Select a Category
               </Heading>
@@ -87,65 +96,95 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
         className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
       >
         <span className={dot} />
-        <div className={chip}><span className="text-foreground font-semibold">Home</span></div>
+        <div className={chip}>
+          <span className="text-foreground font-semibold">Home</span>
+        </div>
       </button>
 
       {/* Top-right: A/B Team */}
-<div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
-  <div className="sr-only" aria-live="polite">
-    {teams[currentTeamIndex]?.name} is playing
-  </div>
-  <div className="flex gap-2">
-    {teams.map((t, i) => {
-      const active = currentTeamIndex === i;
-      const base = "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
-      const cls = active
-        ? `${base} bg-primary text-base-100 border-primary shadow-soft scale-105`
-        : `${base} bg-primary/10 border-border text-muted-foreground`;
-      return (
-        <div key={t.id ?? i} className={cls} aria-current={active ? "true" : "false"}>
-          {t.name} <span className={active ? "font-semibold" : "text-foreground font-semibold"}>
-            {t.timeline?.length ?? 0}
-          </span>
+      <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
+        <div className="sr-only" aria-live="polite">
+          {teams[currentTeamIndex]?.name} is playing
         </div>
-      );
-    })}
-  </div>
-  <span className={dot} />
-</div>
+        <div className="flex gap-2">
+          {teams.map((t, i) => {
+            const active = currentTeamIndex === i;
+            const base =
+              "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
+            const cls = active
+              ? `${base} bg-primary text-base-100 border-primary shadow-soft scale-105`
+              : `${base} bg-primary/10 border-border text-muted-foreground`;
+            return (
+              <div
+                key={t.id ?? i}
+                className={cls}
+                aria-current={active ? "true" : "false"}
+              >
+                {t.name}{" "}
+                <span
+                  className={
+                    active ? "font-semibold" : "text-foreground font-semibold"
+                  }
+                >
+                  {t.timeline?.length ?? 0}
+                </span>
+              </div>
+            );
+          })}
+        </div>
+        <span className={dot} />
+      </div>
 
       {/* Bottom-left: Round */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
         <span className={dot} />
-        <div className={chip}>{roundLabel}: <span className="text-foreground font-semibold">{roundValue}</span></div>
+        <div className={chip}>
+          {roundLabel}:{" "}
+          <span className="text-foreground font-semibold">{roundValue}</span>
+        </div>
       </div>
 
       {/* Bottom-right: Category */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 right-3 sm:right-6 flex items-center gap-2">
-        <div className={chip}>{categoryLabel}: <span className="text-foreground font-semibold">{categoryValue}</span></div>
+        <div className={chip}>
+          {categoryLabel}:{" "}
+          <span className="text-foreground font-semibold">{categoryValue}</span>
+        </div>
         <span className={dot} />
       </div>
 
       {/* Timer */}
-{(phase === "DRAWN" || phase === "PLACED_PENDING" || phase === "CHOICE_AFTER_CORRECT") && (
-  <div className="flex items-center gap-3 pt-2 w-full max-w-sm" aria-live="polite">
-    <div className="font-mono tabular-nums text-sm" aria-label="Time left">
-      {String(Math.floor(left / 60)).padStart(2, "0")}:{String(left % 60).padStart(2, "0")}
-    </div>
-    <div
-      className="flex-1 h-2 rounded-full bg-muted relative"
-      role="progressbar"
-      aria-valuemin={0}
-      aria-valuemax={total}
-      aria-valuenow={elapsed}
-    >
-      <div className="h-2 rounded-full bg-primary absolute left-0 top-0" style={{ width: `${pct}%` }} />
-    </div>
-  </div>
-)}
+      {(phase === "DRAWN" ||
+        phase === "PLACED_PENDING" ||
+        phase === "CHOICE_AFTER_CORRECT") && (
+        <div
+          className="flex items-center gap-3 pt-2 w-full max-w-sm"
+          aria-live="polite"
+        >
+          <div
+            className="font-mono tabular-nums text-sm"
+            aria-label="Time left"
+          >
+            {String(Math.floor(left / 60)).padStart(2, "0")}:
+            {String(left % 60).padStart(2, "0")}
+          </div>
+          <div
+            className="flex-1 h-2 rounded-full bg-muted relative"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-valuenow={elapsed}
+          >
+            <div
+              className="h-2 rounded-full bg-primary absolute left-0 top-0"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Innehållssektion med DotPattern – växla mellan SETUP (Settings) och Board */}
-      <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
+      <section className="relative w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
         <div className="absolute inset-0 pointer-events-none opacity-70">
           <DotPattern variant="diagonal" size="lg" />
         </div>
@@ -154,11 +193,16 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
           {phase === "SETUP" ? (
             <>
               <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">Game Settings</div>
+                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+                  Game Settings
+                </div>
                 <Heading
                   level={1}
                   className="leading-[0.95] text-foreground"
-                  style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", letterSpacing: "-0.02em" }}
+                  style={{
+                    fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                    letterSpacing: "-0.02em",
+                  }}
                 >
                   Configure your match
                 </Heading>
@@ -166,7 +210,9 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
 
               <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
                 <GameSettings
-                  onClose={() => navigate("/", { state: { scrollTo: "categories" } })}
+                  onClose={() =>
+                    navigate("/", { state: { scrollTo: "categories" } })
+                  }
                   onContinue={() => startGame()}
                 />
               </div>
@@ -174,17 +220,22 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
           ) : (
             <>
               <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">Game Question</div>
+                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+                  Game Question
+                </div>
                 <Heading
                   level={1}
                   className="leading-[0.95] text-foreground"
-                  style={{ fontSize: "clamp(2rem, 6vw, 4.5rem)", letterSpacing: "-0.02em" }}
+                  style={{
+                    fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                    letterSpacing: "-0.02em",
+                  }}
                 >
                   {selectedCategory.question}
                 </Heading>
               </div>
 
-              <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
+              <div className="w-full px-4 sm:px-8">
                 <GameBoard />
               </div>
             </>
