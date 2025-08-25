@@ -62,6 +62,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
   const team = teams[currentTeamIndex];
 
+  const winner = useGame ((s) => (s as any).winner);
+
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
   );
@@ -80,6 +82,35 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     if (!currentCard) return;
     placeAt(n);
   };
+
+  const [showWinner, setShowWinner] = React.useState(true);
+React.useEffect(() => {
+  setShowWinner(true);
+  const onKey = (e: KeyboardEvent) => {
+    if (e.key === "Escape") setShowWinner(false);
+  };
+  window.addEventListener("keydown", onKey);
+  return () => window.removeEventListener("keydown", onKey);
+}, [winner]);
+
+
+  const winnerName = React.useMemo(() => {
+  if (!winner) return null;
+  if (typeof winner === "number") return teams[winner]?.name ?? "Team";
+  if (typeof winner === "string") return winner;
+  if (typeof winner === "object") {
+    if ("teamIndex" in winner) return teams[(winner as any).teamIndex]?.name ?? "Team";
+    if ("index" in winner) return teams[(winner as any).index]?.name ?? "Team";
+    if ("name" in winner) return (winner as any).name ?? "Team";
+  }
+  const bestIdx = teams.reduce(
+    (best, _, i, arr) =>
+      (arr[i].timeline?.length ?? 0) > (arr[best].timeline?.length ?? 0) ? i : best,
+    0
+  );
+  return teams[bestIdx]?.name ?? "Team";
+}, [winner, teams]);
+
 
   /** Timeline i liten skala; kort växer på hover */
   const renderTimeline = () => {
@@ -291,6 +322,44 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           </div>
         </>
       )}
+
+{winner && showWinner && (
+  <div
+    className="fixed inset-0 z-[70] flex items-center justify-center"
+    role="dialog"
+    aria-modal="true"
+    aria-live="assertive"
+    onClick={() => setShowWinner(false)}
+  >
+    <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
+    <div
+      className="relative mx-4 w-[min(26rem,90vw)] rounded-2xl px-6 py-8 sm:px-8 sm:py-10 text-center bg-surface border border-border shadow-strong"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        onClick={() => setShowWinner(false)}
+        aria-label="Close"
+        className="absolute top-3 right-3 h-8 w-8 flex items-center justify-center rounded-full bg-card border border-border text-2xl leading-none hover:bg-card/80 transition"
+      >
+        ×
+      </button>
+
+      <div className="text-3xl sm:text-4xl font-extrabold text-foreground">
+        Congratulations!
+      </div>
+      <div className="mt-2 text-base sm:text-lg text-muted-foreground">
+        {winnerName ? `${winnerName} wins` : `Winner!`}
+      </div>
+
+      <div className="mt-6">
+        <Button onClick={() => setShowWinner(false)}>Close</Button>
+      </div>
+    </div>
+  </div>
+)}
+
+
+
     </div>
   );
 };
