@@ -6,7 +6,9 @@ import BanganzaIntro from "../components/BanganzaIntro";
 import { CategorySelector } from "../components/CategorySelector";
 
 export const Home = () => {
-  const [introDone, setIntroDone] = useState(false);
+const [introDone, setIntroDone] = useState<boolean>(() =>
+  sessionStorage.getItem("introDone") === "1"
+);
   const [ready, setReady] = useState(false);
   const catsRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
@@ -17,12 +19,18 @@ export const Home = () => {
     return () => clearTimeout(t);
   }, []);
 
-    useEffect(() => {
-    if ((location.state as any)?.scrollTo === "categories") {
-      catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.replaceState({}, ""); // rensa state så det inte triggas igen
+useEffect(() => {
+  const s = (location.state as any) || {};
+  if (s.scrollTo === "categories") {
+    if (!introDone) {
+      setIntroDone(true);
+      sessionStorage.setItem("introDone", "1");
     }
-  }, [location.state]);
+    catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.history.replaceState({}, ""); // rensa state så det inte triggas igen
+  }
+}, [location.state, introDone]);
+
 
   const scrollToCategories = () => {
     catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
@@ -31,7 +39,14 @@ export const Home = () => {
 
   return (
     <div className="min-h-screen">
-      {!introDone && <BanganzaIntro onFinish={() => setIntroDone(true)} />}
+{!introDone && (
+  <BanganzaIntro
+    onFinish={() => {
+      setIntroDone(true);
+      sessionStorage.setItem("introDone", "1");
+    }}
+  />
+)}
 
       <div
         aria-hidden={!introDone}
