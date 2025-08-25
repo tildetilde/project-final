@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useGame } from '../store/game';
 import { Card } from '../ui/Card';
+import { Spinner } from '../ui/Spinner';
 // import { Button } from '../ui/Button';
 import { useNavigate } from 'react-router-dom';
 
@@ -11,9 +12,9 @@ export const CategorySelector: React.FC = () => {
   useEffect(() => { loadCategories(); }, [loadCategories]);
 
   if (loading) return (
-    <div className="flex justify-center items-center p-8">
-      <div className="text-lg">Loading categories...</div>
-    </div>
+  <div className="flex justify-center items-center p-16">
+    <Spinner label="Loading categories..." />
+  </div>
   );
 
   if (error) return (
