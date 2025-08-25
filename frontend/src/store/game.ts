@@ -79,6 +79,7 @@ type Actions = {
   startTimer: () => void;
   stopTimer: () => void;
   timeUp: () => void;
+  resetGame: () => void;
 };
 
 const initialSettings: GameSettings = {
@@ -459,6 +460,37 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           timerId: null,
           turnDeadline: null,
           secondsLeft: full, // reset till max
+        },
+      });
+    },
+
+    resetGame: () => {
+      const { timerId } = get().timer;
+      if (timerId) window.clearInterval(timerId);
+      
+      set({
+        deck: [],
+        discard: [],
+        teams: [
+          { id: "A", name: "Team A", timeline: [], score: 0 },
+          { id: "B", name: "Team B", timeline: [], score: 0 },
+        ],
+        currentTeamIndex: 0,
+        currentCard: undefined,
+        phase: "SETUP",
+        loading: false,
+        error: null,
+        lastPlacementCorrect: null,
+        pendingIndex: null,
+        roundBaselineTimeline: [],
+        turnTimeline: [],
+        selectedCategory: null,
+        winner: null,
+        lastTurnFeedback: null,
+        timer: {
+          turnDeadline: null,
+          secondsLeft: initialSettings.turnSeconds,
+          timerId: null,
         },
       });
     },

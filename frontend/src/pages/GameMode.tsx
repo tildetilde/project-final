@@ -4,12 +4,14 @@ import { OrientationGuard } from "../components/OrientationGuard";
 import { GameBoard } from "../components/GameBoard";
 import { CategorySelector } from "../components/CategorySelector";
 import { Heading, DotPattern } from "../ui";
+import { ConfirmModal } from "../components/ConfirmModal";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
 
 export default function GameMode() {
   const navigate = useNavigate();
-  const { teams, currentTeamIndex, selectedCategory, phase, startGame } = useGame();
+  const { teams, currentTeamIndex, selectedCategory, phase, startGame, resetGame } = useGame();
+  const [showConfirmModal, setShowConfirmModal] = React.useState(false);
 
   const categoryLabel = "Category";
   const categoryValue = selectedCategory?.name || "Select Category";
@@ -29,6 +31,16 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
   const chip =
     "px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground";
   const dot = "inline-block w-2 h-2 rounded-sm bg-primary shadow-soft";
+
+  const handleHomeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirmHome = () => {
+    resetGame();
+    navigate("/");
+  };
 
   // --- 1) Fallback: ingen kategori vald ---
   if (!selectedCategory) {
@@ -70,10 +82,13 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
       <OrientationGuard minWidth={600} />
 
       {/* Top-left: Home */}
-      <Link to="/" className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity">
+      <button
+        onClick={handleHomeClick}
+        className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+      >
         <span className={dot} />
         <div className={chip}><span className="text-foreground font-semibold">Home</span></div>
-      </Link>
+      </button>
 
       {/* Top-right: A/B Team */}
 <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
@@ -164,6 +179,17 @@ const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
           )}
         </div>
       </section>
+
+      {/* Confirmation Modal */}
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleConfirmHome}
+        title="End Game?"
+        message="Are you sure you want to end the current game and return to the home page? All progress will be lost."
+        confirmText="Yes, End Game"
+        cancelText="Continue Playing"
+      />
     </div>
   );
 }
