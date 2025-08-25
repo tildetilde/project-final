@@ -26,6 +26,7 @@ export default function BanganzaIntro({ onFinish }: Props) {
         muted
         playsInline
         preload="auto"
+        poster="/intropic.png"
         onEnded={endWithFade}
         onClick={endWithFade} /* klick för att hoppa över */
         className="w-full h-full object-cover"

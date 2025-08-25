@@ -75,14 +75,18 @@ export const Home = () => {
               <p className="mb-6 tracking-[.25em] text-[10px] md:text-xs text-white/70">
                 BEYOND THE ANSWERS… THERE IS
               </p>
-              <Heading
-                level={1}
-                className="text-5xl md:text-7xl font-black tracking-wider"
-              >
-                BANGANZA
-              </Heading>
 
-              {/* 🔽 Diskret scroll-hint i stället för Start Game */}
+              {/* Semantisk h1 för skärmläsare */}
+              <h1 className="sr-only">Banganza</h1>
+
+              {/* SVG-logga som visuellt ersätter rubriken */}
+              <img
+                src="/banganzalogo.svg"
+                aria-hidden="true"
+                className="mx-auto w-[min(82vw,900px)] h-auto text-[var(--color-base-400)]"
+              />
+
+              {/* 🔽 Diskret scroll-hint */}
               <button
                 type="button"
                 onClick={scrollToCategories}
