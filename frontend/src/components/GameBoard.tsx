@@ -12,6 +12,7 @@ import {
   closestCenter,
 } from "@dnd-kit/core";
 import { restrictToWindowEdges } from "@dnd-kit/modifiers";
+import { useNavigate } from "react-router-dom";
 
 import { useGame } from "../store/game";
 import { Button } from "../ui";
@@ -61,6 +62,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const turnTimeline = useGame((s) => s.turnTimeline);
 
   const team = teams[currentTeamIndex];
+
+  const navigate = useNavigate();
 
   const winner = useGame ((s) => (s as any).winner);
 
@@ -351,9 +354,20 @@ React.useEffect(() => {
         {winnerName ? `${winnerName} wins` : `Winner!`}
       </div>
 
-      <div className="mt-6">
-        <Button onClick={() => setShowWinner(false)}>Close</Button>
-      </div>
+<div className="mt-6 flex flex-col sm:flex-row gap-3 justify-center">
+<Button
+  onClick={() => {
+    setShowWinner(false);
+    useGame.getState().applySettings();
+    useGame.getState().startGame();
+  }}
+>
+  Rematch
+</Button>
+<Button variant="outline" onClick={() => navigate("/", { state: { scrollTo: "categories" } })}>
+  New category
+</Button>
+</div>
     </div>
   </div>
 )}
