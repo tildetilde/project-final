@@ -1,23 +1,17 @@
-import { useEffect, useState } from "react";
-import logoUrl from "../assets/banganzalogo.svg";
-import bananaUrl from "../assets/banana.png"; // byt till rätt bana-fil
+import { useRef, useState } from "react";
 
 type Props = { onFinish?: () => void };
 
 export default function BanganzaIntro({ onFinish }: Props) {
   const [exiting, setExiting] = useState(false);
+  const doneRef = useRef(false);
 
-  useEffect(() => {
-    const timers: number[] = [];
-    // auto-exit efter 3.5s
-    timers.push(window.setTimeout(() => exit(), 3500));
-    return () => timers.forEach((t) => clearTimeout(t));
-  }, []);
-
-  function exit() {
-    if (exiting) return;
+  function endWithFade() {
+    if (doneRef.current) return;
+    doneRef.current = true;
     setExiting(true);
-    setTimeout(() => onFinish?.(), 400);
+    // vänta tills mörka overlayn hunnit tona in (matchar duration-500)
+    setTimeout(() => onFinish?.(), 600);
   }
 
   return (
@@ -25,43 +19,28 @@ export default function BanganzaIntro({ onFinish }: Props) {
       role="dialog"
       aria-modal="true"
       aria-label="Banganza intro"
-      onPointerDown={exit}
-      className={[
-        "fixed inset-0 z-[60] flex items-center justify-center overflow-hidden",
-        "bg-[var(--color-base-400)]",
-        exiting ? "opacity-0 transition-opacity duration-300" : "opacity-100",
-      ].join(" ")}
+      className="fixed inset-0 z-[60] overflow-hidden bg-[#2a0d0d]"
     >
-      <div aria-hidden className="pointer-events-none absolute inset-0 z-20">
-        {Array.from({ length: 12 }).map((_, i) => {
-          const left = `${(i * 13) % 100}%`; // slumpmässig horisontell spridning
-          const delay = `${i * 150}ms`;
-          const size =
-            i % 3 === 0 ? "w-12 h-12" : i % 3 === 1 ? "w-10 h-10" : "w-8 h-8";
-          const rot = i % 2 === 0 ? "rotate-[14deg]" : "-rotate-[12deg]";
-          return (
-            <img
-              key={i}
-              src={bananaUrl}
-              alt=""
-              style={{ left, animationDelay: delay }}
-              className={[
-                "absolute top-[-10%] object-contain opacity-80",
-                size,
-                rot,
-                "animate-[banana-fly_4000ms_linear_infinite]",
-              ].join(" ")}
-            />
-          );
-        })}
-      </div>
+      <video
+        autoPlay
+        muted
+        playsInline
+        preload="auto"
+        onEnded={endWithFade}
+        onClick={endWithFade} /* klick för att hoppa över */
+        className="w-full h-full object-cover"
+      >
+        <source src="/intro.mp4" type="video/mp4" />
+        Your browser does not support video :(
+      </video>
 
-      {/* Logga med inzoom och duns */}
-      <img
-        src={logoUrl}
-        alt="Banganza"
-        draggable={false}
-        className="w-[60%] max-w-4xl animate-[logo-bounce-in_2400ms_cubic-bezier(.25,1.5,.5,1)_forwards]"
+      {/* mörk overlay som fadar in vid exit → undviker ljus flash */}
+      <div
+        className={[
+          "pointer-events-none absolute inset-0 bg-[#2a0d0d]",
+          "transition-opacity duration-500",
+          exiting ? "opacity-100" : "opacity-0",
+        ].join(" ")}
       />
     </div>
   );
