@@ -83,10 +83,6 @@ const AdminPage: React.FC = () => {
       </div>
       
       <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-        <div className="absolute inset-0 pointer-events-none opacity-70">
-          <DotPattern variant="diagonal" size="lg" />
-        </div>
-        
         <div className="relative z-10">
           {/* Header */}
           <div className="mb-8">

@@ -21,7 +21,7 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
       style={style}
       {...listeners}
       {...attributes}
-      className={`w-[136px] cursor-grab active:cursor-grabbing select-none ${
+      className={`w-[102px] sm:w-48 cursor-grab active:cursor-grabbing select-none ${
         dragging ? "opacity-0" : ""
       }`}
     >

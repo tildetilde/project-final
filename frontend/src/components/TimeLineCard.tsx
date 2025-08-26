@@ -22,7 +22,7 @@ const TOKENS: Record<
   xs: {
     wrapper: "w-[144px] h-[202px]",
     value: "text-2xl",
-    name: "text-xs font-semibold",
+    name: "text-base font-semibold",
     label: "text-[10px]",
     badge: "w-5 h-5 text-[10px]",
     padHeader: "pt-2 pb-1 px-2",
@@ -32,7 +32,7 @@ const TOKENS: Record<
   sm: {
     wrapper: "w-[196px] h-[259px]",
     value: "text-3xl",
-    name: "text-sm font-semibold",
+    name: "text-lg font-semibold",
     label: "text-xs",
     badge: "w-6 h-6 text-xs",
     padHeader: "pt-3 pb-2 px-3",
@@ -42,7 +42,7 @@ const TOKENS: Record<
   md: {
     wrapper: "w-[346px] h-[461px]",
     value: "text-6xl",
-    name: "text-4xl font-semibold",
+    name: "text-6xl font-semibold",
     label: "text-3xl font-medium",
     badge: "w-8 h-8 text-lg",
     padHeader: "pt-6 pb-4 px-6",
