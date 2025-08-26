@@ -13,16 +13,20 @@ const SIZES: Record<
   xs: {
     card: "w-[100px] h-[140px]",
     slot: "w-1 h-[140px]",
-    gap: "gap-2",
+    gap: "gap-0.5",
     cardSize: "xs",
   },
   sm: {
     card: "w-[136px] h-[180px]",
     slot: "w-2 h-[180px]",
-    gap: "gap-3",
+    gap: "gap-1",
     cardSize: "sm",
   },
-  md: { card: "w-60 h-80", slot: "w-3 h-80", gap: "gap-6", cardSize: "md" },
+  md: { 
+    card: "w-60 h-80", 
+    slot: "w-3 h-80", 
+    gap: "gap-1.5", 
+    cardSize: "md" },
 };
 
 type TimelineProps = {

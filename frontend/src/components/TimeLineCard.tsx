@@ -20,7 +20,7 @@ const TOKENS: Record<
   }
 > = {
   xs: {
-    wrapper: "w-[100px] h-[140px]",
+    wrapper: "w-[144px] h-[202px]",
     value: "text-2xl",
     name: "text-xs font-semibold",
     label: "text-[10px]",
@@ -30,7 +30,7 @@ const TOKENS: Record<
     vspace: "space-y-1",
   },
   sm: {
-    wrapper: "w-[136px] h-[180px]",
+    wrapper: "w-[196px] h-[259px]",
     value: "text-3xl",
     name: "text-sm font-semibold",
     label: "text-xs",
@@ -40,7 +40,7 @@ const TOKENS: Record<
     vspace: "space-y-2",
   },
   md: {
-    wrapper: "w-60 h-80",
+    wrapper: "w-[346px] h-[461px]",
     value: "text-6xl",
     name: "text-4xl font-semibold",
     label: "text-3xl font-medium",

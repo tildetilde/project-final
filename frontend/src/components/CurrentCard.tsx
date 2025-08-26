@@ -25,7 +25,7 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
         dragging ? "opacity-0" : ""
       }`}
     >
-      <Card className="w-[136px] h-[180px] sm:w-60 sm:h-80 overflow-hidden shadow-medium border-2 border-primary/30">
+      <Card className="w-[102px] h-[136px] sm:w-48 sm:h-64 overflow-hidden shadow-medium border-2 border-primary/30">
         <CardHeader className="pt-4 pb-2">
           <div className="text-xs uppercase text-muted-foreground tracking-wide">
             Place in timeline
@@ -47,7 +47,7 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
 // Preview för DragOverlay (samma look)
 export const CurrentCardPreview: React.FC<{ card: GameItem }> = ({ card }) => (
   <div className="cursor-grabbing pointer-events-none">
-    <Card className="w-[136px] h-[180px] sm:w-60 sm:h-80 overflow-hidden shadow-medium border-2 border-primary/30">
+    <Card className="w-[102px] h-[136px] sm:w-48 sm:h-64 overflow-hidden shadow-medium border-2 border-primary/30">
       <CardHeader className="pt-4 pb-2">
         <div className="text-xs uppercase text-muted-foreground tracking-wide">
           Place in timeline
