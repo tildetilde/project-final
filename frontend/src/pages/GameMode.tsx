@@ -54,9 +54,6 @@ export default function GameMode() {
       <div className="min-h-screen bg-background flex flex-col">
         <OrientationGuard minWidth={600} />
         <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-          <div className="absolute inset-0 pointer-events-none opacity-70">
-            <DotPattern variant="diagonal" size="lg" />
-          </div>
           <div className="relative z-10">
             <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
               <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
@@ -135,6 +132,36 @@ export default function GameMode() {
         <span className={dot} />
       </div>
 
+      {/* Timer - positioned at top center to align with Home and Teams */}
+      {(phase === "DRAWN" ||
+        phase === "PLACED_PENDING" ||
+        phase === "CHOICE_AFTER_CORRECT") && (
+        <div
+          className="fixed z-50 top-3 sm:top-4 left-1/2 transform -translate-x-1/2 flex items-center gap-3"
+          aria-live="polite"
+        >
+          <div
+            className="font-mono tabular-nums text-sm"
+            aria-label="Time left"
+          >
+            {String(Math.floor(left / 60)).padStart(2, "0")}:
+            {String(left % 60).padStart(2, "0")}
+          </div>
+          <div
+            className="w-24 h-2 rounded-full bg-muted relative"
+            role="progressbar"
+            aria-valuemin={0}
+            aria-valuemax={total}
+            aria-valuenow={elapsed}
+          >
+            <div
+              className="h-2 rounded-full bg-primary absolute left-0 top-0"
+              style={{ width: `${pct}%` }}
+            />
+          </div>
+        </div>
+      )}
+
       {/* Bottom-left: Round */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
         <span className={dot} />
@@ -153,42 +180,10 @@ export default function GameMode() {
         <span className={dot} />
       </div>
 
-      {/* Timer */}
-      {(phase === "DRAWN" ||
-        phase === "PLACED_PENDING" ||
-        phase === "CHOICE_AFTER_CORRECT") && (
-        <div
-          className="flex items-center gap-3 pt-2 w-full max-w-sm"
-          aria-live="polite"
-        >
-          <div
-            className="font-mono tabular-nums text-sm"
-            aria-label="Time left"
-          >
-            {String(Math.floor(left / 60)).padStart(2, "0")}:
-            {String(left % 60).padStart(2, "0")}
-          </div>
-          <div
-            className="flex-1 h-2 rounded-full bg-muted relative"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={total}
-            aria-valuenow={elapsed}
-          >
-            <div
-              className="h-2 rounded-full bg-primary absolute left-0 top-0"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-        </div>
-      )}
+
 
       {/* Innehållssektion med DotPattern – växla mellan SETUP (Settings) och Board */}
       <section className="relative w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-        <div className="absolute inset-0 pointer-events-none opacity-70">
-          <DotPattern variant="diagonal" size="lg" />
-        </div>
-
         <div className="relative z-10">
           {phase === "SETUP" ? (
             <>
@@ -233,6 +228,8 @@ export default function GameMode() {
                 >
                   {selectedCategory.question}
                 </Heading>
+                
+
               </div>
 
               <div className="w-full px-4 sm:px-8">

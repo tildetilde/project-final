@@ -137,7 +137,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
       if (phase === "PLACED_PENDING" && pendingIndex === i && currentCard) {
         children.push(
           <div key="pending-card" className="group relative flex-shrink-0">
-            <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+            <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
               <CurrentCard card={currentCard} dragging={isDragging} />
             </div>
           </div>
@@ -155,8 +155,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           key={c?._id ?? c?.id ?? i}
           className="group relative flex-shrink-0"
         >
-          {/* Bas: ~60% storlek. Hover: ~90%. Origin i botten så den “poppar uppåt”. */}
-          <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+          {/* Bas: ~60% storlek. Hover: ~90%. Origin i botten så den "poppar uppåt". */}
+          <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
             <TimeLineCard
               item={base[i]}
               category={selectedCategory || undefined}
@@ -182,7 +182,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         children.length - 1,
         0,
         <div key="pending-last" className="group relative flex-shrink-0">
-          <div className="origin-bottom scale-[0.6] group-hover:scale-[0.9] transition-transform duration-150">
+          <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
             <CurrentCard card={currentCard} dragging={isDragging} />
           </div>
         </div>
@@ -268,6 +268,13 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             <div className="flex flex-col items-stretch gap-4 sm:gap-6">
               <div className="min-h-[140px]">{renderTimeline()}</div>
 
+              {/* Instruction text centered under timeline */}
+              {phase === "DRAWN" && currentCard && (
+                <div className="text-sm text-muted-foreground text-center">
+                  Drag the card and drop it between two cards.
+                </div>
+              )}
+
               {/* Current card alltid placerat under tidslinjen */}
               {phase === "DRAWN" && currentCard && (
                 <div className="flex w-full justify-center">
@@ -312,11 +319,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               <Button onClick={startTurn}>Draw</Button>
             )}
 
-            {phase === "DRAWN" && (
-              <div className="text-sm text-muted-foreground">
-                Drag the card and drop it between two cards.
-              </div>
-            )}
+
 
             {phase === "CHOICE_AFTER_CORRECT" && (
               <>

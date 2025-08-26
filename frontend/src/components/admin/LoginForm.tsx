@@ -22,9 +22,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onLogin, loading, error }) => {
   return (
     <div className="min-h-screen bg-background flex flex-col">
       <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-        <div className="absolute inset-0 pointer-events-none opacity-70">
-          <DotPattern variant="diagonal" size="lg" />
-        </div>
         <div className="relative z-10">
           <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
             <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
