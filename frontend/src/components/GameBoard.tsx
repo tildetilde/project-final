@@ -29,7 +29,7 @@ const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
     <div
       ref={setNodeRef}
       className={[
-        "h-[96px] sm:h-[120px] w-1 sm:w-2 flex-shrink-0 rounded-md transition-all",
+        "h-[96px] sm:h-[120px] w-0.5 sm:w-1 flex-shrink-0 rounded-md transition-all",
         isOver ? "bg-primary/40 outline outline-primary/50" : "bg-primary/20",
       ].join(" ")}
       aria-label="Drop here"
@@ -192,7 +192,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     return (
       <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60">
         {/* overflow-y visible krävs för att hovrade kort kan växa utanför raden */}
-        <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-2 sm:gap-3">
+        <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-0.5 sm:gap-1">
           {children}
         </div>
 
