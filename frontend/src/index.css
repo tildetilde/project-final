@@ -142,6 +142,69 @@ html {
   animation: crt-flicker 1.8s ease-in-out infinite;
 }
 
+/* --- Report-like category cards --- */
+.report-card {
+  position: relative;
+  display: flex;
+  aspect-ratio: 16 / 7;            /* bred, “platta” kort */
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 1rem;             /* ~rounded-2xl */
+  box-shadow: var(--shadow-soft);
+  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+  overflow: hidden;
+}
+
+/* inner border + subtle bevel */
+.report-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: 0 0 0 1px var(--color-border-muted) inset;
+  pointer-events: none;
+}
+
+/* fine noise texture */
+.report-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background-image:
+    radial-gradient(rgba(40,21,23,0.05) 1px, transparent 1.2px);
+  background-size: 3px 3px;
+  opacity: 0.6;
+  mix-blend-mode: multiply;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+}
+
+/* hover / focus style */
+.report-card:hover,
+.report-card:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-medium);
+  border-color: var(--color-foreground);
+  background-color: color-mix(in srgb, var(--color-accent-100) 10%, var(--color-surface));
+}
+
+/* active (vald kategori) */
+.report-card--active {
+  border-color: var(--color-primary);
+  background-color: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
+  box-shadow: var(--shadow-medium);
+}
+
+/* reduce motion */
+@media (prefers-reduced-motion: reduce) {
+  .report-card { transition: none; }
+  .report-card::after { transition: none; }
+}
+
+
+
+
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
