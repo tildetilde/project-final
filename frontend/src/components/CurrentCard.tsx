@@ -25,17 +25,17 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
         dragging ? "opacity-0" : ""
       }`}
     >
-      <Card className="w-[102px] h-[136px] sm:w-48 sm:h-64 overflow-hidden shadow-medium border-2 border-primary/30">
-        <CardHeader className="pt-4 pb-2">
-          <div className="text-xs uppercase text-muted-foreground tracking-wide">
+      <Card className="w-[120px] h-[169px] sm:w-[164px] sm:h-[217px] overflow-hidden shadow-medium border-2 border-primary/30">
+        <CardHeader className="pt-1 pb-1">
+          <div className="text-xs uppercase text-muted-foreground tracking-wide text-center">
             Place in timeline
           </div>
         </CardHeader>
-        <CardContent className="flex-1 flex flex-col items-center justify-center gap-1 px-2">
-          <div className="text-center text-base sm:text-3xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
+        <CardContent className="flex-1 flex flex-col items-center justify-center gap-0 px-2">
+          <div className="text-center text-base sm:text-2xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
             <span className="text-center">{card.name}</span>
           </div>
-          <div className="mt-2 text-3xl sm:text-5xl font-bold text-primary/30">
+          <div className="mt-2 text-2xl sm:text-4xl font-bold text-primary/30">
             ?
           </div>
         </CardContent>
@@ -47,17 +47,17 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
 // Preview för DragOverlay (samma look)
 export const CurrentCardPreview: React.FC<{ card: GameItem }> = ({ card }) => (
   <div className="cursor-grabbing pointer-events-none">
-    <Card className="w-[102px] h-[136px] sm:w-48 sm:h-64 overflow-hidden shadow-medium border-2 border-primary/30">
-      <CardHeader className="pt-4 pb-2">
-        <div className="text-xs uppercase text-muted-foreground tracking-wide">
+    <Card className="w-[120px] h-[169px] sm:w-[164px] sm:h-[217px] overflow-hidden shadow-medium border-2 border-primary/30">
+      <CardHeader className="pt-2 pb-2">
+        <div className="text-xs uppercase text-muted-foreground tracking-wide text-center">
           Place in timeline
         </div>
       </CardHeader>
       <CardContent className="flex-1 flex flex-col items-center justify-center gap-1 px-2">
-        <div className="text-center text-base sm:text-3xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
+        <div className="text-center text-base sm:text-2xl font-semibold text-primary break-normal px-2 w-full leading-tight flex justify-center">
           <span className="text-center">{card.name}</span>
         </div>
-        <div className="mt-2 text-3xl sm:text-5xl font-bold text-primary/30">
+        <div className="mt-2 text-xl sm:text-3xl font-bold text-primary/30">
           ?
         </div>
       </CardContent>

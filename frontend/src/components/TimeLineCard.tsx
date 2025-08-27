@@ -20,7 +20,7 @@ const TOKENS: Record<
   }
 > = {
   xs: {
-    wrapper: "w-[144px] h-[202px]",
+    wrapper: "w-[120px] h-[169px]",
     value: "text-2xl",
     name: "text-base font-semibold",
     label: "text-[10px]",
@@ -30,7 +30,7 @@ const TOKENS: Record<
     vspace: "space-y-1",
   },
   sm: {
-    wrapper: "w-[196px] h-[259px]",
+    wrapper: "w-[164px] h-[217px]", 
     value: "text-3xl",
     name: "text-lg font-semibold",
     label: "text-xs",
@@ -40,7 +40,7 @@ const TOKENS: Record<
     vspace: "space-y-2",
   },
   md: {
-    wrapper: "w-[346px] h-[461px]",
+    wrapper: "w-[290px] h-[387px]",
     value: "text-6xl",
     name: "text-6xl font-semibold",
     label: "text-3xl font-medium",
@@ -77,11 +77,16 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
 }) => {
   const t = TOKENS[size];
   const unit = category?.unit;
+  
+  // Use responsive sizing for sm size to match CurrentCard
+  const responsiveWrapper = size === "sm" 
+    ? "w-[120px] h-[169px] sm:w-[164px] sm:h-[217px]"
+    : t.wrapper;
 
   return (
     <Card
       className={cn(
-        t.wrapper,
+        responsiveWrapper,
         "flex-shrink-0 flex flex-col relative overflow-hidden p-0",
         "bg-gradient-to-br from-accent-200 via-accent-300 to-accent-500",
         "border-accent-400 text-base-100 shadow-medium",

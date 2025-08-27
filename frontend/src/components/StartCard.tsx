@@ -24,7 +24,7 @@ export const StartCard: React.FC<StartCardProps> = ({
 }) => (
   <Card
     className={`
-      w-[136px] h-[180px] sm:w-60 sm:h-80 flex-shrink-0 flex flex-col relative overflow-hidden
+      w-[136px] h-[180px] sm:w-48 sm:h-64 flex-shrink-0 flex flex-col relative overflow-hidden
       bg-gradient-to-br from-base-100 via-base-200 to-base-300
       border-2 border-primary/30 text-foreground shadow-strong
       hover:shadow-strong hover:border-primary/50 transition-all duration-300

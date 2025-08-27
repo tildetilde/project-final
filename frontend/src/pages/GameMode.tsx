@@ -187,20 +187,20 @@ export default function GameMode() {
         <div className="relative z-10">
           {phase === "SETUP" ? (
             <>
-              <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+              <div className="pt-6 sm:pt-8 pb-6 sm:pb-8">
+                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground text-center">
                   Game Settings
                 </div>
-                <Heading
+                {/* <Heading
                   level={1}
-                  className="leading-[0.95] text-foreground"
+                  className="leading-[0.95] text-foreground text-center"
                   style={{
-                    fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                    fontSize: "clamp(2rem, 3vw, 4rem)",
                     letterSpacing: "-0.02em",
                   }}
                 >
                   Configure your match
-                </Heading>
+                </Heading> */}
               </div>
 
               <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
@@ -214,7 +214,7 @@ export default function GameMode() {
             </>
           ) : (
             <>
-              <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
+              <div className="pt-6 sm:pt-8 pb-6 sm:pb-8">
                 <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
                   Game Question
                 </div>
@@ -222,7 +222,7 @@ export default function GameMode() {
                   level={1}
                   className="leading-[0.95] text-foreground"
                   style={{
-                    fontSize: "clamp(2rem, 6vw, 4.5rem)",
+                    fontSize: "clamp(2rem, 3vw, 4rem)",
                     letterSpacing: "-0.02em",
                   }}
                 >
@@ -232,7 +232,7 @@ export default function GameMode() {
 
               </div>
 
-              <div className="w-full px-4 sm:px-8">
+              <div className="w-full px-0 sm:px-0">
                 <GameBoard />
               </div>
             </>
