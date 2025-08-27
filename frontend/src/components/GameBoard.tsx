@@ -76,7 +76,11 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const [isDragging, setIsDragging] = React.useState(false);
 
   const onDragStart = (e: DragStartEvent) => {
-    if (e.active.id === "current-card" && lastPlacementCorrect !== false && phase !== "PLACED_WRONG") {
+    if (
+      e.active.id === "current-card" &&
+      lastPlacementCorrect !== false &&
+      phase !== "PLACED_WRONG"
+    ) {
       setIsDragging(true);
     }
   };
@@ -84,7 +88,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const onDragEnd = (e: DragEndEvent) => {
     setIsDragging(false);
     if (lastPlacementCorrect === false || phase === "PLACED_WRONG") return; // Don't allow placement if team has lost
-    
+
     const overId = e.over?.id as string | undefined;
     if (!overId || !overId.startsWith("slot-")) return;
     const n = Number(overId.slice(5));
@@ -136,12 +140,38 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
     const showSlots = phase === "DRAWN" || phase === "PLACED_PENDING";
 
-    // If team has lost (wrong answer), show message instead of timeline
-    if (lastPlacementCorrect === false || phase === "PLACED_WRONG") {
+    // TIME'S UP + no answer → stor panel i samma stil som OH NO!
+    if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct == null) {
+      return (
+        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60 animate-pulse">
+          <div className="flex items-center justify-center h-[140px]">
+            <div className="text-center">
+              <div className="font-bold text-xl sm:text-5xl mb-2 text-primary animate-bounce font-mono">
+                TIME’S UP!
+              </div>
+              <div className="sm:text-lg text-foreground font-mono">
+                <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
+                  No answer placed.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Felplacerat (inkl. TIME'S UP + wrong) → rubriken blir TIME'S UP! om tiden gick
+    if (
+      lastPlacementCorrect === false ||
+      phase === "PLACED_WRONG" ||
+      (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === false)
+    ) {
+      const heading = lastTurnFeedback?.timeUp ? "TIME’S UP!" : "OH NO!";
       return (
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
+
               <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf]  animate-bounce font-mono">
                 OH NO!
               </div>
@@ -245,11 +275,17 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
         {lastPlacementCorrect === true && (
           <div className="font-bold sm:text-lg text-[#f9ecdf] text-center mt-2 font-mono">
+
+
+
             <span className="inline-block animate-pulse">
-              CORRECT!
+              {lastTurnFeedback?.timeUp && lastTurnFeedback.correct === true
+                ? "Time’s up. Correct!"
+                : "CORRECT!"}
             </span>
           </div>
         )}
+
         {phase === "PLACED_PENDING" && (
           <div className="flex justify-center pt-2">
             <Button 
@@ -346,6 +382,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             modifiers={[restrictToWindowEdges]}
           >
             {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
+
             <div className="flex flex-col items-stretch gap-1 sm:gap-1">
               {/* Timer positioned above timeline, centered */}
               {renderTimer()}
@@ -366,16 +403,20 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
                   <div className="origin-top scale-105 sm:scale-105">
                     <CurrentCard card={currentCard} dragging={isDragging} />
                   </div>
-                </div>
-              )}
+                )}
             </div>
 
             <DragOverlay>
-              {isDragging && currentCard && lastPlacementCorrect !== false && phase !== "PLACED_WRONG" ? (
+              {isDragging &&
+              currentCard &&
+              lastPlacementCorrect !== false &&
+              phase !== "PLACED_WRONG" &&
+              !lastTurnFeedback?.timeUp ? (
                 <CurrentCardPreview card={currentCard} />
               ) : null}
             </DragOverlay>
           </DndContext>
+
 
           {/* Time's up-feedback (visas mellan turer) */}
           {lastTurnFeedback?.timeUp && lastTurnFeedback.correct !== null && (
@@ -394,8 +435,9 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             </div>
           )}
 
+
           {/* Kontroller */}
-          <div className="flex flex-wrap gap-3 pt-3 sm:pt-6">
+          <div className="flex flex-wrap gap-3 pt-3 sm:pt-6 justify-center font-sans">
             {phase === "TURN_START" && lastPlacementCorrect !== false && (
               <Button 
                 onClick={startTurn}
@@ -421,6 +463,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
                 </Button>
               </>
             )}
+
             
             {(lastPlacementCorrect === false || phase === "PLACED_WRONG" || (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null)) && (
               <Button 

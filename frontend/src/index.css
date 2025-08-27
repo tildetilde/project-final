@@ -1,7 +1,17 @@
 @import "tailwindcss";
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@400;500;700&display=swap");
+
+@font-face {
+  font-family: "Cygnito Mono";
+  src: url("/src/assets/cygnito-mono-regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
 
 @theme {
-  --font-family-sans: "Zen Kaku Gothic New", sans-serif;
+  --font-family-sans: "Zen Kaku Gothic Antique", system-ui, sans-serif;
+  --font-family-mono: "Cygnito Mono", ui-monospace, SFMono-Regular, Menlo,
+    Monaco, Consolas, monospace;
 
   /* Base scale colors */
   --color-base-100: #fefcfa;
@@ -94,7 +104,7 @@ html {
 /* --- Mono / CRT spinner --- */
 .mono-spinner {
   position: relative;
-  width: 3.25rem;   /* 52px */
+  width: 3.25rem; /* 52px */
   height: 3.25rem;
   filter: contrast(110%) saturate(80%);
 }
@@ -105,9 +115,7 @@ html {
   inset: 0;
   border: 1px solid var(--color-border);
   border-radius: 0.5rem;
-  box-shadow:
-    0 0 0 1px var(--color-border-muted) inset,
-    var(--shadow-soft);
+  box-shadow: 0 0 0 1px var(--color-border-muted) inset, var(--shadow-soft);
 }
 
 /* roterande “radar‑skiva” med wedge */
@@ -115,11 +123,16 @@ html {
   position: absolute;
   inset: 6px;
   border-radius: 9999px;
-  background:
-    radial-gradient(circle at center, var(--color-surface) 60%, transparent 61%),
-    conic-gradient(from 0deg,
+  background: radial-gradient(
+      circle at center,
+      var(--color-surface) 60%,
+      transparent 61%
+    ),
+    conic-gradient(
+      from 0deg,
       var(--color-foreground) 0 120deg,
-      transparent 120deg 360deg);
+      transparent 120deg 360deg
+    );
   animation: spin 1.1s linear infinite;
 }
 
@@ -129,14 +142,13 @@ html {
   position: absolute;
   inset: 0;
   border-radius: 0.5rem;
-  background:
-    repeating-linear-gradient(
-      0deg,
-      rgba(40, 21, 23, 0.08),
-      rgba(40, 21, 23, 0.08) 2px,
-      transparent 2px,
-      transparent 4px
-    );
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(40, 21, 23, 0.08),
+    rgba(40, 21, 23, 0.08) 2px,
+    transparent 2px,
+    transparent 4px
+  );
   mix-blend-mode: multiply;
   pointer-events: none;
   animation: crt-flicker 1.8s ease-in-out infinite;
@@ -146,12 +158,13 @@ html {
 .report-card {
   position: relative;
   display: flex;
-  aspect-ratio: 16 / 7;            /* bred, “platta” kort */
+  aspect-ratio: 16 / 7; /* bred, “platta” kort */
   background: var(--color-surface);
   border: 1px solid var(--color-border);
-  border-radius: 1rem;             /* ~rounded-2xl */
+  border-radius: 1rem; /* ~rounded-2xl */
   box-shadow: var(--shadow-soft);
-  transition: transform 200ms ease, box-shadow 200ms ease, border-color 200ms ease, background-color 200ms ease;
+  transition: transform 200ms ease, box-shadow 200ms ease,
+    border-color 200ms ease, background-color 200ms ease;
   overflow: hidden;
 }
 
@@ -171,8 +184,10 @@ html {
   position: absolute;
   inset: 0;
   border-radius: inherit;
-  background-image:
-    radial-gradient(rgba(40,21,23,0.05) 1px, transparent 1.2px);
+  background-image: radial-gradient(
+    rgba(40, 21, 23, 0.05) 1px,
+    transparent 1.2px
+  );
   background-size: 3px 3px;
   opacity: 0.6;
   mix-blend-mode: multiply;
@@ -186,29 +201,39 @@ html {
   transform: translateY(-2px);
   box-shadow: var(--shadow-medium);
   border-color: var(--color-foreground);
-  background-color: color-mix(in srgb, var(--color-accent-100) 10%, var(--color-surface));
+  background-color: color-mix(
+    in srgb,
+    var(--color-accent-100) 10%,
+    var(--color-surface)
+  );
 }
 
 /* active (vald kategori) */
 .report-card--active {
   border-color: var(--color-primary);
-  background-color: color-mix(in srgb, var(--color-primary) 12%, var(--color-surface));
+  background-color: color-mix(
+    in srgb,
+    var(--color-primary) 12%,
+    var(--color-surface)
+  );
   box-shadow: var(--shadow-medium);
 }
 
 /* reduce motion */
 @media (prefers-reduced-motion: reduce) {
-  .report-card { transition: none; }
-  .report-card::after { transition: none; }
+  .report-card {
+    transition: none;
+  }
+  .report-card::after {
+    transition: none;
+  }
 }
-
-
-
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
-
 
 @media (max-width: 640px) {
   html {
@@ -392,9 +417,15 @@ html {
 }
 
 @keyframes pulsate {
-  0% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .animate-pulsate {

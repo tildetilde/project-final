@@ -30,7 +30,7 @@ const TOKENS: Record<
     vspace: "space-y-1",
   },
   sm: {
-    wrapper: "w-[164px] h-[217px]", 
+    wrapper: "w-[164px] h-[217px]",
     value: "text-3xl",
     name: "text-lg font-semibold",
     label: "text-xs",
@@ -77,11 +77,11 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
 }) => {
   const t = TOKENS[size];
   const unit = category?.unit;
-  
+  const unitVisible = category?.unitVisible ?? true;
+
   // Use responsive sizing for sm size to match CurrentCard
-  const responsiveWrapper = size === "sm" 
-    ? "w-[120px] h-[169px] sm:w-[164px] sm:h-[217px]"
-    : t.wrapper;
+  const responsiveWrapper =
+    size === "sm" ? "w-[120px] h-[169px] sm:w-[164px] sm:h-[217px]" : t.wrapper;
 
   return (
           <Card
@@ -96,12 +96,10 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
     >
       {/* diskret mönster - removed for better visibility */}
 
-
-
       {/* NAMN i mitten */}
       <CardContent
         className={cn(
-          "relative z-10 flex-1 flex flex-col justify-center",
+          "relative z-10 flex-1 flex flex-col justify-center ",
           t.padContent
         )}
       >
@@ -110,7 +108,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
           <div className={cn(t.value, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-bold font-mono")}>
             {isRevealed ? formatValue(item.value, unit) : "??"}
           </div>
-          
+
           {/* NAME */}
           <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono")}>
             {item.name}
@@ -128,7 +126,9 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
           )}
           aria-label={isCorrect ? "Correct placement" : "Incorrect placement"}
         >
-          <span className="text-white font-bold">{isCorrect ? "✓" : "✗"}</span>
+          <span className="text-white [font-family:var(--font-family-mono)]">
+            {isCorrect ? "✓" : "✗"}
+          </span>
         </div>
       )}
 

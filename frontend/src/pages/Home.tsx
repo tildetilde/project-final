@@ -67,12 +67,12 @@ export const Home = () => {
           </div>
 
           <section
-            className={`relative z-10 flex items-center justify-center min-h-screen transition-all duration-700 ${
+            className={`relative z-0 flex items-center justify-center min-h-[90vh] pb-16 md:pb-24 transition-all duration-700 ${
               ready ? "opacity-100 scale-100" : "opacity-0 scale-95"
             }`}
           >
             <div className="text-center px-6">
-              <p className="mb-16 tracking-[.25em] text-[10px] md:text-xs text-white/70">
+              <p className="[font-family:var(--font-family-sans)] mb-16 tracking-[.25em] text-[10px] md:text-xs text-white/70">
                 BEYOND THE ANSWERS… THERE IS
               </p>
 
@@ -86,23 +86,23 @@ export const Home = () => {
                 className="mx-auto w-[min(95vw,1800px)] h-auto text-[var(--color-base-400)]"
               />
 
-              {/* 🔽 Diskret scroll-hint */}
-              <button
+              {/* <button
                 type="button"
                 onClick={scrollToCategories}
                 className="mt-16 text-white/70 hover:text-white transition-colors text-sm tracking-wide"
                 aria-label="Scroll to categories"
               >
                 See categories ↓
-              </button>
+              </button> */}
             </div>
           </section>
         </main>
-
-        {/* Kategorierna under (hintas genom negativ margin) */}
+        {/* Kategorierna under (hintas genom negativ margin) */}+{" "}
         <section
           ref={catsRef}
-          className="bg-background text-foreground -mt-10 pt-12 pb-16"
+          className="relative z-20 bg-background text-foreground
+              -mt-10 md:-mt-30 rounded-t-3xl pt-10 md:pt-12 pb-16
+              shadow-[0_-16px_40px_rgba(0,0,0,0.35)]"
         >
           <div className="mx-auto max-w-5xl px-4">
             <CategorySelector />

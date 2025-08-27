@@ -8,7 +8,6 @@ import { ConfirmModal } from "../components/ConfirmModal";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
 
-
 export default function GameMode() {
   const navigate = useNavigate();
   const {
@@ -20,8 +19,6 @@ export default function GameMode() {
     resetGame,
   } = useGame();
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
-
-
 
   const categoryLabel = "Category";
   const categoryValue = selectedCategory?.name || "Select Category";
@@ -114,9 +111,14 @@ export default function GameMode() {
               <div
                 key={t.id ?? i}
                 className={cls}
-                style={active ? { 
-                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.1)'
-                } : {}}
+                style={
+                  active
+                    ? {
+                        boxShadow:
+                          "0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.1)",
+                      }
+                    : {}
+                }
                 aria-current={active ? "true" : "false"}
               >
                 {t.name}{" "}
@@ -154,8 +156,6 @@ export default function GameMode() {
         <span className={dot} />
       </div>
 
-
-
       {/* Innehållssektion med DotPattern – växla mellan SETUP (Settings) och Board */}
       <section className="relative w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
         <div className="relative z-10">
@@ -188,12 +188,14 @@ export default function GameMode() {
             </>
           ) : (
             <>
-              <div className="pt-6 sm:pt-8 pb-6 sm:pb-6">
+
+              <div className="pt-6 sm:pt-8 pb-6 sm:pb-6 text-center">
                 <div className="text-xs sm:text-sm tracking-wider uppercase text-[#fefcfa]">
                   Game Question
                 </div>
                 <Heading
                   level={1}
+
                   className="leading-[0.95] text-[#f9ecdf]"
                   style={{
                     fontSize: "clamp(2rem, 3vw, 4rem)",
@@ -202,8 +204,6 @@ export default function GameMode() {
                 >
                   {selectedCategory.question}
                 </Heading>
-                
-
               </div>
 
               <div className="w-full px-0 sm:px-0">

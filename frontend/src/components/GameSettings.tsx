@@ -26,18 +26,15 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         <div className="text-sm text-muted-foreground" aria-live="polite">
           {settings.teamNames.length} teams • {settings.turnSeconds}s per turn
         </div>
-        {onClose && (
-          <Button variant="outline" size="sm" onClick={onClose}>
-            ← Back to categories
-          </Button>
-        )}
       </header>
 
       <Card className="p-4 space-y-4 ">
         <div className="font-semibold">Teams</div>
 
         <div className="flex items-center gap-3">
-          <label htmlFor="teamCount" className="text-sm text-muted-foreground">Number of teams</label>
+          <label htmlFor="teamCount" className="text-sm text-muted-foreground">
+            Number of teams
+          </label>
           <select
             id="teamCount"
             value={settings.teamNames.length}
@@ -69,7 +66,9 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         <select
           aria-label="Turn time in seconds"
           value={settings.turnSeconds}
-          onChange={(e) => setTurnSeconds(Number(e.target.value) as 30 | 60 | 90)}
+          onChange={(e) =>
+            setTurnSeconds(Number(e.target.value) as 30 | 60 | 90)
+          }
           className="w-full sm:w-56 rounded-md border border-border bg-card px-3 py-2"
         >
           <option value={30}>30 seconds</option>
@@ -78,7 +77,13 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         </select>
       </Card>
 
-      <div className="pt-0">
+      <div className="mt-2 flex flex-wrap items-center gap-5 justify-between">
+        {onClose && (
+          <Button variant="outline" onClick={onClose}>
+            Back to categories
+          </Button>
+        )}
+
         <Button onClick={handleContinue}>Continue to board</Button>
       </div>
     </div>
