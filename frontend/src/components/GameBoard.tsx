@@ -138,14 +138,39 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
     const showSlots = phase === "DRAWN" || phase === "PLACED_PENDING";
 
-    // If team has lost (wrong answer), show message instead of timeline
-    if (lastPlacementCorrect === false || phase === "PLACED_WRONG") {
+    // TIME'S UP + no answer → stor panel i samma stil som OH NO!
+    if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct == null) {
       return (
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60 animate-pulse">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
               <div className="font-bold text-xl sm:text-5xl mb-2 text-primary animate-bounce font-mono">
-                OH NO!
+                TIME’S UP!
+              </div>
+              <div className="sm:text-lg text-foreground font-mono">
+                <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
+                  No answer placed.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // Felplacerat (inkl. TIME'S UP + wrong) → rubriken blir TIME'S UP! om tiden gick
+    if (
+      lastPlacementCorrect === false ||
+      phase === "PLACED_WRONG" ||
+      (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === false)
+    ) {
+      const heading = lastTurnFeedback?.timeUp ? "TIME’S UP!" : "OH NO!";
+      return (
+        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60 animate-pulse">
+          <div className="flex items-center justify-center h-[140px]">
+            <div className="text-center">
+              <div className="font-bold text-xl sm:text-5xl mb-2 text-primary animate-bounce font-mono">
+                {heading}
               </div>
               <div className="font-base sm:text-lg text-foreground font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
@@ -225,16 +250,14 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           {children}
         </div>
 
-        {lastPlacementCorrect === true && (
+        {(lastPlacementCorrect === true ||
+          (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === true)) && (
           <div className="font-bold sm:text-lg text-foreground text-center mt-2 font-mono">
-            <span className="inline-block animate-pulse">CORRECT!</span>
-          </div>
-        )}
-        {phase === "PLACED_PENDING" && (
-          <div className="flex justify-center pt-2">
-            <Button size="sm" onClick={confirmPlacement}>
-              Confirm placement
-            </Button>
+            <span className="inline-block animate-pulse">
+              {lastTurnFeedback?.timeUp && lastTurnFeedback.correct === true
+                ? "Time’s up. Correct!"
+                : "CORRECT!"}
+            </span>
           </div>
         )}
       </div>
@@ -295,7 +318,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               {/* Instruction text positioned under timeline, aligned to the left */}
               {phase === "DRAWN" &&
                 currentCard &&
-                lastPlacementCorrect !== false && (
+                lastPlacementCorrect !== false &&
+                !lastTurnFeedback?.timeUp && (
                   <div className="text-sm text-muted-foreground text-left">
                     Drag the card and drop it between two cards.
                   </div>
@@ -304,7 +328,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               {/* Current card alltid placerat under tidslinjen */}
               {phase === "DRAWN" &&
                 currentCard &&
-                lastPlacementCorrect !== false && (
+                lastPlacementCorrect !== false &&
+                !lastTurnFeedback?.timeUp && (
                   <div className="flex w-full justify-center">
                     {/* Gör kortet något större för tydlighet */}
                     <div className="origin-top scale-105 sm:scale-105">
@@ -318,31 +343,14 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               {isDragging &&
               currentCard &&
               lastPlacementCorrect !== false &&
-              phase !== "PLACED_WRONG" ? (
+              phase !== "PLACED_WRONG" &&
+              !lastTurnFeedback?.timeUp ? (
                 <CurrentCardPreview card={currentCard} />
               ) : null}
             </DragOverlay>
           </DndContext>
 
-          {/* Time's up-feedback (visas mellan turer) */}
-          {lastTurnFeedback?.timeUp && (
-            <div
-              className="mt-2 text-sm text-center"
-              role="status"
-              aria-live="polite"
-            >
-              <span className="font-medium">Time’s up.</span>{" "}
-              {lastTurnFeedback.correct === true && (
-                <span className="text-green-700">You were correct!</span>
-              )}
-              {lastTurnFeedback.correct === false && (
-                <span className="text-red-700">That was incorrect.</span>
-              )}
-              {lastTurnFeedback.correct == null && (
-                <span className="text-muted-foreground">No answer placed.</span>
-              )}
-            </div>
-          )}
+          {/* (tidigare liten "Time's up"-rad borttagen – all feedback hanteras i panelerna ovan) */}
 
           {/* Kontroller */}
           <div className="flex flex-wrap gap-3 pt-3 justify-center font-sans">
@@ -361,7 +369,18 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               </>
             )}
 
-            {(lastPlacementCorrect === false || phase === "PLACED_WRONG") && (
+            {phase === "PLACED_PENDING" && (
+              <div className="flex justify-center pt-2">
+                <Button size="sm" onClick={confirmPlacement}>
+                  Confirm placement
+                </Button>
+              </div>
+            )}
+
+            {(lastPlacementCorrect === false ||
+              phase === "PLACED_WRONG" ||
+              (lastTurnFeedback?.timeUp &&
+                lastTurnFeedback.correct !== true)) && (
               <Button
                 variant="primary"
                 onClick={nextTeam}
