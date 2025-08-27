@@ -3,10 +3,11 @@ import { Link, useNavigate } from "react-router-dom";
 import { OrientationGuard } from "../components/OrientationGuard";
 import { GameBoard } from "../components/GameBoard";
 import { CategorySelector } from "../components/CategorySelector";
-import { Heading, DotPattern } from "../ui";
+import { Heading } from "../ui";
 import { ConfirmModal } from "../components/ConfirmModal";
 import { useGame } from "../store/game";
 import { GameSettings } from "../components/GameSettings";
+
 
 export default function GameMode() {
   const navigate = useNavigate();
@@ -19,6 +20,8 @@ export default function GameMode() {
     resetGame,
   } = useGame();
   const [showConfirmModal, setShowConfirmModal] = React.useState(false);
+
+
 
   const categoryLabel = "Category";
   const categoryValue = selectedCategory?.name || "Select Category";
@@ -109,12 +112,15 @@ export default function GameMode() {
             const base =
               "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
             const cls = active
-              ? `${base} bg-primary text-base-100 border-primary shadow-soft scale-105`
+              ? `${base} bg-primary text-base-100 border-primary scale-105 animate-pulse animate-pulsate`
               : `${base} bg-primary/10 border-border text-muted-foreground`;
             return (
               <div
                 key={t.id ?? i}
                 className={cls}
+                style={active ? { 
+                  boxShadow: '0 4px 8px rgba(0, 0, 0, 0.3), 0 8px 16px rgba(0, 0, 0, 0.2), 0 16px 32px rgba(0, 0, 0, 0.1)'
+                } : {}}
                 aria-current={active ? "true" : "false"}
               >
                 {t.name}{" "}
