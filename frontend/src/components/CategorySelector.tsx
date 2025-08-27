@@ -105,10 +105,12 @@ export const CategorySelector: React.FC = () => {
   return (
     <div className="space-y-8">
       <div className="text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-          Choose a Category
+        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 [font-family:var(--font-family-sans)]">
+          THE CATEGORIES
         </h2>
-        <p className="text-muted-foreground">Pick one to start playing</p>
+        <p className="text-muted-foreground [font-family:var(--font-family-mono)]">
+          Pick one to start playing
+        </p>
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -122,14 +124,14 @@ export const CategorySelector: React.FC = () => {
                 selectCategory(c);
                 navigate("/gamemode");
               }}
-              className={`report-card group focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary ${
+              className={`[font-family:var(--font-family-mono)] report-card font-[var(--font-family-mono)] group focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary ${
                 active ? "report-card--active" : ""
               }`}
               aria-pressed={active}
             >
               <div className="flex flex-col items-center justify-center gap-5 text-center px-8">
                 {iconFor(c.id)}
-                <h3 className="uppercase font-semibold text-foreground/90 text-[clamp(0.9rem,2.5vw,1.1rem)] leading-snug">
+                <h3 className="uppercase font-semibold text-foreground/90 text-[clamp(0.9rem,2.5vw,1.1rem)] leading-snug [text-wrap:balance]">
                   {c.question}
                 </h3>
               </div>
