@@ -80,6 +80,7 @@ type Actions = {
   stopTimer: () => void;
   timeUp: () => void;
   resetGame: () => void;
+  resetGameAndCategory: () => void;
 };
 
 const initialSettings: GameSettings = {
@@ -493,6 +494,11 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           timerId: null,
         },
       });
+    },
+
+    resetGameAndCategory: () => {
+      get().resetGame();
+      set({ selectedCategory: null });
     },
   };
 });
