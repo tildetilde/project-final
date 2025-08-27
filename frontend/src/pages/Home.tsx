@@ -72,7 +72,7 @@ export const Home = () => {
             }`}
           >
             <div className="text-center px-6">
-              <p className="mb-6 tracking-[.25em] text-[10px] md:text-xs text-white/70">
+              <p className="mb-16 tracking-[.25em] text-[10px] md:text-xs text-white/70">
                 BEYOND THE ANSWERS… THERE IS
               </p>
 
@@ -83,14 +83,14 @@ export const Home = () => {
               <img
                 src="/banganzalogo.svg"
                 aria-hidden="true"
-                className="mx-auto w-[min(82vw,900px)] h-auto text-[var(--color-base-400)]"
+                className="mx-auto w-[min(95vw,1800px)] h-auto text-[var(--color-base-400)]"
               />
 
               {/* 🔽 Diskret scroll-hint */}
               <button
                 type="button"
                 onClick={scrollToCategories}
-                className="mt-10 text-white/70 hover:text-white transition-colors text-sm tracking-wide"
+                className="mt-16 text-white/70 hover:text-white transition-colors text-sm tracking-wide"
                 aria-label="Scroll to categories"
               >
                 See categories ↓
