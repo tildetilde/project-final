@@ -4,7 +4,7 @@
   "description": "Oldest to Youngest Celebrities",
   "question": "What year was the celebrity born in?",
   "unit": "year",
-  "unitVisible": true,
+  "unitVisible": false,
   "sort": "desc",
   "source": {
     "name": "",
