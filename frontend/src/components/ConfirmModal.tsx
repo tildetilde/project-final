@@ -20,16 +20,14 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
   confirmText = "Confirm",
   cancelText = "Cancel",
 }) => {
-  if (!isOpen) return null;
-
-  const handleConfirm = () => {
+  const handleConfirm = React.useCallback(() => {
     onConfirm();
     onClose();
-  };
+  }, [onConfirm, onClose]);
 
-  const handleCancel = () => {
+  const handleCancel = React.useCallback(() => {
     onClose();
-  };
+  }, [onClose]);
 
   // Handle escape key
   React.useEffect(() => {
@@ -54,6 +52,11 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
       };
     }
   }, [isOpen]);
+
+  // Don't render anything if modal is not open
+  if (!isOpen) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
