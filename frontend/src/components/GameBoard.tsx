@@ -143,15 +143,15 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     // TIME'S UP + no answer → stor panel i samma stil som OH NO!
     if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct == null) {
       return (
-        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60 animate-pulse">
+        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
-              <div className="font-bold text-xl sm:text-5xl mb-2 text-primary animate-bounce font-mono">
+              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf] animate-bounce font-mono">
                 TIME’S UP!
               </div>
-              <div className="sm:text-lg text-foreground font-mono">
+              <div className="sm:text-lg text-[#f9ecdf] font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
-                  No answer placed.
+                  Your turn is over, it's time for the next team.
                 </span>
               </div>
             </div>
