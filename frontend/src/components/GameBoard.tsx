@@ -61,6 +61,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const selectedCategory = useGame((s) => s.selectedCategory);
   const lastTurnFeedback = useGame((s) => s.lastTurnFeedback);
   const turnTimeline = useGame((s) => s.turnTimeline);
+  const timer = useGame((s) => s.timer);
+  const settings = useGame((s) => s.settings);
 
   const team = teams[currentTeamIndex];
 
@@ -137,15 +139,35 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     // If team has lost (wrong answer), show message instead of timeline
     if (lastPlacementCorrect === false || phase === "PLACED_WRONG") {
       return (
-        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60 animate-pulse">
+        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
-              <div className="font-bold text-xl sm:text-5xl mb-2 text-primary animate-bounce font-mono">
+              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf]  animate-bounce font-mono">
                 OH NO!
               </div>
-              <div className="font-base sm:text-lg text-foreground font-mono">
+              <div className="font-base sm:text-lg text-[#f9ecdf] font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Wrong answer. Your turn is over.
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
+
+    // If time is up and no card was placed, show timeout message
+    if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) {
+      return (
+        <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d]">
+          <div className="flex items-center justify-center h-[140px]">
+            <div className="text-center">
+              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf] font-mono">
+                TIME'S UP!
+              </div>
+              <div className="font-base sm:text-lg text-[#f9ecdf] font-mono">
+                <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
+                  Your turn is over, it's time for the next team.
                 </span>
               </div>
             </div>
@@ -215,14 +237,14 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     }
 
     return (
-      <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60">
+      <div className="rounded-2xl p-2 sm:p-3 border border-[#f9ecdf] bg-[#2a0d0d]">
         {/* overflow-y visible krävs för att hovrade kort kan växa utanför raden */}
         <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-1 sm:gap-2">
           {children}
         </div>
 
-                {lastPlacementCorrect === true && (
-          <div className="font-bold sm:text-lg text-foreground text-center mt-2 font-mono">
+        {lastPlacementCorrect === true && (
+          <div className="font-bold sm:text-lg text-[#f9ecdf] text-center mt-2 font-mono">
             <span className="inline-block animate-pulse">
               CORRECT!
             </span>
@@ -230,11 +252,48 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         )}
         {phase === "PLACED_PENDING" && (
           <div className="flex justify-center pt-2">
-            <Button size="sm" onClick={confirmPlacement}>
+            <Button 
+              size="sm" 
+              onClick={confirmPlacement}
+              className="bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a]"
+            >
               Confirm placement
             </Button>
           </div>
         )}
+      </div>
+    );
+  };
+
+  // Timer component to be displayed above timeline
+  const renderTimer = () => {
+    if (phase !== "DRAWN" && phase !== "PLACED_PENDING" && phase !== "CHOICE_AFTER_CORRECT") {
+      return null;
+    }
+
+    const total = settings.turnSeconds;
+    const left = timer.secondsLeft;
+    const elapsed = total - left;
+    const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
+
+    return (
+      <div className="flex flex-col items-center gap-1 mb-1">
+        <div className="font-mono tabular-nums text-sm text-[#f9ecdf]">
+          {String(Math.floor(left / 60)).padStart(2, "0")}:
+          {String(left % 60).padStart(2, "0")}
+        </div>
+        <div
+          className="w-24 h-2 rounded-full bg-muted relative"
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={total}
+          aria-valuenow={elapsed}
+        >
+          <div
+            className="h-2 rounded-full bg-primary absolute left-0 top-0 transition-all duration-250"
+            style={{ width: `${pct}%` }}
+          />
+        </div>
       </div>
     );
   };
@@ -287,18 +346,21 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             modifiers={[restrictToWindowEdges]}
           >
             {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
-            <div className="flex flex-col items-stretch gap-2 sm:gap-3">
+            <div className="flex flex-col items-stretch gap-1 sm:gap-1">
+              {/* Timer positioned above timeline, centered */}
+              {renderTimer()}
+              
               <div className="min-h-[140px]">{renderTimeline()}</div>
 
               {/* Instruction text positioned under timeline, aligned to the left */}
-              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && (
+              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && !(lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) && (
                 <div className="text-sm text-muted-foreground text-left">
                   Drag the card and drop it between two cards.
                 </div>
               )}
 
               {/* Current card alltid placerat under tidslinjen */}
-              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && (
+              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && !(lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) && (
                 <div className="flex w-full justify-center">
                   {/* Gör kortet något större för tydlighet */}
                   <div className="origin-top scale-105 sm:scale-105">
@@ -316,44 +378,55 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           </DndContext>
 
           {/* Time's up-feedback (visas mellan turer) */}
-          {lastTurnFeedback?.timeUp && (
+          {lastTurnFeedback?.timeUp && lastTurnFeedback.correct !== null && (
             <div
               className="mt-2 text-sm text-center"
               role="status"
               aria-live="polite"
             >
-              <span className="font-medium">Time’s up.</span>{" "}
+              <span className="font-medium text-[#f9ecdf]">Time's up.</span>{" "}
               {lastTurnFeedback.correct === true && (
-                <span className="text-green-700">You were correct!</span>
+                <span className="text-[#f9ecdf]">You were correct!</span>
               )}
               {lastTurnFeedback.correct === false && (
-                <span className="text-red-700">That was incorrect.</span>
-              )}
-              {lastTurnFeedback.correct == null && (
-                <span className="text-muted-foreground">No answer placed.</span>
+                <span className="text-[#f9ecdf]">That was incorrect.</span>
               )}
             </div>
           )}
 
           {/* Kontroller */}
-          <div className="flex flex-wrap gap-3 pt-3">
+          <div className="flex flex-wrap gap-3 pt-3 sm:pt-6">
             {phase === "TURN_START" && lastPlacementCorrect !== false && (
-              <Button onClick={startTurn}>Draw</Button>
+              <Button 
+                onClick={startTurn}
+                className="bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a]"
+              >
+                Draw
+              </Button>
             )}
 
             {phase === "CHOICE_AFTER_CORRECT" && (
               <>
-                <Button variant="primary" onClick={drawAnother}>
+                <Button 
+                  onClick={drawAnother}
+                  className="bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a]"
+                >
                   Draw another
                 </Button>
-                <Button variant="outline" onClick={lockIn}>
+                <Button 
+                  onClick={lockIn}
+                  className="bg-[#f9ecdf] text-[#2a0d0d] border border-[#2a0d0d] hover:bg-[#f0dbc5]"
+                >
                   Lock in & end turn
                 </Button>
               </>
             )}
             
-            {(lastPlacementCorrect === false || phase === "PLACED_WRONG") && (
-              <Button variant="primary" onClick={nextTeam} className="w-full sm:w-auto">
+            {(lastPlacementCorrect === false || phase === "PLACED_WRONG" || (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null)) && (
+              <Button 
+                onClick={nextTeam} 
+                className="w-full sm:w-auto bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a]"
+              >
                 Next Team
               </Button>
             )}

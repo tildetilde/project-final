@@ -31,15 +31,11 @@ export default function GameMode() {
   const scoreA = teams[0]?.timeline.length ?? 0;
   const scoreB = teams[1]?.timeline.length ?? 0;
 
-  const { settings, timer } = useGame();
-  const total = settings.turnSeconds;
-  const left = timer.secondsLeft;
-  const elapsed = total - left;
-  const pct = Math.max(0, Math.min(100, Math.round((elapsed / total) * 100)));
+
 
   const chip =
-    "px-2 py-1 rounded-full bg-primary/10 border border-border text-xs tracking-wider uppercase text-muted-foreground";
-  const dot = "inline-block w-2 h-2 rounded-sm bg-primary shadow-soft";
+    "px-2 py-1 rounded-full bg-primary/10 border border-[#f9ecdf] text-xs tracking-wider uppercase text-[#f9ecdf]";
+  const dot = "inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft";
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -59,7 +55,7 @@ export default function GameMode() {
         <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
           <div className="relative z-10">
             <div className="pt-10 sm:pt-16 pb-8 sm:pb-12">
-              <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+              <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground text-[var(--color-base-100)]">
                 Choose Your Game
               </div>
               <Heading
@@ -87,7 +83,7 @@ export default function GameMode() {
 
   // --- 2) Vanliga GameMode-chrome (samma i SETUP och under spelet) ---
   return (
-    <div className="min-h-screen bg-background flex flex-col">
+    <div className={`min-h-screen flex flex-col ${phase === "SETUP" ? "bg-background" : "bg-[#2a0d0d]"}`}>
       <OrientationGuard minWidth={600} />
 
       {/* Top-left: Home */}
@@ -97,7 +93,7 @@ export default function GameMode() {
       >
         <span className={dot} />
         <div className={chip}>
-          <span className="text-foreground font-semibold">Home</span>
+          <span className="text-[#f9ecdf] font-semibold">Home</span>
         </div>
       </button>
 
@@ -112,8 +108,8 @@ export default function GameMode() {
             const base =
               "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
             const cls = active
-              ? `${base} bg-primary text-base-100 border-primary scale-105 animate-pulse animate-pulsate`
-              : `${base} bg-primary/10 border-border text-muted-foreground`;
+              ? `${base} bg-[#f9ecdf] text-[#2a0d0d] border-[#f9ecdf] scale-105 animate-pulse animate-pulsate`
+              : `${base} bg-primary/10 border-[#f9ecdf] text-[#f9ecdf]`;
             return (
               <div
                 key={t.id ?? i}
@@ -126,7 +122,7 @@ export default function GameMode() {
                 {t.name}{" "}
                 <span
                   className={
-                    active ? "font-semibold" : "text-foreground font-semibold"
+                    active ? "font-semibold" : "text-[#f9ecdf] font-semibold"
                   }
                 >
                   {t.timeline?.length ?? 0}
@@ -138,42 +134,14 @@ export default function GameMode() {
         <span className={dot} />
       </div>
 
-      {/* Timer - positioned at top center to align with Home and Teams */}
-      {(phase === "DRAWN" ||
-        phase === "PLACED_PENDING" ||
-        phase === "CHOICE_AFTER_CORRECT") && (
-        <div
-          className="fixed z-50 top-3 sm:top-4 left-1/2 transform -translate-x-1/2 flex items-center gap-3"
-          aria-live="polite"
-        >
-          <div
-            className="font-mono tabular-nums text-sm"
-            aria-label="Time left"
-          >
-            {String(Math.floor(left / 60)).padStart(2, "0")}:
-            {String(left % 60).padStart(2, "0")}
-          </div>
-          <div
-            className="w-24 h-2 rounded-full bg-muted relative"
-            role="progressbar"
-            aria-valuemin={0}
-            aria-valuemax={total}
-            aria-valuenow={elapsed}
-          >
-            <div
-              className="h-2 rounded-full bg-primary absolute left-0 top-0"
-              style={{ width: `${pct}%` }}
-            />
-          </div>
-        </div>
-      )}
+
 
       {/* Bottom-left: Round */}
       <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
         <span className={dot} />
         <div className={chip}>
           {roundLabel}:{" "}
-          <span className="text-foreground font-semibold">{roundValue}</span>
+          <span className="text-[#f9ecdf] font-semibold">{roundValue}</span>
         </div>
       </div>
 
@@ -181,7 +149,7 @@ export default function GameMode() {
       <div className="fixed z-50 bottom-3 sm:bottom-4 right-3 sm:right-6 flex items-center gap-2">
         <div className={chip}>
           {categoryLabel}:{" "}
-          <span className="text-foreground font-semibold">{categoryValue}</span>
+          <span className="text-[#f9ecdf] font-semibold">{categoryValue}</span>
         </div>
         <span className={dot} />
       </div>
@@ -220,13 +188,13 @@ export default function GameMode() {
             </>
           ) : (
             <>
-              <div className="pt-6 sm:pt-8 pb-6 sm:pb-8">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
+              <div className="pt-6 sm:pt-8 pb-6 sm:pb-6">
+                <div className="text-xs sm:text-sm tracking-wider uppercase text-[#fefcfa]">
                   Game Question
                 </div>
                 <Heading
                   level={1}
-                  className="leading-[0.95] text-foreground"
+                  className="leading-[0.95] text-[#f9ecdf]"
                   style={{
                     fontSize: "clamp(2rem, 3vw, 4rem)",
                     letterSpacing: "-0.02em",

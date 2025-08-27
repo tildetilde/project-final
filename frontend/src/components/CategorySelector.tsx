@@ -104,13 +104,6 @@ export const CategorySelector: React.FC = () => {
 
   return (
     <div className="space-y-8">
-      <div className="text-center">
-        <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">
-          Choose a Category
-        </h2>
-        <p className="text-muted-foreground">Pick one to start playing</p>
-      </div>
-
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {categories.map((c) => {
           const active = selectedCategory?.id === c.id;
