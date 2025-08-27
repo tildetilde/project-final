@@ -272,10 +272,11 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           currentCard: undefined,
           pendingIndex: null,
           lastPlacementCorrect: false,
-          phase: "TURN_START",
+          phase: "PLACED_WRONG",
         });
         get().stopTimer();
-        get().nextTeam();
+        // Don't automatically call nextTeam for wrong answers
+        // Let the user click "Next Team" manually to see the feedback
       }
     },
 
@@ -309,17 +310,32 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         lastPlacementCorrect: null,
       });
 
-      get().nextTeam();
+      // Only automatically switch teams if the last placement was correct
+      // If it was wrong, wait for user to click "Next Team"
+      if (s.lastPlacementCorrect !== false) {
+        get().nextTeam();
+      }
     },
 
     nextTeam: () => {
       const s = get();
-      const next = (s.currentTeamIndex + 1) % s.teams.length;
+      const currentTeamIdx = s.currentTeamIndex;
+      const next = (currentTeamIdx + 1) % s.teams.length;
+      const nextTeam = s.teams[next];
+      
+      // Commit the current team's timeline before switching
+      const committed = s.turnTimeline;
       set({
+        teams: s.teams.map((t, i) =>
+          i === currentTeamIdx ? { ...t, timeline: committed } : t
+        ) as GameState["teams"],
         currentTeamIndex: next,
         currentCard: undefined,
         pendingIndex: null,
         phase: "TURN_START",
+        lastPlacementCorrect: null,
+        lastTurnFeedback: null,
+        turnTimeline: nextTeam?.timeline?.slice() || [],
       });
     },
 
@@ -405,7 +421,8 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
             lastTurnFeedback: { timeUp: true, correct: false },
           });
           get().stopTimer();
-          get().lockIn(); // commit baseline + nästa lag
+          // Don't automatically call lockIn for wrong answers
+          // Let the user click "Next Team" manually
           return;
         }
       }
@@ -416,7 +433,9 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         lastTurnFeedback: { timeUp: true, correct: null },
       });
       get().stopTimer();
-      get().lockIn(); // commit nuvarande turnTimeline (baseline) + nästa lag
+      // Don't automatically call lockIn when no answer was placed
+      // Let the user click "Next Team" manually
+      return;
     },
 
     startTimer: () => {

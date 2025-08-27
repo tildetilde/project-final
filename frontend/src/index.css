@@ -369,6 +369,38 @@ html {
   }
 }
 
+@keyframes typewriter {
+  0% {
+    width: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+  100% {
+    width: 100%;
+    overflow: visible;
+    white-space: normal;
+  }
+}
+
+@keyframes typewriter-smooth {
+  0% {
+    clip-path: inset(0 100% 0 0);
+  }
+  100% {
+    clip-path: inset(0 0% 0 0);
+  }
+}
+
+@keyframes pulsate {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.animate-pulsate {
+  animation: pulsate 2s ease-in-out infinite;
+}
+
 @media (prefers-reduced-motion: reduce) {
   * {
     animation: none !important;
