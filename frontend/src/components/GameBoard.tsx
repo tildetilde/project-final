@@ -20,7 +20,7 @@ import { ErrorMessage } from "../ui/ErrorMessage";
 import { TimeLineCard } from "./TimeLineCard";
 import { CurrentCard, CurrentCardPreview } from "./CurrentCard";
 
-/** Smalare och lägre “drop slots” för kompakt timeline */
+/** Smalare och lägre "drop slots" för kompakt timeline */
 const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
   if (!show) return null;
@@ -137,7 +137,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
       if (phase === "PLACED_PENDING" && pendingIndex === i && currentCard) {
         children.push(
           <div key="pending-card" className="group relative flex-shrink-0">
-            <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
+            <div className="origin-bottom scale-[0.8] group-hover:scale-[1] transition-transform duration-150">
               <CurrentCard card={currentCard} dragging={isDragging} />
             </div>
           </div>
@@ -155,8 +155,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           key={c?._id ?? c?.id ?? i}
           className="group relative flex-shrink-0"
         >
-          {/* Bas: ~60% storlek. Hover: ~90%. Origin i botten så den "poppar uppåt". */}
-          <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
+          {/* Bas: ~60% storlek. Hover: ~75%. Origin i botten så den "poppar uppåt". */}
+          <div className="origin-bottom scale-[0.8] group-hover:scale-[1] transition-transform duration-150">
             <TimeLineCard
               item={base[i]}
               category={selectedCategory || undefined}
@@ -182,7 +182,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         children.length - 1,
         0,
         <div key="pending-last" className="group relative flex-shrink-0">
-          <div className="origin-bottom scale-[0.7] group-hover:scale-[1.0] transition-transform duration-150">
+          <div className="origin-bottom scale-[0.8] group-hover:scale-[1] transition-transform duration-150">
             <CurrentCard card={currentCard} dragging={isDragging} />
           </div>
         </div>
@@ -264,13 +264,13 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             collisionDetection={closestCenter}
             modifiers={[restrictToWindowEdges]}
           >
-            {/* Ny layout: tidslinjen överst, current card *under* tidslinjen */}
-            <div className="flex flex-col items-stretch gap-4 sm:gap-6">
+            {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
+            <div className="flex flex-col items-stretch gap-2 sm:gap-3">
               <div className="min-h-[140px]">{renderTimeline()}</div>
 
-              {/* Instruction text centered under timeline */}
+              {/* Instruction text positioned under timeline, aligned to the left */}
               {phase === "DRAWN" && currentCard && (
-                <div className="text-sm text-muted-foreground text-center">
+                <div className="text-sm text-muted-foreground text-left">
                   Drag the card and drop it between two cards.
                 </div>
               )}
@@ -279,7 +279,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               {phase === "DRAWN" && currentCard && (
                 <div className="flex w-full justify-center">
                   {/* Gör kortet något större för tydlighet */}
-                  <div className="origin-top scale-110 sm:scale-125">
+                  <div className="origin-top scale-105 sm:scale-105">
                     <CurrentCard card={currentCard} dragging={isDragging} />
                   </div>
                 </div>
