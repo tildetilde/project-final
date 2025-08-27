@@ -1,19 +1,15 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap");
-
-/* index.css */
-@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+Antique:wght@400;500;700&display=swap");
 
 @font-face {
   font-family: "Cygnito Mono";
-  src: url("/src/assets/cygnito-mono-regular.otf") format("truetype");
+  src: url("/src/assets/cygnito-mono-regular.otf") format("opentype");
   font-weight: 400;
   font-style: normal;
 }
 
 @theme {
-  --font-family-sans: "Zen Kaku Gothic New", sans-serif;
+  --font-family-sans: "Zen Kaku Gothic Antique", system-ui, sans-serif;
   --font-family-mono: "Cygnito Mono", ui-monospace, SFMono-Regular, Menlo,
     Monaco, Consolas, monospace;
 
