@@ -375,9 +375,10 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               </Button>
               <Button
                 variant="outline"
-                onClick={() =>
-                  navigate("/", { state: { scrollTo: "categories" } })
-                }
+                onClick={() => {
+                  useGame.getState().resetGameAndCategory();
+                  navigate("/", { state: { scrollTo: "categories" } });
+                }}
               >
                 New category
               </Button>
