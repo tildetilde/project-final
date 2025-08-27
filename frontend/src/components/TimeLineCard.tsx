@@ -84,21 +84,17 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
     size === "sm" ? "w-[120px] h-[169px] sm:w-[164px] sm:h-[217px]" : t.wrapper;
 
   return (
-    <Card
-      className={cn(
-        responsiveWrapper,
-        "flex-shrink-0 flex flex-col relative overflow-hidden p-0",
-        "bg-gradient-to-br from-accent-200 via-accent-300 to-accent-500",
-        "border-accent-400 text-base-100 shadow-medium",
-        isRevealed ? "" : "bg-gradient-to-br from-accent-600 to-accent-800",
-        className
-      )}
+          <Card
+        className={cn(
+          responsiveWrapper,
+          "flex-shrink-0 flex flex-col relative overflow-hidden p-0",
+          isCorrect === false ? "bg-[#2a0d0d] border-[#f9ecdf]" : "bg-[#f9ecdf]",
+          "border-accent-400 text-base-100 shadow-medium",
+          className
+        )}
       aria-label={`${item.name}${item.label ? ` – ${item.label}` : ""}`}
     >
-      {/* diskret mönster */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(255,255,255,0.1)_1px,transparent_1px)] bg-[length:20px_20px]" />
-      </div>
+      {/* diskret mönster - removed for better visibility */}
 
       {/* NAMN i mitten */}
       <CardContent
@@ -109,22 +105,12 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
       >
         <div className={cn(t.vspace, "text-center")}>
           {/* VALUE + UNIT */}
-          <div
-            className={cn(
-              t.value,
-              "text-base-100 leading-tight [font-family:var(--font-family-mono)]"
-            )}
-          >
+          <div className={cn(t.value, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-bold font-mono")}>
             {isRevealed ? formatValue(item.value, unit) : "??"}
           </div>
 
           {/* NAME */}
-          <div
-            className={cn(
-              t.name,
-              "text-base-100 leading-tight [font-family:var(--font-family-mono)]"
-            )}
-          >
+          <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono")}>
             {item.name}
           </div>
         </div>
@@ -146,8 +132,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         </div>
       )}
 
-      {/* glint */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/5 to-transparent" />
+      {/* glint - removed for better visibility */}
     </Card>
   );
 };
