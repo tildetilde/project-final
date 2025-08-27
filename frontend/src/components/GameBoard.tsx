@@ -74,7 +74,11 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const [isDragging, setIsDragging] = React.useState(false);
 
   const onDragStart = (e: DragStartEvent) => {
-    if (e.active.id === "current-card" && lastPlacementCorrect !== false && phase !== "PLACED_WRONG") {
+    if (
+      e.active.id === "current-card" &&
+      lastPlacementCorrect !== false &&
+      phase !== "PLACED_WRONG"
+    ) {
       setIsDragging(true);
     }
   };
@@ -82,7 +86,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const onDragEnd = (e: DragEndEvent) => {
     setIsDragging(false);
     if (lastPlacementCorrect === false || phase === "PLACED_WRONG") return; // Don't allow placement if team has lost
-    
+
     const overId = e.over?.id as string | undefined;
     if (!overId || !overId.startsWith("slot-")) return;
     const n = Number(overId.slice(5));
@@ -221,11 +225,9 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           {children}
         </div>
 
-                {lastPlacementCorrect === true && (
+        {lastPlacementCorrect === true && (
           <div className="font-bold sm:text-lg text-foreground text-center mt-2 font-mono">
-            <span className="inline-block animate-pulse">
-              CORRECT!
-            </span>
+            <span className="inline-block animate-pulse">CORRECT!</span>
           </div>
         )}
         {phase === "PLACED_PENDING" && (
@@ -287,29 +289,36 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             modifiers={[restrictToWindowEdges]}
           >
             {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
-            <div className="flex flex-col items-stretch gap-2 sm:gap-3">
+            <div className="flex flex-col items-stretch gap-2 sm:gap-3 mt-30">
               <div className="min-h-[140px]">{renderTimeline()}</div>
 
               {/* Instruction text positioned under timeline, aligned to the left */}
-              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && (
-                <div className="text-sm text-muted-foreground text-left">
-                  Drag the card and drop it between two cards.
-                </div>
-              )}
+              {phase === "DRAWN" &&
+                currentCard &&
+                lastPlacementCorrect !== false && (
+                  <div className="text-sm text-muted-foreground text-left">
+                    Drag the card and drop it between two cards.
+                  </div>
+                )}
 
               {/* Current card alltid placerat under tidslinjen */}
-              {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && (
-                <div className="flex w-full justify-center">
-                  {/* Gör kortet något större för tydlighet */}
-                  <div className="origin-top scale-105 sm:scale-105">
-                    <CurrentCard card={currentCard} dragging={isDragging} />
+              {phase === "DRAWN" &&
+                currentCard &&
+                lastPlacementCorrect !== false && (
+                  <div className="flex w-full justify-center">
+                    {/* Gör kortet något större för tydlighet */}
+                    <div className="origin-top scale-105 sm:scale-105">
+                      <CurrentCard card={currentCard} dragging={isDragging} />
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
             </div>
 
             <DragOverlay>
-              {isDragging && currentCard && lastPlacementCorrect !== false && phase !== "PLACED_WRONG" ? (
+              {isDragging &&
+              currentCard &&
+              lastPlacementCorrect !== false &&
+              phase !== "PLACED_WRONG" ? (
                 <CurrentCardPreview card={currentCard} />
               ) : null}
             </DragOverlay>
@@ -336,7 +345,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           )}
 
           {/* Kontroller */}
-          <div className="flex flex-wrap gap-3 pt-3">
+          <div className="flex flex-wrap gap-3 pt-3 justify-center font-sans">
             {phase === "TURN_START" && lastPlacementCorrect !== false && (
               <Button onClick={startTurn}>Draw</Button>
             )}
@@ -351,9 +360,13 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
                 </Button>
               </>
             )}
-            
+
             {(lastPlacementCorrect === false || phase === "PLACED_WRONG") && (
-              <Button variant="primary" onClick={nextTeam} className="w-full sm:w-auto">
+              <Button
+                variant="primary"
+                onClick={nextTeam}
+                className="w-full sm:w-auto"
+              >
                 Next Team
               </Button>
             )}
