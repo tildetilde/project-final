@@ -111,12 +111,12 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
       >
         <div className={cn(t.vspace, "text-center")}>
           {/* VALUE + UNIT */}
-          <div className={cn(t.value, "text-base-100 leading-tight font-bold")}>
+          <div className={cn(t.value, "text-base-100 leading-tight font-bold font-mono")}>
             {isRevealed ? formatValue(item.value, unit) : "??"}
           </div>
           
           {/* NAME */}
-          <div className={cn(t.name, "text-base-100 leading-tight")}>
+          <div className={cn(t.name, "text-base-100 leading-tight font-mono")}>
             {item.name}
           </div>
         </div>
