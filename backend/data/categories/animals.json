@@ -2,7 +2,7 @@
   "id": "animals.weight",
   "name": "Animals",
   "description": "Quiz about animal weights in kilograms",
-  "question": "Which animal is heaviest?",
+  "question": "Which animal weighs the most?",
   "unit": "kg",
   "unitVisible": true,
   "sort": "desc",
