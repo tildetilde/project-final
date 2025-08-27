@@ -403,7 +403,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
                   <div className="origin-top scale-105 sm:scale-105">
                     <CurrentCard card={currentCard} dragging={isDragging} />
                   </div>
-                )}
+                </div>
+              )}
             </div>
 
             <DragOverlay>
