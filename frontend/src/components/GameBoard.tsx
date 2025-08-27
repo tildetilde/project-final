@@ -192,7 +192,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     return (
       <div className="rounded-2xl p-2 sm:p-3 border border-border bg-background/60">
         {/* overflow-y visible krävs för att hovrade kort kan växa utanför raden */}
-        <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-0.5 sm:gap-1">
+        <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-1 sm:gap-2">
           {children}
         </div>
 
