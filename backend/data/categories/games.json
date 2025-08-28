@@ -1,0 +1,14 @@
+{
+  "id": "games.releaseyear",
+  "name": "Console Games",
+  "description": "Quiz about release years of popular console games",
+  "question": "What year was the game released?",
+  "unit": "year",
+  "unitVisible": false,
+  "sort": "desc",
+  "source": {
+    "name": "Wikipedia, IGN, GameSpot",
+    "url": "https://en.wikipedia.org/wiki/List_of_best-selling_video_games"
+  },
+  "version": 1
+}

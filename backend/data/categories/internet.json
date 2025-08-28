@@ -1,0 +1,14 @@
+{
+  "id": "internet.phenomena.year",
+  "name": "Internet Phenomena",
+  "description": "Quiz about viral internet phenomena and the year they peaked",
+  "question": "Which internet phenomenon happened first?",
+  "unit": "year",
+  "unitVisible": false,
+  "sort": "asc",
+  "source": {
+    "name": "Wikipedia, Know Your Meme",
+    "url": "https://knowyourmeme.com/"
+  },
+  "version": 1
+}

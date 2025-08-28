@@ -214,5 +214,245 @@
     "value": 1,
     "categoryId": "animals.weight",
     "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-28",
+    "name": "Komodo Dragon",
+    "label": "Weight 70 kg",
+    "value": 70,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-29",
+    "name": "Emperor Penguin",
+    "label": "Weight 30 kg",
+    "value": 30,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-30",
+    "name": "Golden Eagle",
+    "label": "Weight 6 kg",
+    "value": 6,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-31",
+    "name": "Bald Eagle",
+    "label": "Weight 5 kg",
+    "value": 5,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-32",
+    "name": "Koala",
+    "label": "Weight 12 kg",
+    "value": 12,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-33",
+    "name": "Sloth",
+    "label": "Weight 6 kg",
+    "value": 6,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-34",
+    "name": "Red Fox",
+    "label": "Weight 8 kg",
+    "value": 8,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-35",
+    "name": "Snow Leopard",
+    "label": "Weight 32 kg",
+    "value": 32,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-36",
+    "name": "Puma",
+    "label": "Weight 70 kg",
+    "value": 70,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-37",
+    "name": "Hyena",
+    "label": "Weight 60 kg",
+    "value": 60,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-38",
+    "name": "Crocodile",
+    "label": "Weight 500 kg",
+    "value": 500,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-39",
+    "name": "Anaconda",
+    "label": "Weight 250 kg",
+    "value": 250,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-40",
+    "name": "Komodo Dragon Hatchling",
+    "label": "Weight 0.1 kg",
+    "value": 0.1,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-41",
+    "name": "Albatross",
+    "label": "Weight 8 kg",
+    "value": 8,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-42",
+    "name": "Puffin",
+    "label": "Weight 0.5 kg",
+    "value": 0.5,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-43",
+    "name": "Octopus",
+    "label": "Weight 15 kg",
+    "value": 15,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-44",
+    "name": "Giant Squid",
+    "label": "Weight 275 kg",
+    "value": 275,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-45",
+    "name": "Manta Ray",
+    "label": "Weight 1350 kg",
+    "value": 1350,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-46",
+    "name": "Stingray",
+    "label": "Weight 300 kg",
+    "value": 300,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-47",
+    "name": "Walrus",
+    "label": "Weight 1000 kg",
+    "value": 1000,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-48",
+    "name": "Seal",
+    "label": "Weight 150 kg",
+    "value": 150,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-49",
+    "name": "Lynx",
+    "label": "Weight 20 kg",
+    "value": 20,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-50",
+    "name": "Hedgehog",
+    "label": "Weight 1 kg",
+    "value": 1,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-51",
+    "name": "Rabbit",
+    "label": "Weight 2 kg",
+    "value": 2,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-52",
+    "name": "House Cat",
+    "label": "Weight 4 kg",
+    "value": 4,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-53",
+    "name": "Dog (Labrador)",
+    "label": "Weight 30 kg",
+    "value": 30,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-54",
+    "name": "Guinea Pig",
+    "label": "Weight 1 kg",
+    "value": 1,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-55",
+    "name": "Hamster",
+    "label": "Weight 0.1 kg",
+    "value": 0.1,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-56",
+    "name": "Mouse",
+    "label": "Weight 0.02 kg",
+    "value": 0.02,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "animal-57",
+    "name": "Blue Jay",
+    "label": "Weight 0.1 kg",
+    "value": 0.1,
+    "categoryId": "animals.weight",
+    "source": { "name": "Wikipedia" }
   }
 ]

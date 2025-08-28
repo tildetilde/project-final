@@ -67,6 +67,65 @@ const GlobeIcon = () => (
   </svg>
 );
 
+const GameIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M2 6m0 2a2 2 0 0 1 2 -2h16a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-16a2 2 0 0 1 -2 -2z" />
+    <path d="M6 12h4m-2 -2v4" />
+    <path d="M15 11l0 .01" />
+    <path d="M18 13l0 .01" />
+  </svg>
+);
+
+const ElementIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M12 12v.01" />
+    <path d="M19.071 4.929c-1.562 -1.562 -6 .337 -9.9 4.243c-3.905 3.905 -5.804 8.337 -4.242 9.9c1.562 1.561 6 -.338 9.9 -4.244c3.905 -3.905 5.804 -8.337 4.242 -9.9" />
+    <path d="M4.929 4.929c-1.562 1.562 .337 6 4.243 9.9c3.905 3.905 8.337 5.804 9.9 4.242c1.561 -1.562 -.338 -6 -4.244 -9.9c-3.905 -3.905 -8.337 -5.804 -9.9 -4.242" />
+  </svg>
+);
+
+const InternetIcon = () => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    stroke-width="2"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  >
+    <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+    <path d="M3 5a1 1 0 0 1 1 -1h16a1 1 0 0 1 1 1v10a1 1 0 0 1 -1 1h-16a1 1 0 0 1 -1 -1v-10z" />
+    <path d="M7 20h10" />
+    <path d="M9 16v4" />
+    <path d="M15 16v4" />
+  </svg>
+);
+
 export const CategorySelector: React.FC = () => {
   const {
     categories,
@@ -99,6 +158,9 @@ export const CategorySelector: React.FC = () => {
   const iconFor = (id: string) => {
     if (id.startsWith("animals")) return <AnimalIcon />;
     if (id.startsWith("celebrities")) return <PersonIcon />;
+    if (id.startsWith("games")) return <GameIcon />;
+    if (id.startsWith("element")) return <ElementIcon />;
+    if (id.startsWith("internet")) return <InternetIcon />;
     return <GlobeIcon />;
   };
 

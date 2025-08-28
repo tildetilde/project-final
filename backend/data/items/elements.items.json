@@ -1,0 +1,352 @@
+[
+  {
+    "id": "element-1",
+    "name": "Hydrogen",
+    "label": "Atomic number 1",
+    "value": 1,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-2",
+    "name": "Helium",
+    "label": "Atomic number 2",
+    "value": 2,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-3",
+    "name": "Lithium",
+    "label": "Atomic number 3",
+    "value": 3,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-4",
+    "name": "Beryllium",
+    "label": "Atomic number 4",
+    "value": 4,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-5",
+    "name": "Boron",
+    "label": "Atomic number 5",
+    "value": 5,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-6",
+    "name": "Carbon",
+    "label": "Atomic number 6",
+    "value": 6,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-7",
+    "name": "Nitrogen",
+    "label": "Atomic number 7",
+    "value": 7,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-8",
+    "name": "Oxygen",
+    "label": "Atomic number 8",
+    "value": 8,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-9",
+    "name": "Fluorine",
+    "label": "Atomic number 9",
+    "value": 9,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-10",
+    "name": "Neon",
+    "label": "Atomic number 10",
+    "value": 10,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-11",
+    "name": "Sodium",
+    "label": "Atomic number 11",
+    "value": 11,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-12",
+    "name": "Magnesium",
+    "label": "Atomic number 12",
+    "value": 12,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-13",
+    "name": "Aluminium",
+    "label": "Atomic number 13",
+    "value": 13,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-14",
+    "name": "Silicon",
+    "label": "Atomic number 14",
+    "value": 14,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-15",
+    "name": "Phosphorus",
+    "label": "Atomic number 15",
+    "value": 15,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-16",
+    "name": "Sulfur",
+    "label": "Atomic number 16",
+    "value": 16,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-17",
+    "name": "Chlorine",
+    "label": "Atomic number 17",
+    "value": 17,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-18",
+    "name": "Argon",
+    "label": "Atomic number 18",
+    "value": 18,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-19",
+    "name": "Potassium",
+    "label": "Atomic number 19",
+    "value": 19,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-20",
+    "name": "Calcium",
+    "label": "Atomic number 20",
+    "value": 20,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-21",
+    "name": "Scandium",
+    "label": "Atomic number 21",
+    "value": 21,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-22",
+    "name": "Titanium",
+    "label": "Atomic number 22",
+    "value": 22,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-23",
+    "name": "Vanadium",
+    "label": "Atomic number 23",
+    "value": 23,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-24",
+    "name": "Chromium",
+    "label": "Atomic number 24",
+    "value": 24,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-25",
+    "name": "Manganese",
+    "label": "Atomic number 25",
+    "value": 25,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-26",
+    "name": "Iron",
+    "label": "Atomic number 26",
+    "value": 26,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-27",
+    "name": "Cobalt",
+    "label": "Atomic number 27",
+    "value": 27,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-28",
+    "name": "Nickel",
+    "label": "Atomic number 28",
+    "value": 28,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-29",
+    "name": "Copper",
+    "label": "Atomic number 29",
+    "value": 29,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-30",
+    "name": "Zinc",
+    "label": "Atomic number 30",
+    "value": 30,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-31",
+    "name": "Gallium",
+    "label": "Atomic number 31",
+    "value": 31,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-32",
+    "name": "Germanium",
+    "label": "Atomic number 32",
+    "value": 32,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-33",
+    "name": "Arsenic",
+    "label": "Atomic number 33",
+    "value": 33,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-34",
+    "name": "Selenium",
+    "label": "Atomic number 34",
+    "value": 34,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-35",
+    "name": "Bromine",
+    "label": "Atomic number 35",
+    "value": 35,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-36",
+    "name": "Krypton",
+    "label": "Atomic number 36",
+    "value": 36,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-37",
+    "name": "Rubidium",
+    "label": "Atomic number 37",
+    "value": 37,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-38",
+    "name": "Strontium",
+    "label": "Atomic number 38",
+    "value": 38,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-39",
+    "name": "Yttrium",
+    "label": "Atomic number 39",
+    "value": 39,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-40",
+    "name": "Zirconium",
+    "label": "Atomic number 40",
+    "value": 40,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-41",
+    "name": "Niobium",
+    "label": "Atomic number 41",
+    "value": 41,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-42",
+    "name": "Molybdenum",
+    "label": "Atomic number 42",
+    "value": 42,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-43",
+    "name": "Technetium",
+    "label": "Atomic number 43",
+    "value": 43,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-44",
+    "name": "Ruthenium",
+    "label": "Atomic number 44",
+    "value": 44,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-45",
+    "name": "Rhodium",
+    "label": "Atomic number 45",
+    "value": 45,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-46",
+    "name": "Palladium",
+    "label": "Atomic number 46",
+    "value": 46,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-47",
+    "name": "Silver",
+    "label": "Atomic number 47",
+    "value": 47,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-48",
+    "name": "Cadmium",
+    "label": "Atomic number 48",
+    "value": 48,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-49",
+    "name": "Indium",
+    "label": "Atomic number 49",
+    "value": 49,
+    "categoryId": "elements.atomicnumber"
+  },
+  {
+    "id": "element-50",
+    "name": "Tin",
+    "label": "Atomic number 50",
+    "value": 50,
+    "categoryId": "elements.atomicnumber"
+  }
+]

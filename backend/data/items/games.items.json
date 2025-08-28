@@ -1,0 +1,341 @@
+[
+  {
+    "id": "game-1",
+    "name": "Super Mario Bros.",
+    "label": "Released 1985",
+    "value": 1985,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-2",
+    "name": "The Legend of Zelda",
+    "label": "Released 1986",
+    "value": 1986,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-3",
+    "name": "Tetris",
+    "label": "Released 1989",
+    "value": 1989,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-4",
+    "name": "Street Fighter II",
+    "label": "Released 1991",
+    "value": 1991,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-5",
+    "name": "Sonic the Hedgehog",
+    "label": "Released 1991",
+    "value": 1991,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-6",
+    "name": "Mortal Kombat",
+    "label": "Released 1992",
+    "value": 1992,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-7",
+    "name": "DOOM",
+    "label": "Released 1993",
+    "value": 1993,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-8",
+    "name": "Pokémon Red/Blue",
+    "label": "Released 1996",
+    "value": 1996,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-9",
+    "name": "Final Fantasy VII",
+    "label": "Released 1997",
+    "value": 1997,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-10",
+    "name": "GoldenEye 007",
+    "label": "Released 1997",
+    "value": 1997,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-11",
+    "name": "Half-Life",
+    "label": "Released 1998",
+    "value": 1998,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-13",
+    "name": "Super Smash Bros.",
+    "label": "Released 1999",
+    "value": 1999,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-14",
+    "name": "The Sims",
+    "label": "Released 2000",
+    "value": 2000,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-15",
+    "name": "Grand Theft Auto III",
+    "label": "Released 2001",
+    "value": 2001,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-16",
+    "name": "Halo: Combat Evolved",
+    "label": "Released 2001",
+    "value": 2001,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-17",
+    "name": "Metroid Prime",
+    "label": "Released 2002",
+    "value": 2002,
+    "categoryId": "games.releaseyear"
+  },
+
+  {
+    "id": "game-19",
+    "name": "Call of Duty",
+    "label": "Released 2003",
+    "value": 2003,
+    "categoryId": "games.releaseyear"
+  },
+
+  {
+    "id": "game-21",
+    "name": "World of Warcraft",
+    "label": "Released 2004",
+    "value": 2004,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-22",
+    "name": "Half-Life 2",
+    "label": "Released 2004",
+    "value": 2004,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-23",
+    "name": "Resident Evil 4",
+    "label": "Released 2005",
+    "value": 2005,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-24",
+    "name": "God of War",
+    "label": "Released 2005",
+    "value": 2005,
+    "categoryId": "games.releaseyear"
+  },
+
+  {
+    "id": "game-26",
+    "name": "Gears of War",
+    "label": "Released 2006",
+    "value": 2006,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-27",
+    "name": "BioShock",
+    "label": "Released 2007",
+    "value": 2007,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-29",
+    "name": "Super Mario Galaxy",
+    "label": "Released 2007",
+    "value": 2007,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-30",
+    "name": "Grand Theft Auto IV",
+    "label": "Released 2008",
+    "value": 2008,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-31",
+    "name": "Fallout 3",
+    "label": "Released 2008",
+    "value": 2008,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-32",
+    "name": "Uncharted 2: Among Thieves",
+    "label": "Released 2009",
+    "value": 2009,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-33",
+    "name": "Minecraft",
+    "label": "Released 2009",
+    "value": 2009,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-34",
+    "name": "Red Dead Redemption",
+    "label": "Released 2010",
+    "value": 2010,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-35",
+    "name": "Mass Effect 2",
+    "label": "Released 2010",
+    "value": 2010,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-37",
+    "name": "Dark Souls",
+    "label": "Released 2011",
+    "value": 2011,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-38",
+    "name": "Journey",
+    "label": "Released 2012",
+    "value": 2012,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-39",
+    "name": "Borderlands 2",
+    "label": "Released 2012",
+    "value": 2012,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-40",
+    "name": "The Last of Us",
+    "label": "Released 2013",
+    "value": 2013,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-41",
+    "name": "Grand Theft Auto V",
+    "label": "Released 2013",
+    "value": 2013,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-42",
+    "name": "Destiny",
+    "label": "Released 2014",
+    "value": 2014,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-43",
+    "name": "Mario Kart 8",
+    "label": "Released 2014",
+    "value": 2014,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-44",
+    "name": "The Witcher 3: Wild Hunt",
+    "label": "Released 2015",
+    "value": 2015,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-45",
+    "name": "Bloodborne",
+    "label": "Released 2015",
+    "value": 2015,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-46",
+    "name": "Overwatch",
+    "label": "Released 2016",
+    "value": 2016,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-47",
+    "name": "Uncharted 4: A Thief's End",
+    "label": "Released 2016",
+    "value": 2016,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-49",
+    "name": "Horizon Zero Dawn",
+    "label": "Released 2017",
+    "value": 2017,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-50",
+    "name": "God of War",
+    "label": "Released 2018",
+    "value": 2018,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-51",
+    "name": "Red Dead Redemption 2",
+    "label": "Released 2018",
+    "value": 2018,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-52",
+    "name": "Sekiro: Shadows Die Twice",
+    "label": "Released 2019",
+    "value": 2019,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-53",
+    "name": "Death Stranding",
+    "label": "Released 2019",
+    "value": 2019,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-55",
+    "name": "The Last of Us Part II",
+    "label": "Released 2020",
+    "value": 2020,
+    "categoryId": "games.releaseyear"
+  },
+  {
+    "id": "game-56",
+    "name": "Elden Ring",
+    "label": "Released 2022",
+    "value": 2022,
+    "categoryId": "games.releaseyear"
+  }
+]

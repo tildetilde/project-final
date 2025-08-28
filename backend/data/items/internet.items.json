@@ -1,0 +1,346 @@
+[
+  {
+    "id": "net-1",
+    "name": "Dancing Baby",
+    "label": "Year 1996",
+    "value": 1996,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "net-2",
+    "name": "Star Wars Kid",
+    "label": "Year 2003",
+    "value": 2003,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "net-3",
+    "name": "Numa Numa",
+    "label": "Year 2004",
+    "value": 2004,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "net-4",
+    "name": "Leeroy Jenkins",
+    "label": "Year 2005",
+    "value": 2005,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "net-5",
+    "name": "Chuck Norris Facts",
+    "label": "Year 2005",
+    "value": 2005,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "KnowYourMeme" }
+  },
+  {
+    "id": "net-6",
+    "name": "OK Go – Treadmills",
+    "label": "Year 2006",
+    "value": 2006,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "Wikipedia" }
+  },
+  {
+    "id": "net-7",
+    "name": "Rickrolling",
+    "label": "Year 2007",
+    "value": 2007,
+    "categoryId": "internet.phenomena.year",
+    "source": { "name": "KnowYourMeme" }
+  },
+  {
+    "id": "net-9",
+    "name": "Chocolate Rain",
+    "label": "Year 2007",
+    "value": 2007,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-10",
+    "name": "Dramatic Chipmunk",
+    "label": "Year 2007",
+    "value": 2007,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-11",
+    "name": "Keyboard Cat",
+    "label": "Year 2009",
+    "value": 2009,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-12",
+    "name": "David After Dentist",
+    "label": "Year 2009",
+    "value": 2009,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-13",
+    "name": "Double Rainbow",
+    "label": "Year 2010",
+    "value": 2010,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-14",
+    "name": "Bed Intruder",
+    "label": "Year 2010",
+    "value": 2010,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-15",
+    "name": "Planking",
+    "label": "Year 2011",
+    "value": 2011,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-16",
+    "name": "Nyan Cat",
+    "label": "Year 2011",
+    "value": 2011,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-17",
+    "name": "Rebecca Black – Friday",
+    "label": "Year 2011",
+    "value": 2011,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-18",
+    "name": "Kony 2012",
+    "label": "Year 2012",
+    "value": 2012,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-19",
+    "name": "Gangnam Style",
+    "label": "Year 2012",
+    "value": 2012,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-20",
+    "name": "Overly Attached Girlfriend",
+    "label": "Year 2012",
+    "value": 2012,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-21",
+    "name": "Harlem Shake",
+    "label": "Year 2013",
+    "value": 2013,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-22",
+    "name": "What Does the Fox Say?",
+    "label": "Year 2013",
+    "value": 2013,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-23",
+    "name": "Doge",
+    "label": "Year 2013",
+    "value": 2013,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-24",
+    "name": "Ice Bucket Challenge",
+    "label": "Year 2014",
+    "value": 2014,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-25",
+    "name": "Alex from Target",
+    "label": "Year 2014",
+    "value": 2014,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-26",
+    "name": "The Dress (Blue/Black)",
+    "label": "Year 2015",
+    "value": 2015,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-27",
+    "name": "Left Shark",
+    "label": "Year 2015",
+    "value": 2015,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-28",
+    "name": "Damn, Daniel",
+    "label": "Year 2016",
+    "value": 2016,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-29",
+    "name": "Mannequin Challenge",
+    "label": "Year 2016",
+    "value": 2016,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-30",
+    "name": "Bottle Flip",
+    "label": "Year 2016",
+    "value": 2016,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-31",
+    "name": "Fidget Spinner Craze",
+    "label": "Year 2017",
+    "value": 2017,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-32",
+    "name": "Distracted Boyfriend",
+    "label": "Year 2017",
+    "value": 2017,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-33",
+    "name": "Ugandan Knuckles",
+    "label": "Year 2018",
+    "value": 2018,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-34",
+    "name": "Yanny or Laurel",
+    "label": "Year 2018",
+    "value": 2018,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-35",
+    "name": "Kiki Challenge",
+    "label": "Year 2018",
+    "value": 2018,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-36",
+    "name": "Storm Area 51",
+    "label": "Year 2019",
+    "value": 2019,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-37",
+    "name": "Baby Yoda",
+    "label": "Year 2019",
+    "value": 2019,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-38",
+    "name": "Woman Yelling at a Cat",
+    "label": "Year 2019",
+    "value": 2019,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-39",
+    "name": "Coffin Dance (Astronomia)",
+    "label": "Year 2020",
+    "value": 2020,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-40",
+    "name": "Among Us (Viral Breakout)",
+    "label": "Year 2020",
+    "value": 2020,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-41",
+    "name": "Tiger King Memes",
+    "label": "Year 2020",
+    "value": 2020,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-42",
+    "name": "Bernie Sanders Mittens",
+    "label": "Year 2021",
+    "value": 2021,
+    "categoryId": "internet.phenomena.year"
+  },
+
+  {
+    "id": "net-44",
+    "name": "Red Flag Emoji Trend",
+    "label": "Year 2021",
+    "value": 2021,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-45",
+    "name": "Wordle",
+    "label": "Year 2022",
+    "value": 2022,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-46",
+    "name": "“It’s Morbin’ Time”",
+    "label": "Year 2022",
+    "value": 2022,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-47",
+    "name": "Little Miss Meme",
+    "label": "Year 2022",
+    "value": 2022,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-48",
+    "name": "Barbenheimer",
+    "label": "Year 2023",
+    "value": 2023,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-49",
+    "name": "Grimace Shake",
+    "label": "Year 2023",
+    "value": 2023,
+    "categoryId": "internet.phenomena.year"
+  },
+  {
+    "id": "net-50",
+    "name": "NPC Streaming Trend",
+    "label": "Year 2023",
+    "value": 2023,
+    "categoryId": "internet.phenomena.year"
+  }
+]
