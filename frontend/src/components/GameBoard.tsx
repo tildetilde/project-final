@@ -316,19 +316,19 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
     return (
       <div className="flex flex-col items-center gap-1 mb-1">
-        <div className="font-mono tabular-nums text-sm text-[#f9ecdf]">
+        <div className="font-mono tabular-nums text-sm lg:text-xl text-[#f9ecdf]">
           {String(Math.floor(left / 60)).padStart(2, "0")}:
           {String(left % 60).padStart(2, "0")}
         </div>
         <div
-          className="w-24 h-2 rounded-full bg-muted relative"
+          className="w-24 lg:w-32 h-2 lg:h-3 rounded-full bg-muted relative"
           role="progressbar"
           aria-valuemin={0}
           aria-valuemax={total}
           aria-valuenow={elapsed}
         >
           <div
-            className="h-2 rounded-full bg-primary absolute left-0 top-0 transition-all duration-250"
+            className="h-2 lg:h-3 rounded-full bg-primary absolute left-0 top-0 transition-all duration-250"
             style={{ width: `${pct}%` }}
           />
         </div>
@@ -384,7 +384,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           >
             {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
 
-            <div className="flex flex-col items-stretch gap-1 sm:gap-1">
+            <div className="flex flex-col items-stretch gap-0.5 sm:gap-0.5">
+              
               {/* Timer positioned above timeline, centered */}
               {renderTimer()}
               

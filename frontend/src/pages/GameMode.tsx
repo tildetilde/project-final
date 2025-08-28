@@ -87,15 +87,14 @@ export default function GameMode() {
           <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 items-end sm:items-center">
             {teams.map((t, i) => {
               const active = currentTeamIndex === i;
-              const base =
-                "px-2 py-1 rounded-full border text-xs tracking-wider uppercase text-right sm:text-center";
-              const cls = active
-                ? `${base} bg-[#f9ecdf] text-[#2a0d0d] border-[#f9ecdf] scale-105 animate-pulse animate-pulsate`
-                : `${base} bg-primary/10 border-[#f9ecdf] text-[#f9ecdf]`;
               return (
                 <div
                   key={t.id ?? i}
-                  className={cls}
+                  className={
+                    active
+                      ? "px-2 py-1 rounded-full bg-[#f9ecdf] text-[#2a0d0d] border border-[#f9ecdf] text-xs tracking-wider uppercase text-right sm:text-center scale-105 animate-pulse animate-pulsate"
+                      : "text-xs tracking-wider uppercase text-right sm:text-center text-[#f9ecdf]"
+                  }
                   style={
                     active
                       ? {
@@ -109,7 +108,7 @@ export default function GameMode() {
                   {t.name}{" "}
                   <span
                     className={
-                      active ? "font-semibold" : "text-[#f9ecdf] font-semibold"
+                      active ? "font-semibold" : "font-semibold"
                     }
                   >
                     {t.timeline?.length ?? 0}
@@ -149,20 +148,15 @@ export default function GameMode() {
         <div className="relative z-10">
           {phase === "SETUP" ? (
             <>
-              <div className="pt-6 sm:pt-8 pb-6 sm:pb-8">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground text-center">
-                  Game Settings
+              <div className="pb-6 sm:pb-8">
+                <div className="text-center">
+                  <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 [font-family:var(--font-family-sans)]">
+                    GAME SETTINGS
+                  </h2>
+                  <p className="text-muted-foreground [font-family:var(--font-family-mono)]">
+                    Configure your match
+                  </p>
                 </div>
-                {/* <Heading
-                  level={1}
-                  className="leading-[0.95] text-foreground text-center"
-                  style={{
-                    fontSize: "clamp(2rem, 3vw, 4rem)",
-                    letterSpacing: "-0.02em",
-                  }}
-                >
-                  Configure your match
-                </Heading> */}
               </div>
 
               <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
@@ -178,7 +172,7 @@ export default function GameMode() {
             <>
 
               <div className="pt-4 sm:pt-2 lg:pt-8 pb-4 sm:pb-2 lg:pb-8">
-                <div className="text-xs sm:text-sm tracking-wider uppercase text-[#fefcfa]">
+                <div className="hidden mb-2 lg:block text-xs tracking-wider uppercase text-[#fefcfa] font-mono">
                   Game Question
                 </div>
                 <Heading

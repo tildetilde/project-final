@@ -123,12 +123,12 @@ export const CategorySelector: React.FC = () => {
                 selectCategory(c);
                 navigate("/gamemode");
               }}
-              className={`[font-family:var(--font-family-mono)] report-card font-[var(--font-family-mono)] group focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary ${
+              className={`flex items-center justify-center w-full max-w-sm justify-self-center sm:justify-self-stretch [font-family:var(--font-family-mono)] report-card font-[var(--font-family-mono)] group focus-visible:outline focus-visible:outline-offset-4 focus-visible:outline-primary ${
                 active ? "report-card--active" : ""
               }`}
               aria-pressed={active}
             >
-              <div className="flex flex-col items-center justify-center gap-5 text-center px-8">
+              <div className="flex flex-col items-center justify-center gap-5 text-center px-8 w-full h-full">
                 {iconFor(c.id)}
                 <h3 className="uppercase font-semibold text-foreground/90 text-[clamp(0.9rem,2.5vw,1.1rem)] leading-snug [text-wrap:balance]">
                   {c.question}
