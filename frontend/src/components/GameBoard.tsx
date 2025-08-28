@@ -2,7 +2,8 @@
 import React from "react";
 import {
   DndContext,
-  PointerSensor,
+  MouseSensor,
+  TouchSensor,
   useSensor,
   useSensors,
   DragStartEvent,
@@ -71,7 +72,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const winner = useGame((s) => (s as any).winner);
 
   const sensors = useSensors(
-    useSensor(PointerSensor, { activationConstraint: { distance: 6 } })
+    useSensor(MouseSensor),
+    useSensor(TouchSensor, { activationConstraint: { delay: 250, tolerance: 5 } })
   );
   const [isDragging, setIsDragging] = React.useState(false);
 
@@ -379,7 +381,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             onDragStart={onDragStart}
             onDragEnd={onDragEnd}
             collisionDetection={closestCenter}
-            modifiers={[restrictToWindowEdges]}
           >
             {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
 
