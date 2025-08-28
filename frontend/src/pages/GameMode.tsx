@@ -84,7 +84,7 @@ export default function GameMode() {
           <div className="sr-only" aria-live="polite">
             {teams[currentTeamIndex]?.name} is playing
           </div>
-          <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 items-end sm:items-center">
+          <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 lg:gap-4 items-end sm:items-center">
             {teams.map((t, i) => {
               const active = currentTeamIndex === i;
               return (
@@ -93,7 +93,7 @@ export default function GameMode() {
                   className={
                     active
                       ? "px-2 py-1 rounded-full bg-[#f9ecdf] text-[#2a0d0d] border border-[#f9ecdf] text-xs tracking-wider uppercase text-right sm:text-center scale-105 animate-pulse animate-pulsate"
-                      : "text-xs tracking-wider uppercase text-right sm:text-center text-[#f9ecdf]"
+                      : "px-2 py-1 rounded-full bg-primary/10 sm:border border-[#f9ecdf] text-[#f9ecdf] text-xs tracking-wider uppercase text-right sm:text-center"
                   }
                   style={
                     active
