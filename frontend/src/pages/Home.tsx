@@ -82,6 +82,7 @@ export const Home = () => {
               {/* SVG-logga som visuellt ersätter rubriken */}
               <img
                 src="/banganzalogo.svg"
+                alt="Banganza logo"
                 aria-hidden="true"
                 className="mx-auto w-[min(95vw,1800px)] h-auto text-[var(--color-base-400)]"
               />
