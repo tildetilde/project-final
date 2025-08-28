@@ -108,7 +108,7 @@ export const CategorySelector: React.FC = () => {
         <h2 className="text-2xl sm:text-3xl font-bold text-foreground mb-2 [font-family:var(--font-family-sans)]">
           THE CATEGORIES
         </h2>
-        <p className="text-muted-foreground [font-family:var(--font-family-mono)]">
+        <p className="--color-accent-950; [font-family:var(--font-family-mono)]">
           Pick one to start playing
         </p>
       </div>
