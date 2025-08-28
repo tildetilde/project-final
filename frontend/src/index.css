@@ -438,3 +438,7 @@ html {
     transition: none !important;
   }
 }
+
+.border-\[\#f9ecdf\] {
+  border-color: #e1c09e;
+}
