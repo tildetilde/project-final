@@ -101,7 +101,7 @@ export const Home = () => {
         <section
           ref={catsRef}
           className="relative z-20 bg-background text-foreground
-              -mt-10 md:-mt-30 rounded-t-3xl pt-10 md:pt-12 pb-16
+              -mt-25 md:-mt-30 rounded-t-3xl pt-10 md:pt-12 pb-16
               shadow-[0_-16px_40px_rgba(0,0,0,0.35)]"
         >
           <div className="mx-auto max-w-5xl px-4">

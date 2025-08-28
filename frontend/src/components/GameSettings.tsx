@@ -21,14 +21,14 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
   };
 
   return (
-    <div className="space-y-6 w-full max-w-xs md:max-w-md lg:max-w-xl mx-auto">
+    <div className=" space-y-4 md:space-y-6 w-full max-w-xs md:max-w-md lg:max-w-xl mx-auto">
       <header className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground" aria-live="polite">
           {settings.teamNames.length} teams • {settings.turnSeconds}s per turn
         </div>
       </header>
 
-      <Card className="p-4 space-y-4 ">
+      <Card className="p-4 space-y-2 md:space-y-4 ">
         <div className="font-semibold">Teams</div>
 
         <div className="flex items-center gap-3">
@@ -61,7 +61,7 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         </div>
       </Card>
 
-      <Card className="p-4 space-y-4">
+      <Card className="p-4 space-y-2 md:space-y-4">
         <div className="font-semibold">Turn time</div>
         <select
           aria-label="Turn time in seconds"
@@ -69,7 +69,7 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
           onChange={(e) =>
             setTurnSeconds(Number(e.target.value) as 30 | 60 | 90)
           }
-          className="w-full sm:w-56 rounded-md border border-border bg-card px-3 py-2"
+          className="w-full md:w-56 rounded-md border border-border bg-card px-3 py-2"
         >
           <option value={30}>30 seconds</option>
           <option value={60}>60 seconds</option>
@@ -77,7 +77,7 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
         </select>
       </Card>
 
-      <div className="mt-2 flex flex-wrap items-center gap-5 justify-between">
+      <div className="mt-2 flex flex-wrap items-center gap-2 md:gap-5 justify-between">
         {onClose && (
           <Button variant="outline" onClick={onClose}>
             Back to categories
