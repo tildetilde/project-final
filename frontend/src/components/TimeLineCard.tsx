@@ -88,7 +88,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         className={cn(
           responsiveWrapper,
           "flex-shrink-0 flex flex-col relative overflow-hidden p-0",
-          isCorrect === false ? "bg-[#2a0d0d] border-[#f9ecdf]" : "bg-[#f9ecdf]",
+          isCorrect === false ? "bg-[#2a0d0d] border-[#e1c09e]" : "bg-[#fdf8f3]",
           "border-accent-400 text-base-100 shadow-medium",
           className
         )}
