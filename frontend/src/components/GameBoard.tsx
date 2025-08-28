@@ -148,10 +148,10 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
-              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf] animate-bounce font-mono">
+              <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf] animate-bounce font-mono">
                 TIME’S UP!
               </div>
-              <div className="sm:text-lg text-[#f9ecdf] font-mono">
+              <div className="lg:text-lg text-[#f9ecdf] font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Your turn is over, it's time for the next team.
                 </span>
@@ -174,10 +174,10 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
 
-              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf]  animate-bounce font-mono">
+              <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf]  animate-bounce font-mono">
                 OH NO!
               </div>
-              <div className="font-base sm:text-lg text-[#f9ecdf] font-mono">
+              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Wrong answer. Your turn is over.
                 </span>
@@ -194,10 +194,10 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d]">
           <div className="flex items-center justify-center h-[140px]">
             <div className="text-center">
-              <div className="font-bold text-xl sm:text-5xl mb-2 text-[#f9ecdf] font-mono">
+              <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf] font-mono">
                 TIME'S UP!
               </div>
-              <div className="font-base sm:text-lg text-[#f9ecdf] font-mono">
+              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Your turn is over, it's time for the next team.
                 </span>
@@ -276,7 +276,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         </div>
 
         {lastPlacementCorrect === true && (
-          <div className="font-bold sm:text-lg text-[#f9ecdf] text-center mt-2 font-mono">
+          <div className="font-bold lg:text-lg text-[#f9ecdf] text-center mt-2 font-mono">
 
 
 
@@ -500,10 +500,10 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               ×
             </button>
 
-            <div className="text-3xl sm:text-4xl font-extrabold text-foreground">
+            <div className="text-3xl lg:text-4xl font-extrabold text-foreground">
               Congratulations!
             </div>
-            <div className="mt-2 text-base sm:text-lg text-muted-foreground">
+            <div className="mt-2 text-base lg:text-lg text-muted-foreground">
               {winnerName ? `${winnerName} wins` : `Winner!`}
             </div>
 

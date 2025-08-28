@@ -20,24 +20,24 @@ const TOKENS: Record<
   }
 > = {
   xs: {
-    wrapper: "w-[120px] h-[169px]",
-    value: "text-2xl",
-    name: "text-base font-semibold",
-    label: "text-[10px]",
-    badge: "w-5 h-5 text-[10px]",
-    padHeader: "pt-2 pb-1 px-2",
-    padContent: "px-2 pb-2",
-    vspace: "space-y-1",
+    wrapper: "w-[90px] h-[127px]",
+    value: "text-xl",
+    name: "text-sm font-semibold",
+    label: "text-[9px]",
+    badge: "w-4 h-4 text-[9px]",
+    padHeader: "pt-1.5 pb-0.5 px-1.5",
+    padContent: "px-1.5 pb-1.5",
+    vspace: "space-y-0.5",
   },
   sm: {
-    wrapper: "w-[164px] h-[217px]",
-    value: "text-3xl",
-    name: "text-lg font-semibold",
-    label: "text-xs",
-    badge: "w-6 h-6 text-xs",
-    padHeader: "pt-3 pb-2 px-3",
-    padContent: "px-3 pb-3",
-    vspace: "space-y-2",
+    wrapper: "w-[90px] h-[127px] lg:w-[164px] lg:h-[217px]",
+    value: "text-xl lg:text-3xl",
+    name: "text-sm lg:text-lg font-semibold",
+    label: "text-[9px] lg:text-xs",
+    badge: "w-4 h-4 lg:w-6 lg:h-6 text-[9px] lg:text-xs",
+    padHeader: "pt-1.5 pb-0.5 px-1.5 lg:pt-3 lg:pb-2 lg:px-3",
+    padContent: "px-1.5 pb-1.5 lg:px-3 lg:pb-3",
+    vspace: "space-y-0.5 lg:space-y-2",
   },
   md: {
     wrapper: "w-[290px] h-[387px]",
@@ -81,7 +81,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
 
   // Use responsive sizing for sm size to match CurrentCard
   const responsiveWrapper =
-    size === "sm" ? "w-[120px] h-[169px] sm:w-[164px] sm:h-[217px]" : t.wrapper;
+    size === "sm" ? "w-[90px] h-[127px] lg:w-[164px] lg:h-[217px]" : t.wrapper;
 
   return (
           <Card

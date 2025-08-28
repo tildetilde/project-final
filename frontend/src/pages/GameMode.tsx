@@ -71,8 +71,8 @@ export default function GameMode() {
           onClick={handleHomeClick}
           className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
         >
-          <span className={dot} />
-          <div className={chip}>
+          <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
+          <div className="px-2 py-1 rounded-full bg-primary/10 border border-[#f9ecdf] text-xs tracking-wider uppercase text-[#f9ecdf]">
             <span className="text-[#f9ecdf] font-semibold">Home</span>
           </div>
         </button>
@@ -84,11 +84,11 @@ export default function GameMode() {
           <div className="sr-only" aria-live="polite">
             {teams[currentTeamIndex]?.name} is playing
           </div>
-          <div className="flex gap-2">
+          <div className="flex flex-col sm:flex-row gap-1 sm:gap-2 items-end sm:items-center">
             {teams.map((t, i) => {
               const active = currentTeamIndex === i;
               const base =
-                "px-2 py-1 rounded-full border text-xs tracking-wider uppercase";
+                "px-2 py-1 rounded-full border text-xs tracking-wider uppercase text-right sm:text-center";
               const cls = active
                 ? `${base} bg-[#f9ecdf] text-[#2a0d0d] border-[#f9ecdf] scale-105 animate-pulse animate-pulsate`
                 : `${base} bg-primary/10 border-[#f9ecdf] text-[#f9ecdf]`;
@@ -118,14 +118,14 @@ export default function GameMode() {
               );
             })}
           </div>
-          <span className={dot} />
+          <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
         </div>
       )}
 
       {/* Bottom-left: Round - Only show when not in SETUP */}
       {phase !== "SETUP" && (
         <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
-          <span className={dot} />
+          <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
           <div className={chip}>
             {roundLabel}:{" "}
             <span className="text-[#f9ecdf] font-semibold">{roundValue}</span>
@@ -140,7 +140,7 @@ export default function GameMode() {
             {categoryLabel}:{" "}
             <span className="text-[#f9ecdf] font-semibold">{categoryValue}</span>
           </div>
-          <span className={dot} />
+          <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
         </div>
       )}
 
@@ -177,7 +177,7 @@ export default function GameMode() {
           ) : (
             <>
 
-              <div className="pt-6 sm:pt-8 pb-6 sm:pb-6">
+              <div className="pt-4 sm:pt-2 lg:pt-8 pb-4 sm:pb-2 lg:pb-8">
                 <div className="text-xs sm:text-sm tracking-wider uppercase text-[#fefcfa]">
                   Game Question
                 </div>
@@ -186,7 +186,7 @@ export default function GameMode() {
 
                   className="leading-[0.95] text-[#f9ecdf]"
                   style={{
-                    fontSize: "clamp(2rem, 3vw, 4rem)",
+                    fontSize: "clamp(1rem, 3vw, 4rem)",
                     letterSpacing: "-0.02em",
                   }}
                 >
