@@ -1,22 +1,48 @@
-Banganza – Final Project
-Banganza is an interactive multiplayer quiz game where teams compete by placing items in the correct order on a timeline. Categories include animals, elements, internet phenomena, and more. The project was built as a final assignment to demonstrate full-stack development with React, TypeScript, Node.js and MongoDB.
+# Banganza
 
-The problem
-The goal was to create a fully functioning game that combines accessibility, design, and game mechanics in one app.
-Key challenges included state management for multiple teams, drag-and-drop interactions, and an admin interface for managing categories and items.
+Banganza is a multiplayer quiz game where teams drag and drop cards on a timeline.  
+Built with **React, TypeScript, and Node.js**.
 
-Technologies and tools used:
-Frontend: React 18, TypeScript, Vite, Tailwind CSS, custom UI components
-Backend: Node.js, Express, MongoDB
-Features: JWT authentication, admin panel for CRUD operations, accessible design with ARIA and keyboard support, animated intro and transitions
+---
 
-Planning involved sketching wireframes, defining game phases, and structuring code with clean practices and reusable components.
+## Features
+- Intro animation with video
+- Category selector with icons
+- Drag & drop timeline gameplay
+- Admin panel to manage categories and items
+- Fully responsive & accessible design
 
-If there was more time, next steps would include:
-Adding live multiplayer with WebSockets
-More categories and item sets
-Enhanced animations and sounds
-Analytics and scoring history
+---
 
-View it live
-You can try the game here: https://banganza.netlify.app
+## Example Data
+Example of an item that can be added via the admin panel:
+
+```json
+{
+  "id": "net-1",
+  "name": "Dancing Baby",
+  "label": "Year 1996",
+  "value": 1996,
+  "categoryId": "internet.phenomena.year"
+}
+
+
+## Tech Stack
+**Frontend:** React 18, TypeScript, Tailwind, dnd-kit  
+**Backend:** Node.js, Express, MongoDB  
+**Other:** JWT auth, Netlify/Render deployment
+
+![intro-2](https://github.com/user-attachments/assets/06855ee2-6994-49ab-956b-3b968b672752)
+
+
+## Run locally
+```bash
+git clone https://github.com/username/project-final.git
+cd project-final
+npm install
+npm run dev
+
+
+Live Demo
+👉 Play Banganza [here]([url](https://banganza.netlify.app/))
+https://banganza.netlify.app/
