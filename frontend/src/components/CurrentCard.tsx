@@ -44,7 +44,6 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
   );
 };
 
-// Preview för DragOverlay (samma look)
 export const CurrentCardPreview: React.FC<{ card: GameItem }> = ({ card }) => (
   <div className="cursor-grabbing pointer-events-none">
     <Card className="w-[90px] h-[127px] lg:w-[164px] lg:h-[217px] overflow-hidden shadow-medium border-2 border-primary/30 bg-[#f9ecdf] p-0">

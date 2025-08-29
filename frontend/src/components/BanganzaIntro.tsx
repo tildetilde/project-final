@@ -10,7 +10,6 @@ export default function BanganzaIntro({ onFinish }: Props) {
     if (doneRef.current) return;
     doneRef.current = true;
     setExiting(true);
-    // vänta tills mörka overlayn hunnit tona in (matchar duration-500)
     setTimeout(() => onFinish?.(), 100);
   }
 
@@ -28,14 +27,14 @@ export default function BanganzaIntro({ onFinish }: Props) {
         preload="auto"
         poster="/intropic.png"
         onEnded={endWithFade}
-        onClick={endWithFade} /* klick för att hoppa över */
+        onClick={endWithFade}
         className="w-full h-full object-cover"
       >
         <source src="/intro.mp4" type="video/mp4" />
         Your browser does not support video :(
       </video>
 
-      {/* mörk overlay som fadar in vid exit → undviker ljus flash */}
+      {/* dark overlay fading in on exit → prevents bright flash */}
       <div
         className={[
           "pointer-events-none absolute inset-0 bg-[#2a0d0d]",

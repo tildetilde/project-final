@@ -1,4 +1,3 @@
-// src/components/Timeline.tsx
 import React from "react";
 import { useDroppable } from "@dnd-kit/core";
 import { TimeLineCard } from "./TimeLineCard";
@@ -9,7 +8,6 @@ const SIZES: Record<
   Size,
   { card: string; slot: string; gap: string; cardSize: Size }
 > = {
-  // xs ryms ~10 kort på vanliga laptop-bredder
   xs: {
     card: "w-[100px] h-[140px]",
     slot: "w-1 h-[140px]",

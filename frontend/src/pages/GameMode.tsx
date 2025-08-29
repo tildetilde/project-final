@@ -44,28 +44,48 @@ export default function GameMode() {
     navigate("/");
   };
 
-  // --- 1) Fallback: ingen kategori vald ---
-  if (!selectedCategory) {
-    return (
-      <div className="min-h-screen bg-background flex flex-col">
-        <OrientationGuard minWidth={600} />
-        <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
-          <div className="relative z-10">
-            <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
-              <CategorySelector />
-            </div>
-          </div>
-        </section>
-      </div>
-    );
-  }
+if (!selectedCategory) {
+  return (
+    <div className="min-h-screen bg-background flex flex-col">
+      <OrientationGuard minWidth={600} />
 
-  // --- 2) Vanliga GameMode-chrome (samma i SETUP och under spelet) ---
+      <button
+        onClick={handleHomeClick}
+        className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+      >
+        <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#2a0d0d] shadow-soft" />
+        <div className="px-2 py-1 rounded-full bg-primary/10 border border-[#2a0d0d] text-xs tracking-wider uppercase text-[#2a0d0d]">
+          <span className="font-semibold">Home</span>
+        </div>
+      </button>
+
+      <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
+        <div className="relative z-10">
+          <div className="max-w-7xl mx-auto px-4 sm:px-8 w-full">
+            <CategorySelector />
+          </div>
+        </div>
+      </section>
+
+      <ConfirmModal
+        isOpen={showConfirmModal}
+        onClose={() => setShowConfirmModal(false)}
+        onConfirm={handleConfirmHome}
+        title="Back to Home?"
+        message="Are you sure you want to return to the home page?"
+        confirmText="Yes, go Home"
+        cancelText="Stay here"
+      />
+    </div>
+  );
+}
+
+
+
   return (
     <div className={`min-h-screen flex flex-col ${phase === "SETUP" ? "bg-background" : "bg-[#2a0d0d]"}`}>
       <OrientationGuard minWidth={600} />
 
-      {/* Top-left: Home - Only show when not in SETUP */}
       {phase !== "SETUP" && (
         <button
           onClick={handleHomeClick}
@@ -78,7 +98,6 @@ export default function GameMode() {
         </button>
       )}
 
-      {/* Top-right: A/B Team - Only show when not in SETUP */}
       {phase !== "SETUP" && (
         <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
           <div className="sr-only" aria-live="polite">
@@ -121,7 +140,6 @@ export default function GameMode() {
         </div>
       )}
 
-      {/* Bottom-left: Round - Only show when not in SETUP */}
       {phase !== "SETUP" && (
         <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
           <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
@@ -132,7 +150,6 @@ export default function GameMode() {
         </div>
       )}
 
-      {/* Bottom-right: Category - Only show when not in SETUP */}
       {phase !== "SETUP" && (
         <div className="fixed z-50 bottom-3 sm:bottom-4 right-3 sm:right-6 flex items-center gap-2">
           <div className={chip}>
@@ -143,7 +160,6 @@ export default function GameMode() {
         </div>
       )}
 
-      {/* Innehållssektion med DotPattern – växla mellan SETUP (Settings) och Board */}
       <section className="relative w-full px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
         <div className="relative z-10">
           {phase === "SETUP" ? (
@@ -172,7 +188,7 @@ export default function GameMode() {
             <>
 
               <div className="pt-4 sm:pt-2 lg:pt-8 pb-4 sm:pb-2 lg:pb-8">
-                <div className="hidden mb-2 lg:block text-xs tracking-wider uppercase text-[#fefcfa] font-mono">
+                <div className="hidden mb-2 lg:block text-xs tracking-wider uppercase text-[#fefcfa] font-mono text-center">
                   Game Question
                 </div>
                 <Heading
@@ -196,7 +212,6 @@ export default function GameMode() {
         </div>
       </section>
 
-      {/* Confirmation Modal */}
       <ConfirmModal
         isOpen={showConfirmModal}
         onClose={() => setShowConfirmModal(false)}

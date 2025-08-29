@@ -1,4 +1,3 @@
-// src/components/GameBoard.tsx
 import React from "react";
 import {
   DndContext,
@@ -20,7 +19,6 @@ import { ErrorMessage } from "../ui/ErrorMessage";
 import { TimeLineCard } from "./TimeLineCard";
 import { CurrentCard, CurrentCardPreview } from "./CurrentCard";
 
-/** Smalare och lägre "drop slots" för kompakt timeline */
 const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
   const { setNodeRef, isOver } = useDroppable({ id });
   if (!show) return null;
@@ -38,7 +36,6 @@ const DropSlot: React.FC<{ id: string; show: boolean }> = ({ id, show }) => {
 };
 
 export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
-  // ---- En hook per fält/action (inga object-literals → inga nya referenser per render)
   const teams = useGame((s) => s.teams);
   const currentTeamIndex = useGame((s) => s.currentTeamIndex);
   const phase = useGame((s) => s.phase);
@@ -88,7 +85,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
   const onDragEnd = (e: DragEndEvent) => {
     setIsDragging(false);
-    if (lastPlacementCorrect === false || phase === "PLACED_WRONG") return; // Don't allow placement if team has lost
+    if (lastPlacementCorrect === false || phase === "PLACED_WRONG") return;
 
     const overId = e.over?.id as string | undefined;
     if (!overId || !overId.startsWith("slot-")) return;
@@ -129,7 +126,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     return teams[bestIdx]?.name ?? "Team";
   }, [winner, teams]);
 
-  /** Timeline i liten skala; kort växlar på hover */
+
   const renderTimeline = () => {
     const teamTimeline = team?.timeline ?? [];
     const base =
@@ -141,7 +138,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
     const showSlots = phase === "DRAWN" || phase === "PLACED_PENDING";
 
-    // TIME'S UP + no answer → stor panel i samma stil som OH NO!
+
     if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct == null) {
       return (
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
@@ -161,7 +158,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
       );
     }
 
-    // Felplacerat (inkl. TIME'S UP + wrong) → rubriken blir TIME'S UP! om tiden gick
     if (
       lastPlacementCorrect === false ||
       phase === "PLACED_WRONG" ||
@@ -187,7 +183,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
       );
     }
 
-    // If time is up and no card was placed, show timeout message
     if (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) {
       return (
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d]">
@@ -211,7 +206,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     children.push(<DropSlot key="slot-0" id="slot-0" show={showSlots} />);
 
     for (let i = 0; i < base.length; i++) {
-      // Pending-kortet renderas i samma lilla skala, precis som övriga
       if (phase === "PLACED_PENDING" && pendingIndex === i && currentCard) {
         children.push(
           <div key="pending-card" className="group relative flex-shrink-0">
@@ -233,7 +227,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           key={c?._id ?? c?.id ?? i}
           className="group relative flex-shrink-0"
         >
-          {/* Bas: ~60% storlek. Hover: ~75%. Origin i botten så den "poppar uppåt". */}
           <div className="origin-bottom scale-[0.8] group-hover:scale-[1] transition-transform duration-150">
             <TimeLineCard
               item={base[i]}
@@ -269,7 +262,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
     return (
       <div className="rounded-2xl p-2 sm:p-3 border border-[#f9ecdf] bg-[#2a0d0d]">
-        {/* overflow-y visible krävs för att hovrade kort kan växa utanför raden */}
         <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-1 sm:gap-2">
           {children}
         </div>
@@ -302,7 +294,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     );
   };
 
-  // Timer component to be displayed above timeline
   const renderTimer = () => {
     if (phase !== "DRAWN" && phase !== "PLACED_PENDING" && phase !== "CHOICE_AFTER_CORRECT") {
       return null;
@@ -337,7 +328,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
   return (
     <div className={["animate-in fade-in-50", className].join(" ")}>
-      {/* Errors / loading */}
       {loading && (
         <div className="text-sm text-muted-foreground">Loading items…</div>
       )}
@@ -355,7 +345,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         </div>
       )}
 
-      {/* Start-knapp */}
       {phase === "SETUP" && (
         <div className="fixed inset-0 flex items-center justify-center z-50">
           <Button
@@ -372,7 +361,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
         </div>
       )}
 
-      {/* Board */}
       {phase !== "SETUP" && (
         <>
           <DndContext
@@ -381,26 +369,21 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             onDragEnd={onDragEnd}
             collisionDetection={closestCenter}
           >
-            {/* Ny layout: tidslinjen överst, instruction text under till vänster */}
 
             <div className="flex flex-col items-stretch gap-0.5 sm:gap-0.5">
               
-              {/* Timer positioned above timeline, centered */}
               {renderTimer()}
               
               <div className="min-h-[140px]">{renderTimeline()}</div>
 
-              {/* Instruction text positioned under timeline, aligned to the left */}
               {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && !(lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) && (
                 <div className="text-sm text-muted-foreground text-left">
                   Drag the card and drop it between two cards.
                 </div>
               )}
 
-              {/* Current card alltid placerat under tidslinjen */}
               {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && !(lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) && (
                 <div className="flex w-full justify-center">
-                  {/* Gör kortet något större för tydlighet */}
                   <div className="origin-top scale-105 sm:scale-105">
                     <CurrentCard card={currentCard} dragging={isDragging} />
                   </div>
@@ -420,25 +403,6 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           </DndContext>
 
 
-          {/* Time's up-feedback (visas mellan turer) */}
-          {lastTurnFeedback?.timeUp && lastTurnFeedback.correct !== null && (
-            <div
-              className="mt-2 text-sm text-center"
-              role="status"
-              aria-live="polite"
-            >
-              <span className="font-medium text-[#f9ecdf]">Time's up.</span>{" "}
-              {lastTurnFeedback.correct === true && (
-                <span className="text-[#f9ecdf]">You were correct!</span>
-              )}
-              {lastTurnFeedback.correct === false && (
-                <span className="text-[#f9ecdf]">That was incorrect.</span>
-              )}
-            </div>
-          )}
-
-
-          {/* Kontroller */}
           <div className="flex flex-wrap gap-3 pt-3 sm:pt-6 justify-center font-sans">
             {phase === "TURN_START" && lastPlacementCorrect !== false && (
               <Button 

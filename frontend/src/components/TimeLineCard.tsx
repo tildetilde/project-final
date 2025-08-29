@@ -53,17 +53,15 @@ const TOKENS: Record<
 
 interface TimeLineCardProps {
   item: GameItem;
-  category?: GameCategory; // för unit (t.ex. "kg", "year" etc.)
+  category?: GameCategory;
   isCorrect?: boolean;
   isRevealed?: boolean;
   className?: string;
   size?: CardSize;
 }
 
-/** Enkel formattering av value + unit (ingen i18n-tyngd här) */
 const formatValue = (value: number, unit?: string) => {
   if (!unit) return String(value);
-  // Exempel: 150000 kg • 1958 year
   return `${value} ${unit}`;
 };
 
@@ -79,7 +77,6 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
   const unit = category?.unit;
   const unitVisible = category?.unitVisible ?? true;
 
-  // Use responsive sizing for sm size to match CurrentCard
   const responsiveWrapper =
     size === "sm" ? "w-[90px] h-[127px] lg:w-[164px] lg:h-[217px]" : t.wrapper;
 
@@ -94,9 +91,6 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         )}
       aria-label={`${item.name}${item.label ? ` – ${item.label}` : ""}`}
     >
-      {/* diskret mönster - removed for better visibility */}
-
-      {/* NAMN i mitten */}
       <CardContent
         className={cn(
           "relative z-10 flex-1 flex flex-col justify-center ",
@@ -104,19 +98,16 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         )}
       >
         <div className={cn(t.vspace, "text-center")}>
-          {/* VALUE + UNIT */}
           <div className={cn(t.value, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-bold font-mono")}>
             {isRevealed ? formatValue(item.value, unit) : "??"}
           </div>
 
-          {/* NAME */}
           <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono")}>
             {item.name}
           </div>
         </div>
       </CardContent>
 
-      {/* Rätt/Fel-badge (om vi vill visa feedback) */}
       {isCorrect !== undefined && (
         <div
           className={cn(
@@ -132,7 +123,6 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
         </div>
       )}
 
-      {/* glint - removed for better visibility */}
     </Card>
   );
 };

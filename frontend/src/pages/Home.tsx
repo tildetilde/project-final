@@ -28,7 +28,7 @@ export const Home = () => {
         sessionStorage.setItem("introDone", "1");
       }
       catsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-      window.history.replaceState({}, ""); // rensa state så det inte triggas igen
+      window.history.replaceState({}, "");
     }
   }, [location.state, introDone]);
 
@@ -38,20 +38,16 @@ export const Home = () => {
 
   return (
     <div className="min-h-screen bg-[#2a0d0d] text-white relative">
-      {/* INTROT: ligger överst och fadar ut när videon är klar */}
       {showIntro && (
         <BanganzaIntro
           onFinish={() => {
-            // starta Home-fade-in
             setIntroDone(true);
             sessionStorage.setItem("introDone", "1");
-            // vänta tills Home är synligt → SEN unmounta introt
             setTimeout(() => setShowIntro(false), FADE_MS);
           }}
         />
       )}
 
-      {/* HOME: ligger under introt och fadar in */}
       <div
         aria-hidden={!introDone}
         className={`transition-opacity duration-[${FADE_MS}ms] ${
@@ -74,10 +70,8 @@ export const Home = () => {
                 BEYOND THE ANSWERS… THERE IS
               </p>
 
-              {/* Semantisk h1 för skärmläsare */}
               <h1 className="sr-only">Banganza</h1>
 
-              {/* SVG-logga som visuellt ersätter rubriken */}
               <img
                 src="/banganzalogo.svg"
                 alt="Banganza logo"
@@ -85,18 +79,9 @@ export const Home = () => {
                 className="mx-auto w-[min(95vw,1800px)] h-auto text-[var(--color-base-400)]"
               />
 
-              {/* <button
-                type="button"
-                onClick={scrollToCategories}
-                className="mt-16 text-white/70 hover:text-white transition-colors text-sm tracking-wide"
-                aria-label="Scroll to categories"
-              >
-                See categories ↓
-              </button> */}
             </div>
           </section>
         </main>
-        {/* Kategorierna under (hintas genom negativ margin) */}+{" "}
         <section
           ref={catsRef}
           className="relative z-20 bg-background text-foreground
