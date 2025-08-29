@@ -118,4 +118,3 @@ export const checkAnswers = async (req, res) => {
         res.status(500).json(response);
     }
 };
-//# sourceMappingURL=quizController.js.map

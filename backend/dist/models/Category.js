@@ -14,4 +14,3 @@ const CategorySchema = new Schema({
     version: { type: Number, required: false }
 }, { strict: false, timestamps: false });
 export const Category = model('Category', CategorySchema);
-//# sourceMappingURL=Category.js.map

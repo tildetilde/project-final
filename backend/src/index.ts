@@ -18,11 +18,6 @@ app.use(
     origin: [
       config.FRONTEND_URI,
       "https://banganza.netlify.app",
-      // Development origins
-      "http://127.0.0.1:5173",
-      "http://localhost:5173",
-      "http://127.0.0.1:3000",
-      "http://localhost:3000",
     ],
     credentials: true, // Allow cookies
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],

@@ -7,4 +7,3 @@ router.get('/items/:categoryId', validateCategoryId, getQuizItems);
 router.get('/category/:categoryId/items', validateCategoryId, getCategoryItems);
 router.post('/check', validateQuizAnswers, checkAnswers);
 export default router;
-//# sourceMappingURL=quizRoutes.js.map

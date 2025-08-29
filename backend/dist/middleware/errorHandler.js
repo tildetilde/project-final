@@ -29,4 +29,3 @@ export const notFound = (req, res) => {
     const response = ResponseBuilder.notFound(`Route ${req.originalUrl} not found`, req);
     res.status(404).json(response);
 };
-//# sourceMappingURL=errorHandler.js.map

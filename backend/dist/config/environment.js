@@ -15,6 +15,14 @@ const validateEnvironment = () => {
         throw new Error(`Missing required environment variables: ${missingVars.join(', ')}\n` +
             'Please check your .env file and ensure all required variables are set.');
     }
+    if (process.env.NODE_ENV === 'production') {
+        if (process.env.JWT_SECRET.length < 32) {
+            throw new Error('JWT_SECRET must be at least 32 characters long in production');
+        }
+        if (!process.env.MONGODB_URI.includes('mongodb.net')) {
+            console.warn('Warning: Using non-Atlas MongoDB URI in production');
+        }
+    }
     return {
         NODE_ENV: process.env.NODE_ENV || 'development',
         PORT: parseInt(process.env.PORT || '8888', 10),
@@ -27,4 +35,3 @@ const validateEnvironment = () => {
     };
 };
 export const config = validateEnvironment();
-//# sourceMappingURL=environment.js.map
