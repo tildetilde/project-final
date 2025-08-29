@@ -30,13 +30,11 @@ const AdminPage: React.FC = () => {
   const [showCreateForm, setShowCreateForm] = useState(false);
   const [selectedCategoryFilter, setSelectedCategoryFilter] = useState<string>('all');
 
-  // Sort and group items by category
   const sortedAndGroupedItems = useMemo(() => {
     const filteredItems = selectedCategoryFilter === 'all' 
       ? items 
       : items.filter(item => item.categoryId === selectedCategoryFilter);
     
-    // Group by category
     const grouped = filteredItems.reduce((acc, item) => {
       const categoryId = item.categoryId;
       if (!acc[categoryId]) {
@@ -46,7 +44,6 @@ const AdminPage: React.FC = () => {
       return acc;
     }, {} as Record<string, any[]>);
     
-    // Sort items within each category alphabetically
     Object.keys(grouped).forEach(categoryId => {
       grouped[categoryId].sort((a, b) => a.name.localeCompare(b.name));
     });
@@ -74,7 +71,6 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Fixed Logout Button */}
       <div className="fixed top-4 right-4 z-50">
         <Button onClick={handleLogout} variant="outline">
           Logout
@@ -83,7 +79,6 @@ const AdminPage: React.FC = () => {
       
       <section className="relative mx-auto max-w-7xl px-4 sm:px-8 pt-8 sm:pt-12 pb-8 flex-grow">
         <div className="relative z-10">
-          {/* Header */}
           <div className="mb-8">
             <div>
               <div className="text-xs sm:text-sm tracking-wider uppercase text-muted-foreground">
@@ -102,14 +97,12 @@ const AdminPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Error Messages */}
           {(authError || categoriesError || itemsError) && (
             <div className="mb-6">
               <ErrorMessage message={authError || categoriesError || itemsError || ''} />
             </div>
           )}
 
-          {/* Tabs */}
           <div className="flex space-x-1 mb-6">
             <Button
               variant={activeTab === 'categories' ? 'primary' : 'outline'}
@@ -125,7 +118,6 @@ const AdminPage: React.FC = () => {
             </Button>
           </div>
 
-          {/* Content */}
           {activeTab === 'categories' ? (
             <CategoriesTab
               categories={categories}
