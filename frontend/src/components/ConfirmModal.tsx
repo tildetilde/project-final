@@ -29,7 +29,6 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     onClose();
   }, [onClose]);
 
-  // Handle escape key
   React.useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -43,7 +42,6 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     }
   }, [isOpen, onClose]);
 
-  // Prevent body scroll when modal is open
   React.useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -53,21 +51,18 @@ export const ConfirmModal: React.FC<ConfirmModalProps> = ({
     }
   }, [isOpen]);
 
-  // Don't render anything if modal is not open
   if (!isOpen) {
     return null;
   }
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
-      {/* Backdrop */}
       <div
         className="absolute inset-0 bg-black/50 backdrop-blur-sm"
         onClick={onClose}
         aria-hidden="true"
       />
       
-      {/* Modal */}
       <div className="relative bg-background border border-border rounded-2xl p-6 max-w-md w-full mx-4 shadow-2xl">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-foreground mb-3">

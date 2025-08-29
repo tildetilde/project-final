@@ -30,7 +30,6 @@ export const StartCard: React.FC<StartCardProps> = ({
       hover:shadow-strong hover:border-primary/50 transition-all duration-300
     `}
   >
-    {/* Dekor – göm på mobil för att spara plats */}
     <div className="absolute top-0 left-0 w-16 h-16 hidden sm:block">
       <div className="absolute top-2 left-2 w-12 h-12 border-2 border-primary/20 rounded-full" />
       <div className="absolute top-4 left-4 w-8 h-8 bg-primary/10 rounded-full" />
@@ -40,14 +39,12 @@ export const StartCard: React.FC<StartCardProps> = ({
       <div className="absolute top-4 left-4 w-8 h-8 bg-primary/10 rounded-full" />
     </div>
 
-    {/* Start-pill */}
     <div className="absolute top-2 right-2 sm:top-4 sm:right-4 px-2 sm:px-3 py-0.5 sm:py-1 bg-primary rounded-full">
       <span className="text-[10px] sm:text-xs font-bold text-base-100 uppercase tracking-wide">
         Start
       </span>
     </div>
 
-    {/* År */}
     <CardHeader className="relative z-10 pt-4 sm:pt-12 pb-2 sm:pb-6">
       <div className="text-3xl sm:text-5xl font-bold text-primary leading-none tracking-tight">
         {formatValue(item.value)}

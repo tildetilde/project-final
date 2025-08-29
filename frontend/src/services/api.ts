@@ -1,7 +1,6 @@
 import { config } from '../config/environment';
 import type { GameItem, GameCategory } from '../types/game';
 
-// API service for communicating with the backend
 class ApiService {
   private baseUrl: string;
 
@@ -38,7 +37,6 @@ class ApiService {
     }
   }
 
-  // Fetch all categories
   async getCategories(): Promise<GameCategory[]> {
     const categories = await this.request<any[]>('/categories');
     return categories.map(cat => ({
@@ -51,33 +49,29 @@ class ApiService {
     }));
   }
 
-  // Fetch items for a specific category (without values, for quiz mode)
   async getItemsByCategory(categoryId: string): Promise<GameItem[]> {
     const response = await this.request<any>('/items/' + categoryId);
     
-    // Transform the backend response to match our GameItem type
     return response.items.map((item: any, index: number) => ({
       _id: item._id,
       id: item.id,
       name: item.name,
       label: item.label,
-      value: 0, // We'll need to get the actual values from the backend
+      value: 0,
       categoryId: categoryId,
       source: response.source,
     }));
   }
 
-  // Get items with their actual values (for game logic)
   async getItemsWithValues(categoryId: string): Promise<GameItem[]> {
     const items = await this.request<any[]>(`/category/${categoryId}/items`);
     
-    // Transform the backend response to match our GameItem type
     return items.map((item: any) => ({
       _id: item._id,
       id: item.id,
       name: item.name,
       label: item.label,
-      value: item.value, // Now we have the actual values!
+      value: item.value,
       categoryId: categoryId,
       source: item.source,
     }));

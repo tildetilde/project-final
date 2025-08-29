@@ -5,3 +5,4 @@ export { DotPattern } from './DotPattern';
 export { ErrorMessage } from './ErrorMessage';
 export { Input } from './Input';
 export { Label } from './Label';
+export {Spinner} from './Spinner';

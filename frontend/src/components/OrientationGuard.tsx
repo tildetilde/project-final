@@ -1,7 +1,7 @@
 import React from "react"
 
 type Props = {
-  minWidth?: number // px – när under denna bredd visar vi varningen i porträtt
+  minWidth?: number
   allowDismiss?: boolean
 }
 
@@ -32,7 +32,6 @@ export const OrientationGuard: React.FC<Props> = ({ minWidth = 600, allowDismiss
     <div className="fixed inset-0 z-[60] bg-accent-900/80 backdrop-blur-sm flex items-center justify-center p-6">
       <div className="w-full max-w-sm bg-surface border border-border/60 shadow-strong rounded-2xl p-5 text-center space-y-3">
         <div className="mx-auto w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
-          {/* liten rotera-ikon */}
           <div className="w-5 h-3 border-2 border-primary rounded-md rotate-90" />
         </div>
         <h2 className="text-lg font-semibold text-foreground">Rotate your screen</h2>

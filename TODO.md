@@ -1,6 +1,0 @@
-- logik för när spelet är slut när man lagt 10 kort i rad [X]
-- game settings för antal lag [X]
-- display cards för kategorier
-- admin login + logik för att redigera spelet [X ]
-- mobilvy
-- tillgänglighet

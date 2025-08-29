@@ -1,4 +1,3 @@
-// src/store/game.ts
 import { create } from "zustand";
 import type {
   GameItem,
@@ -37,7 +36,6 @@ const drawOne = (pool: GameItem[]) => {
   return pool.splice(i, 1)[0];
 };
 
-// ---------- extra UI-state ----------
 type TimerState = {
   turnDeadline: number | null;
   secondsLeft: number;
@@ -59,7 +57,6 @@ type UIState = {
   winner: { teamIndex: number; teamName: string } | null;
 };
 
-// ---------- actions ----------
 type Actions = {
   clearError: () => void;
   loadCategories: () => Promise<void>;
@@ -96,7 +93,6 @@ const initialTimer: TimerState = {
 };
 
 export const useGame = create<GameState & UIState & Actions>()((set, get) => {
-  // 🔹 Nu kan du definiera helpers här:
   const declareWinner = (staged: GameItem[]) => {
     const s = get();
     const tIdx = s.currentTeamIndex;
@@ -115,7 +111,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
     });
   };
 
-  // 🔹 Här returnerar du store-objektet som tidigare
   return {
     deck: [],
     discard: [],
@@ -275,8 +270,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           phase: "PLACED_WRONG",
         });
         get().stopTimer();
-        // Don't automatically call nextTeam for wrong answers
-        // Let the user click "Next Team" manually to see the feedback
       }
     },
 
@@ -293,7 +286,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
 
       get().stopTimer();
 
-      // extra explicit reset (syns direkt i UI även om batched)
       const full = get().settings.turnSeconds;
       set((state) => ({ timer: { ...state.timer, secondsLeft: full } }));
 
@@ -310,8 +302,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         lastPlacementCorrect: null,
       });
 
-      // Only automatically switch teams if the last placement was correct
-      // If it was wrong, wait for user to click "Next Team"
       if (s.lastPlacementCorrect !== false) {
         get().nextTeam();
       }
@@ -323,7 +313,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
       const next = (currentTeamIdx + 1) % s.teams.length;
       const nextTeam = s.teams[next];
       
-      // Commit the current team's timeline before switching
       const committed = s.turnTimeline;
       set({
         teams: s.teams.map((t, i) =>
@@ -374,7 +363,6 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
     timeUp: () => {
       const s = get();
 
-      // Har spelaren lagt ett kort i en slot (PLACED_PENDING)?
       if (s.pendingIndex != null && s.currentCard) {
         const ok = isPlacementCorrect(
           s.turnTimeline,
@@ -383,14 +371,12 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         );
 
         if (ok) {
-          // ✅ Rätt: lägg in kortet i turnTimeline och låt spelaren välja
           const staged = insertAt(
             s.turnTimeline,
             s.currentCard,
             s.pendingIndex
           );
           if (staged.length >= WIN_TARGET) {
-            // Commit + vinnare
             set({
               currentCard: undefined,
               pendingIndex: null,
@@ -408,11 +394,10 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
             lastPlacementCorrect: true,
             lastTurnFeedback: { timeUp: true, correct: true },
           });
-          get().stopTimer(); // stoppa & nollställ klockan
-          set({ phase: "CHOICE_AFTER_CORRECT" }); // stanna i valet (inte lockIn)
+          get().stopTimer();
+          set({ phase: "CHOICE_AFTER_CORRECT" });
           return;
         } else {
-          // ❌ Fel: återställ till baseline och avsluta turen
           set({
             turnTimeline: s.roundBaselineTimeline.slice(),
             currentCard: undefined,
@@ -421,20 +406,15 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
             lastTurnFeedback: { timeUp: true, correct: false },
           });
           get().stopTimer();
-          // Don't automatically call lockIn for wrong answers
-          // Let the user click "Next Team" manually
           return;
         }
       }
 
-      // ⏱️ Tiden slut utan att något lades (ingen pending)
       set({
         lastPlacementCorrect: null,
         lastTurnFeedback: { timeUp: true, correct: null },
       });
       get().stopTimer();
-      // Don't automatically call lockIn when no answer was placed
-      // Let the user click "Next Team" manually
       return;
     },
 
@@ -479,7 +459,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           ...get().timer,
           timerId: null,
           turnDeadline: null,
-          secondsLeft: full, // reset till max
+          secondsLeft: full,
         },
       });
     },
