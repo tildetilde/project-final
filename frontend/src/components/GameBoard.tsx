@@ -12,7 +12,6 @@ import {
   useDroppable,
   closestCenter,
 } from "@dnd-kit/core";
-import { restrictToWindowEdges } from "@dnd-kit/modifiers";
 import { useNavigate } from "react-router-dom";
 
 import { useGame } from "../store/game";

@@ -1,6 +1,6 @@
 import React from "react";
 import { Card, CardHeader, CardContent } from "../ui";
-import type { GameItem, GameCategory } from "../types/game";
+import type { GameItem } from "../types/game";
 
 interface StartCardProps {
   item: GameItem;

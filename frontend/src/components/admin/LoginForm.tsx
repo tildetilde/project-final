@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Heading, Button, Card, Input, Label, ErrorMessage } from '../../ui';
-import { DotPattern } from '../../ui';
 
 interface LoginFormProps {
   onLogin: (username: string, password: string) => Promise<{ success: boolean; error?: string }>;
