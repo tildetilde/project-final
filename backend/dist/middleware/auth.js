@@ -33,4 +33,3 @@ export const authenticateToken = async (req, res, next) => {
         return res.status(500).json(response);
     }
 };
-//# sourceMappingURL=auth.js.map

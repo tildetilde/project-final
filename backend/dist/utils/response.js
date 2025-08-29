@@ -47,4 +47,3 @@ export class ResponseBuilder {
         return this.error(message, 'INTERNAL_ERROR', undefined, req);
     }
 }
-//# sourceMappingURL=response.js.map

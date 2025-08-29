@@ -303,4 +303,3 @@ export const deleteItem = async (req, res) => {
         res.status(500).json(response);
     }
 };
-//# sourceMappingURL=adminController.js.map

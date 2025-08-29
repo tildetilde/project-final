@@ -10,17 +10,18 @@
     "skipLibCheck": true,
     "outDir": "./dist",
     "rootDir": "./src",
-    "declaration": true,
-    "declarationMap": true,
-    "sourceMap": true,
+    "declaration": false,
+    "declarationMap": false,
+    "sourceMap": false,
     "resolveJsonModule": true,
-    "allowJs": true,
+    "allowJs": false,
     "noEmit": false
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist"],
-  "ts-node": {
-    "esm": true,
-    "experimentalSpecifierResolution": "node"
-  }
+  "exclude": ["node_modules", 
+  "dist",
+  "data", 
+  "src/services/seedDb.ts", 
+  "src/services/createAdmin.ts"
+]
 }

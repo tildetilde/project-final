@@ -10,4 +10,3 @@ const ItemSchema = new Schema({
     }
 });
 export const Item = model('Item', ItemSchema);
-//# sourceMappingURL=Item.js.map

@@ -42,4 +42,3 @@ export class DatabaseError extends AppError {
         super(message, 500, false);
     }
 }
-//# sourceMappingURL=errors.js.map

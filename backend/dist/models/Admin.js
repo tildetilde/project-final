@@ -49,4 +49,3 @@ AdminSchema.methods.comparePassword = async function (candidatePassword) {
     return bcrypt.compare(candidatePassword, this.password);
 };
 export const Admin = model('Admin', AdminSchema);
-//# sourceMappingURL=Admin.js.map
