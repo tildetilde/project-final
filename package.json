@@ -5,6 +5,6 @@
     "postinstall": "npm install --prefix backend",
     "lint": "npm --prefix frontend run lint",
     "lint:fix": "npm --prefix frontend run lint:fix",
-    "prune": "ts-prune"
+    "prune": "npm --prefix frontend run prune"
   }
 }
