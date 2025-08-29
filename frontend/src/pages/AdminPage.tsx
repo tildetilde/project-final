@@ -1,6 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { Heading, Button, ErrorMessage } from '../ui';
-import { DotPattern } from '../ui';
 import { useAuth } from '../hooks/useAuth';
 import { useCategories } from '../hooks/useCategories';
 import { useItems } from '../hooks/useItems';
