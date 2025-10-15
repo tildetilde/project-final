@@ -1,7 +1,6 @@
 import connectDB from '../config/database.js';
 import { Admin } from '../models/Admin.js';
 import { config } from '../config/environment.js';
-import { logger } from '../utils/logger.js';
 
 const createInitialAdmin = async () => {
   try {
@@ -10,7 +9,7 @@ const createInitialAdmin = async () => {
     // Check if admin already exists
     const existingAdmin = await Admin.findOne({ username: config.ADMIN_USERNAME });
     if (existingAdmin) {
-      logger.info('Admin user already exists', 'CreateAdmin');
+      console.log('[CreateAdmin] Admin user already exists');
       process.exit(0);
     }
     
@@ -23,14 +22,11 @@ const createInitialAdmin = async () => {
     });
     
     await admin.save();
-    logger.info('Initial admin user created successfully', 'CreateAdmin', {
-      username: config.ADMIN_USERNAME,
-      email: config.ADMIN_EMAIL,
-    });
+    console.log(`[CreateAdmin] Initial admin user created successfully: ${config.ADMIN_USERNAME} (${config.ADMIN_EMAIL})`);
     
     process.exit(0);
   } catch (error) {
-    logger.error('Error creating admin user', 'CreateAdmin', error as Error);
+    console.error('[CreateAdmin] Error creating admin user', error);
     process.exit(1);
   }
 };

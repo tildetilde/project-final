@@ -6,7 +6,6 @@ import { fileURLToPath } from 'url';
 import { Item } from '../models/Item.js';
 import { Category } from '../models/Category.js';
 import { config } from '../config/environment.js';
-import { logger } from '../utils/logger.js';
 
 // Get __dirname equivalent for ES modules
 const __filename = fileURLToPath(import.meta.url);
@@ -18,7 +17,7 @@ const readJsonFile = (filePath: string) => {
     const fileContent = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(fileContent);
   } catch (error) {
-    logger.error(`Error reading or parsing file: ${filePath}`, 'SeedDB', error as Error);
+    console.error(`[SeedDB] Error reading or parsing file: ${filePath}`, error);
     return null;
   }
 };
@@ -26,12 +25,12 @@ const readJsonFile = (filePath: string) => {
 const seedData = async () => {
   try {
     await mongoose.connect(config.MONGODB_URI);
-    logger.info('Connected to MongoDB', 'SeedDB');
+    console.log('[SeedDB] Connected to MongoDB');
 
     // Clear existing data to prevent duplicates on re-seed
     await Item.deleteMany({});
     await Category.deleteMany({});
-    logger.info('Existing data cleared', 'SeedDB');
+    console.log('[SeedDB] Existing data cleared');
 
     // Step 1: Read and seed Category data from JSON files
     const categoriesPath = path.join(__dirname, '../../data/categories');
@@ -41,7 +40,7 @@ const seedData = async () => {
       const categoryData = readJsonFile(path.join(categoriesPath, file));
       if (categoryData) {
         await mongoose.connection.collection('categories').insertOne(categoryData);
-        logger.info(`Category "${categoryData.name}" seeded`, 'SeedDB');
+        console.log(`[SeedDB] Category "${categoryData.name}" seeded`);
       }
     }
 
@@ -53,15 +52,15 @@ const seedData = async () => {
       const itemsData = readJsonFile(path.join(itemsPath, file));
       if (itemsData && Array.isArray(itemsData)) {
         await Item.insertMany(itemsData);
-        logger.info(`Items from file "${file}" seeded`, 'SeedDB');
+        console.log(`[SeedDB] Items from file "${file}" seeded`);
       }
     }
 
-    logger.info('Database seeding complete!', 'SeedDB');
+    console.log('[SeedDB] Database seeding complete!');
     mongoose.connection.close();
 
   } catch (error) {
-    logger.error('Database seeding failed', 'SeedDB', error as Error);
+    console.error('[SeedDB] Database seeding failed', error);
     mongoose.connection.close();
   }
 };
