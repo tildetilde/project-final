@@ -2,14 +2,6 @@ import { Request, Response } from 'express';
 import { Item } from '../models/Item.js';
 import { Category } from '../models/Category.js';
 
-// Helper function to shuffle an array
-const shuffleArray = <T>(array: T[]): T[] => {
-  for (let i = array.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [array[i], array[j]] = [array[j], array[i]];
-  }
-  return array;
-};
 
 export const getCategories = async (req: Request, res: Response) => {
   try {
@@ -37,46 +29,6 @@ export const getCategoryItems = async (req: Request, res: Response) => {
   }
 };
 
-export const getQuizItems = async (req: Request, res: Response) => {
-  try {
-    const { categoryId } = req.params;
-    
-    // Find the category
-    const category = await Category.findOne({ id: categoryId });
-    if (!category) {
-      return res.status(404).json({ success: false, error: 'Category not found' });
-    }
-
-    // Get items for this category
-    const items = await Item.find({ categoryId });
-    if (items.length < 2) {
-      return res.status(400).json({ 
-        success: false, 
-        error: 'Not enough items for this quiz' 
-      });
-    }
-
-    // Shuffle and take first 10 items
-    const shuffledItems = shuffleArray(items).slice(0, 10);
-    
-    const responseData = {
-      question: category.question || `Which ${category.name} is the most?`,
-      unit: category.unit,
-      unitVisible: category.unitVisible || false,
-      items: shuffledItems.map(item => ({
-        _id: item._id,
-        id: item.id,
-        name: item.name,
-        label: item.label
-      }))
-    };
-
-    res.status(200).json({ success: true, data: responseData });
-  } catch (error) {
-    console.error('[QuizController] Error fetching quiz items:', error);
-    res.status(500).json({ success: false, error: 'Error fetching quiz items' });
-  }
-};
 
 export const checkAnswers = async (req: Request, res: Response) => {
   try {

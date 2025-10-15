@@ -99,7 +99,6 @@ npm run create-admin
 - `GET /` - Health check
 - `GET /health` - Detailed health status
 - `GET /api/quiz/categories` - Get all quiz categories
-- `GET /api/quiz/items/:categoryId` - Get quiz items for a category
 - `GET /api/quiz/category/:categoryId/items` - Get all items for a category
 - `POST /api/quiz/check` - Check quiz answers
 
