@@ -32,8 +32,8 @@ export const CurrentCard: React.FC<{ card: GameItem; dragging?: boolean }> = ({
           </div>
         </CardHeader>
         <CardContent className="flex-1 flex flex-col items-center justify-center gap-0 px-1 lg:px-2">
-          <div className="text-center text-sm lg:text-2xl font-semibold text-primary break-normal px-1 lg:px-2 w-full leading-tight flex justify-center font-mono">
-            <span className="text-center">{card.name}</span>
+          <div className="text-center text-sm lg:text-2xl font-semibold text-primary px-1 lg:px-2 w-full leading-tight flex justify-center font-mono">
+            <span className="text-center break-words hyphens-auto">{card.name}</span>
           </div>
           <div className="mt-1 lg:mt-2 text-xl lg:text-4xl font-bold text-primary/30 font-mono">
             ?
@@ -53,7 +53,7 @@ export const CurrentCardPreview: React.FC<{ card: GameItem }> = ({ card }) => (
           </div>
         </CardHeader>
         <CardContent className="flex-1 flex flex-col items-center justify-center gap-0 lg:gap-1 px-1 lg:px-2">
-          <div className="text-center text-sm lg:text-2xl font-semibold text-primary break-normal px-1 lg:px-2 w-full leading-tight flex justify-center font-mono">
+          <div className="text-center text-sm lg:text-2xl font-semibold text-primary break-words hyphens-auto px-1 lg:px-2 w-full leading-tight flex justify-center font-mono">
             <span className="text-center">{card.name}</span>
           </div>
           <div className="mt-1 lg:mt-2 text-xl lg:text-3xl font-bold text-primary/30 font-mono">

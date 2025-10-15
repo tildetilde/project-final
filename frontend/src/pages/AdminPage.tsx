@@ -103,16 +103,18 @@ const AdminPage: React.FC = () => {
             </div>
           )}
 
-          <div className="flex space-x-1 mb-6">
+          <div className="flex flex-col sm:flex-row gap-2 sm:space-x-1 mb-6">
             <Button
               variant={activeTab === 'categories' ? 'primary' : 'outline'}
               onClick={() => setActiveTab('categories')}
+              className="w-full sm:w-auto"
             >
               Categories ({categories.length})
             </Button>
             <Button
               variant={activeTab === 'items' ? 'primary' : 'outline'}
               onClick={() => setActiveTab('items')}
+              className="w-full sm:w-auto"
             >
               Items ({items.length})
             </Button>

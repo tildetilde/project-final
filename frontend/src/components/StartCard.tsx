@@ -54,7 +54,7 @@ export const StartCard: React.FC<StartCardProps> = ({
 
     <CardContent className="relative z-10 flex-1 flex flex-col justify-center px-4 sm:px-6 pb-4 sm:pb-8">
       <div className="space-y-2 sm:space-y-3 text-center">
-        <div className="text-sm sm:text-xl font-semibold text-primary leading-tight">
+        <div className="text-sm sm:text-xl font-semibold text-primary leading-tight break-words hyphens-auto">
           {item.name}
         </div>
         <div className="text-xs sm:text-lg text-muted-foreground leading-snug">

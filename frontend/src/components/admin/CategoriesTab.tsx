@@ -67,19 +67,19 @@ const CategoriesTab: React.FC<CategoriesTabProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-2xl font-bold">Categories</h2>
-        <Button onClick={onCreate}>Create Category</Button>
+        <Button onClick={onCreate} className="w-full sm:w-auto">Create Category</Button>
       </div>
 
       {/* Create/Edit Form */}
       {(showCreateForm || editingCategory) && (
-        <Card className="p-6">
+        <Card className="p-4 sm:p-6">
           <h3 className="text-lg font-semibold mb-4">
             {editingCategory ? 'Edit Category' : 'Create Category'}
           </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="id">ID</Label>
                 <Input
@@ -147,11 +147,11 @@ const CategoriesTab: React.FC<CategoriesTabProps> = ({
               />
               <Label htmlFor="unitVisible">Show Unit</Label>
             </div>
-            <div className="flex space-x-2">
-              <Button type="submit">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button type="submit" className="w-full sm:w-auto">
                 {editingCategory ? 'Update' : 'Create'}
               </Button>
-              <Button type="button" variant="outline" onClick={handleCancel}>
+              <Button type="button" variant="outline" onClick={handleCancel} className="w-full sm:w-auto">
                 Cancel
               </Button>
             </div>
@@ -163,27 +163,27 @@ const CategoriesTab: React.FC<CategoriesTabProps> = ({
       <div className="grid gap-4">
         {sortedCategories.map((category) => (
           <Card key={category.id} className="p-4">
-            <div className="flex justify-between items-start">
-              <div className="flex-1">
-                <h3 className="font-semibold text-lg">{category.name}</h3>
+            <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+              <div className="flex-1 min-w-0">
+                <h3 className="font-semibold text-lg break-words">{category.name}</h3>
                 <p className="text-sm text-muted-foreground">ID: {category.id}</p>
                 {category.description && (
-                  <p className="text-sm mt-1">{category.description}</p>
+                  <p className="text-sm mt-1 break-words">{category.description}</p>
                 )}
                 {category.question && (
-                  <p className="text-sm mt-1 text-blue-600">Q: {category.question}</p>
+                  <p className="text-sm mt-1 text-blue-600 break-words">Q: {category.question}</p>
                 )}
-                <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-2 text-sm text-muted-foreground space-y-1 sm:space-y-0">
                   <span>Unit: {category.unit}</span>
                   <span>Sort: {category.sort}</span>
                   <span>Unit Visible: {category.unitVisible ? 'Yes' : 'No'}</span>
                 </div>
               </div>
-              <div className="flex space-x-2">
-                <Button size="sm" variant="outline" onClick={() => handleEdit(category)}>
+              <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
+                <Button size="sm" variant="outline" onClick={() => handleEdit(category)} className="w-full sm:w-auto">
                   Edit
                 </Button>
-                <Button size="sm" variant="secondary" onClick={() => onDelete(category.id)}>
+                <Button size="sm" variant="secondary" onClick={() => onDelete(category.id)} className="w-full sm:w-auto">
                   Delete
                 </Button>
               </div>

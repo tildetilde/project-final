@@ -102,7 +102,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
             {isRevealed ? formatValue(item.value, unit) : "??"}
           </div>
 
-          <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono")}>
+          <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono break-words hyphens-auto")}>
             {item.name}
           </div>
         </div>

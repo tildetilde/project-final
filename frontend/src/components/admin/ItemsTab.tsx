@@ -90,19 +90,19 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
 
   return (
     <div className="space-y-6">
-      <div className="flex justify-between items-center">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
         <h2 className="text-2xl font-bold">Items</h2>
-        <Button onClick={onCreate}>Create Item</Button>
+        <Button onClick={onCreate} className="w-full sm:w-auto">Create Item</Button>
       </div>
 
       {/* Create/Edit Form */}
       {(showCreateForm || editingItem) && (
-        <Card className="p-6">
+        <Card className="p-4 sm:p-6">
           <h3 className="text-lg font-semibold mb-4">
             {editingItem ? 'Edit Item' : 'Create Item'}
           </h3>
           <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <Label htmlFor="itemId">ID</Label>
                 <Input
@@ -159,11 +159,11 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
                 ))}
               </select>
             </div>
-            <div className="flex space-x-2">
-              <Button type="submit">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <Button type="submit" className="w-full sm:w-auto">
                 {editingItem ? 'Update' : 'Create'}
               </Button>
-              <Button type="button" variant="outline" onClick={handleCancel}>
+              <Button type="button" variant="outline" onClick={handleCancel} className="w-full sm:w-auto">
                 Cancel
               </Button>
             </div>
@@ -174,10 +174,11 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
       {/* Items List */}
       <div className="grid gap-4">
         {/* Category Filter */}
-        <div className="flex space-x-2 mb-4">
+        <div className="flex flex-wrap gap-2 mb-4">
           <Button
             variant={selectedCategoryFilter === 'all' ? 'primary' : 'outline'}
             onClick={() => setSelectedCategoryFilter('all')}
+            className="text-xs sm:text-sm"
           >
             All Items
           </Button>
@@ -188,6 +189,7 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
                 key={categoryId}
                 variant={selectedCategoryFilter === categoryId ? 'primary' : 'outline'}
                 onClick={() => setSelectedCategoryFilter(categoryId)}
+                className="text-xs sm:text-sm"
               >
                 {category?.name || 'Unknown Category'} ({items[categoryId].length})
               </Button>
@@ -203,11 +205,11 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
             <div className="grid gap-4">
               {categoryItems.map((item) => (
                 <Card key={item.id} className="p-4">
-                  <div className="flex justify-between items-start">
-                    <div className="flex-1">
-                      <h3 className="font-semibold text-lg">{item.name}</h3>
+                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
+                    <div className="flex-1 min-w-0">
+                      <h3 className="font-semibold text-lg break-words">{item.name}</h3>
                       <p className="text-sm text-muted-foreground">ID: {item.id}</p>
-                      <div className="flex items-center space-x-4 mt-2 text-sm text-muted-foreground">
+                      <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 mt-2 text-sm text-muted-foreground space-y-1 sm:space-y-0">
                         <span>Value: {item.value}</span>
                         <span>Label: {item.label}</span>
                         <span>
@@ -215,11 +217,11 @@ const ItemsTab: React.FC<ItemsTabProps> = ({
                         </span>
                       </div>
                     </div>
-                    <div className="flex space-x-2">
-                      <Button size="sm" variant="outline" onClick={() => handleEdit(item)}>
+                    <div className="flex flex-col sm:flex-row gap-2 sm:space-x-2">
+                      <Button size="sm" variant="outline" onClick={() => handleEdit(item)} className="w-full sm:w-auto">
                         Edit
                       </Button>
-                      <Button size="sm" variant="secondary" onClick={() => onDelete(item.id)}>
+                      <Button size="sm" variant="secondary" onClick={() => onDelete(item.id)} className="w-full sm:w-auto">
                         Delete
                       </Button>
                     </div>
