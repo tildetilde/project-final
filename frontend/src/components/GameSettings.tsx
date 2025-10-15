@@ -21,14 +21,14 @@ export const GameSettings: React.FC<Props> = ({ onClose, onContinue }) => {
   };
 
   return (
-    <div className=" space-y-4 md:space-y-6 w-full max-w-xs md:max-w-md lg:max-w-xl mx-auto">
+    <div className=" space-y-4 md:space-y-6 w-full md:max-w-md lg:max-w-xl mx-auto">
       <header className="flex items-center justify-between">
         <div className="text-sm text-muted-foreground" aria-live="polite">
           {settings.teamNames.length} teams • {settings.turnSeconds}s per turn
         </div>
       </header>
 
-      <Card className="p-4 space-y-2 md:space-y-4 ">
+      <Card className="p-4 space-y-2 md:space-y-4">
         <div className="font-semibold">Teams</div>
 
         <div className="flex items-center gap-3">

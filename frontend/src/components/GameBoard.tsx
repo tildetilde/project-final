@@ -172,7 +172,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf] animate-bounce font-mono">
                 OH NO!
               </div>
-              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono mb-3">
+              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono mb-1">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Wrong answer. Your turn is over.
                 </span>
@@ -437,7 +437,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
           </DndContext>
 
 
-          <div className="flex flex-wrap gap-3 pt-3 sm:pt-6 justify-center font-sans">
+          <div className="flex flex-wrap gap-3 pt-3 sm:pt-2 justify-center font-sans">
             {phase === "TURN_START" && lastPlacementCorrect !== false && (
               <Button 
                 onClick={startTurn}
@@ -451,13 +451,13 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
               <>
                 <Button 
                   onClick={drawAnother}
-                  className="bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a]"
+                  className="bg-[#2a0d0d] text-[#f9ecdf] border border-[#f9ecdf] hover:bg-[#1a0a0a] text-sm lg:text-base px-2 py-0 lg:px-3 lg:py-1"
                 >
                   Draw another
                 </Button>
                 <Button 
                   onClick={lockIn}
-                  className="bg-[#f9ecdf] text-[#2a0d0d] border border-[#2a0d0d] hover:bg-[#f0dbc5]"
+                  className="bg-[#f9ecdf] text-[#2a0d0d] border border-[#2a0d0d] hover:bg-[#f0dbc5] text-sm lg:text-base px-2 lg:px-3"
                 >
                   Lock in & end turn
                 </Button>

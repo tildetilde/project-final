@@ -30,7 +30,6 @@ export default function GameMode() {
 
   const chip =
     "px-2 py-1 rounded-full bg-primary/10 border border-[#f9ecdf] text-xs tracking-wider uppercase text-[#f9ecdf]";
-  const dot = "inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft";
 
   const handleHomeClick = (e: React.MouseEvent) => {
     e.preventDefault();
@@ -87,7 +86,7 @@ if (!selectedCategory) {
       {phase !== "SETUP" && (
         <button
           onClick={handleHomeClick}
-          className="fixed z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
+          className="absolute z-50 top-3 sm:top-4 left-3 sm:left-6 flex items-center gap-2 hover:opacity-80 transition-opacity cursor-pointer"
         >
           <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
           <div className="px-2 py-1 rounded-full bg-primary/10 border border-[#f9ecdf] text-xs tracking-wider uppercase text-[#f9ecdf]">
@@ -97,7 +96,7 @@ if (!selectedCategory) {
       )}
 
       {phase !== "SETUP" && (
-        <div className="fixed z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
+        <div className="absolute z-50 top-3 sm:top-4 right-3 sm:right-6 flex items-center gap-2">
           <div className="sr-only" aria-live="polite">
             {teams[currentTeamIndex]?.name} is playing
           </div>
