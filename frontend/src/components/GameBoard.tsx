@@ -60,6 +60,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
   const turnTimeline = useGame((s) => s.turnTimeline);
   const timer = useGame((s) => s.timer);
   const settings = useGame((s) => s.settings);
+  const wrongAnswerCard = useGame((s) => s.wrongAnswerCard);
 
   const team = teams[currentTeamIndex];
 
@@ -163,20 +164,32 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
       phase === "PLACED_WRONG" ||
       (lastTurnFeedback?.timeUp && lastTurnFeedback.correct === false)
     ) {
-      const heading = lastTurnFeedback?.timeUp ? "TIME’S UP!" : "OH NO!";
+      const heading = lastTurnFeedback?.timeUp ? "TIME'S UP!" : "OH NO!";
       return (
         <div className="rounded-2xl p-2 sm:p-3 border border-border bg-[#2a0d0d] animate-pulse">
-          <div className="flex items-center justify-center h-[140px]">
+          <div className="flex items-center justify-center min-h-[140px] py-2">
             <div className="text-center">
-
-              <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf]  animate-bounce font-mono">
+              <div className="font-bold text-xl lg:text-5xl mb-2 text-[#f9ecdf] animate-bounce font-mono">
                 OH NO!
               </div>
-              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono">
+              <div className="font-base lg:text-lg text-[#f9ecdf] font-mono mb-3">
                 <span className="inline-block animate-[typewriter-smooth_1.5s_ease-out]">
                   Wrong answer. Your turn is over.
                 </span>
               </div>
+              {wrongAnswerCard && (
+                <div className="flex justify-center">
+                  <div className="scale-75">
+                    <TimeLineCard
+                      item={wrongAnswerCard}
+                      category={selectedCategory || undefined}
+                      size="sm"
+                      isRevealed={true}
+                      isCorrect={false}
+                    />
+                  </div>
+                </div>
+              )}
             </div>
           </div>
         </div>
@@ -261,7 +274,7 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     }
 
     return (
-      <div className="rounded-2xl p-2 sm:p-3 border border-[#f9ecdf] bg-[#2a0d0d]">
+      <div className="rounded-2xl p-2 sm:p-3 border border-[#f9ecdf] bg-[#2a0d0d] relative">
         <div className="flex items-end justify-center overflow-x-auto overflow-y-visible gap-1 sm:gap-2">
           {children}
         </div>
@@ -290,6 +303,22 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
             </Button>
           </div>
         )}
+      </div>
+    );
+  };
+
+  const renderTimelineCounter = () => {
+    const isActiveTurn = phase === "DRAWN" || phase === "PLACED_PENDING" || phase === "CHOICE_AFTER_CORRECT";
+    const currentTimeline = isActiveTurn ? turnTimeline : (team?.timeline ?? []);
+    const cardCount = currentTimeline.length;
+    
+    return (
+      <div className="absolute top-2 left-2 z-20">
+        <div className="bg-[#2a0d0d] border border-[#f9ecdf] rounded-lg px-2 py-0 lg:px-3 lg:py-1 shadow-lg">
+          <span className="text-[#f9ecdf] font-mono text-xs lg:text-base">
+            Card{cardCount !== 1 ? 's' : ''}: {cardCount}
+          </span>
+        </div>
       </div>
     );
   };
@@ -372,9 +401,14 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
 
             <div className="flex flex-col items-stretch gap-0.5 sm:gap-0.5">
               
-              {renderTimer()}
+              <div className="flex items-center justify-center relative">
+                {renderTimer()}
+              </div>
               
-              <div className="min-h-[140px]">{renderTimeline()}</div>
+              <div className="min-h-[140px] relative">
+                {renderTimelineCounter()}
+                {renderTimeline()}
+              </div>
 
               {phase === "DRAWN" && currentCard && lastPlacementCorrect !== false && !(lastTurnFeedback?.timeUp && lastTurnFeedback.correct === null) && (
                 <div className="text-sm text-muted-foreground text-left">
