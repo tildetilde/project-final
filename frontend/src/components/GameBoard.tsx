@@ -314,8 +314,8 @@ export const GameBoard: React.FC<{ className?: string }> = ({ className }) => {
     
     return (
       <div className="absolute top-2 left-2 z-20">
-        <div className="bg-[#2a0d0d] border border-[#f9ecdf] rounded-lg px-2 py-0 lg:px-3 lg:py-1 shadow-lg">
-          <span className="text-[#f9ecdf] font-mono text-xs lg:text-base">
+        <div className="bg-[#2a0d0d] border border-[#f9ecdf] flex justify-center rounded-lg px-2 py-1 lg:px-3 lg:py-1 shadow-lg">
+          <span className="text-[#f9ecdf] font-mono text-xs lg:text-sm">
             Card{cardCount !== 1 ? 's' : ''}: {cardCount}
           </span>
         </div>
