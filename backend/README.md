@@ -2,7 +2,7 @@
 
 A Node.js/Express/TypeScript backend server for the Banganza quiz application.
 
-## 🏗️ Architecture
+## Architecture
 
 The backend follows a clean, layered architecture:
 
@@ -15,37 +15,17 @@ src/
 ├── routes/          # API route definitions
 ├── services/        # Business logic services
 ├── types/           # TypeScript type definitions
-└── utils/           # Utility functions and classes
 ```
 
-## 🚀 Features
 
-- **RESTful API** with consistent response format
-- **JWT Authentication** for admin endpoints
-- **MongoDB** with Mongoose ODM
-- **TypeScript** for type safety
-- **Structured logging** with context
-- **Error handling** with custom error classes
-- **Input validation** middleware
-- **Environment configuration** validation
-
-## 📋 Prerequisites
-
-- Node.js 18+ 
-- MongoDB instance
-- TypeScript knowledge
-
-## 🛠️ Installation
+## Installation
 
 1. Install dependencies:
 ```bash
 npm install
 ```
 
-2. Create a `.env` file based on `.env.example`:
-```bash
-cp .env.example .env
-```
+2. Create a `.env` file
 
 3. Configure environment variables in `.env`:
 ```env
@@ -59,7 +39,7 @@ ADMIN_PASSWORD=secure_password
 ADMIN_EMAIL=admin@example.com
 ```
 
-## 🏃‍♂️ Running the Server
+## Running the Server
 
 ### Development
 ```bash
@@ -93,7 +73,7 @@ npm run create-admin
 - `npm run seed` - Seed database with sample data
 - `npm run create-admin` - Create initial admin user
 
-## 📚 API Endpoints
+## API Endpoints
 
 ### Public Endpoints
 - `GET /` - Health check
@@ -115,7 +95,7 @@ npm run create-admin
 - `PUT /api/admin/items/:id` - Update item
 - `DELETE /api/admin/items/:id` - Delete item
 
-## 🔐 Authentication
+## Authentication
 
 Admin endpoints require JWT authentication. Include the token in the Authorization header:
 
@@ -123,7 +103,7 @@ Admin endpoints require JWT authentication. Include the token in the Authorizati
 Authorization: Bearer <your_jwt_token>
 ```
 
-## 📝 Response Format
+## Response Format
 
 All API responses follow a consistent format:
 
@@ -153,10 +133,10 @@ All API responses follow a consistent format:
 }
 ```
 
-## 🗄️ Database Models
+## Database Models
 
 ### Admin
-- Username, password (hashed), email
+- Username, password, email
 - Active status and last login tracking
 
 ### Category
@@ -165,66 +145,4 @@ All API responses follow a consistent format:
 
 ### Item
 - ID, name, value, label
-- Category reference and source
-
-## 🛡️ Security Features
-
-- **Password hashing** with bcrypt
-- **JWT tokens** with expiration
-- **CORS configuration** for frontend
-- **Input validation** middleware
-- **Error sanitization** in production
-
-## 📊 Logging
-
-Structured logging with different levels:
-- **ERROR** - Application errors
-- **WARN** - Warning conditions
-- **INFO** - General information
-- **DEBUG** - Debug information (development only)
-
-## 🧪 Testing
-
-Run the linter and type checker:
-```bash
-npm run lint
-npm run type-check
-```
-
-## 🚀 Deployment
-
-1. Set `NODE_ENV=production`
-2. Configure production MongoDB URI
-3. Set secure JWT secret
-4. Build the application: `npm run build`
-5. Start the server: `npm start`
-
-## 📁 Project Structure
-
-```
-backend/
-├── src/
-│   ├── config/          # Environment and database config
-│   ├── controllers/     # Request handlers
-│   ├── middleware/      # Express middleware
-│   ├── models/          # Mongoose schemas
-│   ├── routes/          # API routes
-│   ├── services/        # Business logic
-│   ├── types/           # TypeScript interfaces
-│   └── utils/           # Utilities and helpers
-├── data/                # Seed data files
-├── dist/                # Compiled JavaScript
-└── package.json         # Dependencies and scripts
-```
-
-## 🤝 Contributing
-
-1. Follow TypeScript best practices
-2. Use the established error handling patterns
-3. Maintain consistent API response format
-4. Add appropriate logging
-5. Run linting before committing
-
-## 📄 License
-
-ISC License
+- Category reference and source 

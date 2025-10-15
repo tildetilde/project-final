@@ -25,29 +25,3 @@ export interface QuizCategory {
   };
   version?: number;
 }
-
-export interface QuizItemsResponse {
-  question: string;
-  unit: string;
-  unitVisible: boolean;
-  items: Omit<QuizItem, 'value' | 'categoryId' | 'source'>[];
-}
-
-export interface QuizAnswer {
-  userAnswers: string[];
-}
-
-export interface QuizResponse {
-  success: boolean;
-  data?: QuizItemsResponse | QuizCheckResult;
-  error?: {
-    message: string;
-    stack?: string;
-  };
-}
-
-export interface QuizCheckResult {
-  isCorrect: boolean;
-  correctOrder?: QuizItem[];
-  userOrder?: QuizItem[];
-}
