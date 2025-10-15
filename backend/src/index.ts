@@ -7,7 +7,6 @@ import adminRoutes from './routes/adminRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
 import connectDB from './config/database.js';
 import { config } from './config/environment.js';
-import { logger } from './utils/logger.js';
 
 const app = express();
 const port = config.PORT;
@@ -73,14 +72,14 @@ connectDB();
 // Start the server
 app
   .listen(port, () => {
-    logger.info(`Backend server is running on port ${port}`, 'Server');
+    console.log(`[Server] Backend server is running on port ${port}`);
     if (config.NODE_ENV === "production") {
-      logger.info("Production mode enabled", 'Server');
+      console.log("[Server] Production mode enabled");
     } else {
-      logger.info(`Development mode: http://127.0.0.1:${port}`, 'Server');
+      console.log(`[Server] Development mode: http://127.0.0.1:${port}`);
     }
   })
   .on("error", (err) => {
-    logger.error("Error starting the server", 'Server', err);
+    console.error("[Server] Error starting the server:", err);
     process.exit(1);
   });

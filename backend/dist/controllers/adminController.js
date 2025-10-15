@@ -3,287 +3,177 @@ import { Admin } from '../models/Admin.js';
 import { Category } from '../models/Category.js';
 import { Item } from '../models/Item.js';
 import { config } from '../config/environment.js';
-import { ResponseBuilder } from '../utils/response.js';
-import { logger } from '../utils/logger.js';
 // Admin Authentication
 export const adminLogin = async (req, res) => {
     try {
         const { username, password } = req.body;
         if (!username || !password) {
-            const response = ResponseBuilder.validationError('Username and password are required', {
-                received: { username: !!username, password: !!password },
-            }, req);
-            return res.status(400).json(response);
+            return res.status(400).json({ success: false, error: 'Username and password are required' });
         }
-        // Find admin by username
         const admin = await Admin.findOne({ username, isActive: true });
-        if (!admin) {
-            const response = ResponseBuilder.unauthorized('Invalid credentials', req);
-            return res.status(401).json(response);
+        if (!admin || !(await admin.comparePassword(password))) {
+            return res.status(401).json({ success: false, error: 'Invalid credentials' });
         }
-        // Check password
-        const isPasswordValid = await admin.comparePassword(password);
-        if (!isPasswordValid) {
-            const response = ResponseBuilder.unauthorized('Invalid credentials', req);
-            return res.status(401).json(response);
-        }
-        // Update last login
         admin.lastLogin = new Date();
         await admin.save();
-        // Generate JWT token
         const token = jwt.sign({ adminId: admin._id }, config.JWT_SECRET, { expiresIn: '24h' });
-        // Return admin info (without password) and token
-        const adminInfo = {
-            id: admin._id,
-            username: admin.username,
-            email: admin.email,
-            lastLogin: admin.lastLogin
-        };
-        const response = ResponseBuilder.success({
-            message: 'Login successful',
-            admin: adminInfo,
-            token
-        }, req);
-        res.json(response);
-    }
-    catch (error) {
-        logger.error('Admin login error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
-    }
-};
-export const adminLogout = async (req, res) => {
-    try {
-        // In a real app, you might want to blacklist the token
-        // For now, we'll just return success
-        const response = ResponseBuilder.success({ message: 'Logout successful' }, req);
-        res.json(response);
-    }
-    catch (error) {
-        logger.error('Admin logout error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
-    }
-};
-export const getAdminProfile = async (req, res) => {
-    try {
-        const admin = req.admin;
-        if (!admin) {
-            const response = ResponseBuilder.unauthorized('Admin not found', req);
-            return res.status(401).json(response);
-        }
-        const response = ResponseBuilder.success({
-            admin: {
-                id: admin._id,
-                username: admin.username,
-                email: admin.email,
-                lastLogin: admin.lastLogin
+        res.json({
+            success: true,
+            data: {
+                message: 'Login successful',
+                admin: { id: admin._id, username: admin.username, email: admin.email, lastLogin: admin.lastLogin },
+                token
             }
-        }, req);
-        res.json(response);
+        });
     }
     catch (error) {
-        logger.error('Get admin profile error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Admin login error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
+};
+export const adminLogout = (req, res) => {
+    res.json({ success: true, data: { message: 'Logout successful' } });
+};
+export const getAdminProfile = (req, res) => {
+    const admin = req.admin;
+    if (!admin) {
+        return res.status(401).json({ success: false, error: 'Admin not found' });
+    }
+    res.json({
+        success: true,
+        data: {
+            admin: { id: admin._id, username: admin.username, email: admin.email, lastLogin: admin.lastLogin }
+        }
+    });
 };
 // Category Management
 export const getAllCategories = async (req, res) => {
     try {
         const categories = await Category.find().sort({ name: 1 });
-        const response = ResponseBuilder.success({ categories }, req);
-        res.json(response);
+        res.json({ success: true, data: { categories } });
     }
     catch (error) {
-        logger.error('Get categories error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
-    }
-};
-export const getCategoryById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const category = await Category.findOne({ id });
-        if (!category) {
-            const response = ResponseBuilder.notFound('Category not found', req);
-            return res.status(404).json(response);
-        }
-        const response = ResponseBuilder.success({ category }, req);
-        res.json(response);
-    }
-    catch (error) {
-        logger.error('Get category error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Get categories error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const createCategory = async (req, res) => {
     try {
         const categoryData = req.body;
-        // Check if category with same ID already exists
-        const existingCategory = await Category.findOne({ id: categoryData.id });
-        if (existingCategory) {
-            const response = ResponseBuilder.error('Category with this ID already exists', 'CONFLICT', {
-                existingId: categoryData.id,
-            }, req);
-            return res.status(409).json(response);
+        if (await Category.findOne({ id: categoryData.id })) {
+            return res.status(409).json({ success: false, error: 'Category with this ID already exists' });
         }
         const category = new Category(categoryData);
         await category.save();
-        const response = ResponseBuilder.success({
-            message: 'Category created successfully',
-            category
-        }, req);
-        res.status(201).json(response);
+        res.status(201).json({
+            success: true,
+            data: {
+                message: 'Category created successfully',
+                category
+            }
+        });
     }
     catch (error) {
-        logger.error('Create category error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Create category error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const updateCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        const updateData = req.body;
-        const category = await Category.findOneAndUpdate({ id }, updateData, { new: true, runValidators: true });
+        const category = await Category.findOneAndUpdate({ id }, req.body, { new: true, runValidators: true });
         if (!category) {
-            const response = ResponseBuilder.notFound('Category not found', req);
-            return res.status(404).json(response);
+            return res.status(404).json({ success: false, error: 'Category not found' });
         }
-        const response = ResponseBuilder.success({
-            message: 'Category updated successfully',
-            category
-        }, req);
-        res.json(response);
+        res.json({
+            success: true,
+            data: {
+                message: 'Category updated successfully',
+                category
+            }
+        });
     }
     catch (error) {
-        logger.error('Update category error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Update category error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const deleteCategory = async (req, res) => {
     try {
         const { id } = req.params;
-        // Check if category exists
-        const category = await Category.findOne({ id });
-        if (!category) {
-            const response = ResponseBuilder.notFound('Category not found', req);
-            return res.status(404).json(response);
+        if (!(await Category.findOne({ id }))) {
+            return res.status(404).json({ success: false, error: 'Category not found' });
         }
-        // Check if there are items in this category
-        const itemCount = await Item.countDocuments({ categoryId: id });
-        if (itemCount > 0) {
-            const response = ResponseBuilder.error('Cannot delete category with existing items', 'CONFLICT', {
-                itemCount
-            }, req);
-            return res.status(409).json(response);
+        if (await Item.countDocuments({ categoryId: id }) > 0) {
+            return res.status(409).json({ success: false, error: 'Cannot delete category with existing items' });
         }
         await Category.deleteOne({ id });
-        const response = ResponseBuilder.success({ message: 'Category deleted successfully' }, req);
-        res.json(response);
+        res.json({ success: true, data: { message: 'Category deleted successfully' } });
     }
     catch (error) {
-        logger.error('Delete category error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Delete category error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 // Item Management
 export const getAllItems = async (req, res) => {
     try {
         const { categoryId } = req.query;
-        let query = {};
-        if (categoryId) {
-            query = { categoryId };
-        }
+        const query = categoryId ? { categoryId } : {};
         const items = await Item.find(query).sort({ name: 1 });
-        const response = ResponseBuilder.success({ items }, req);
-        res.json(response);
+        res.json({ success: true, data: { items } });
     }
     catch (error) {
-        logger.error('Get items error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
-    }
-};
-export const getItemById = async (req, res) => {
-    try {
-        const { id } = req.params;
-        const item = await Item.findOne({ id });
-        if (!item) {
-            const response = ResponseBuilder.notFound('Item not found', req);
-            return res.status(404).json(response);
-        }
-        const response = ResponseBuilder.success({ item }, req);
-        res.json(response);
-    }
-    catch (error) {
-        logger.error('Get item error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Get items error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const createItem = async (req, res) => {
     try {
         const itemData = req.body;
-        // Check if item with same ID already exists
-        const existingItem = await Item.findOne({ id: itemData.id });
-        if (existingItem) {
-            const response = ResponseBuilder.error('Item with this ID already exists', 'CONFLICT', {
-                existingId: itemData.id,
-            }, req);
-            return res.status(409).json(response);
+        if (await Item.findOne({ id: itemData.id })) {
+            return res.status(409).json({ success: false, error: 'Item with this ID already exists' });
         }
-        // Verify category exists
-        const category = await Category.findOne({ id: itemData.categoryId });
-        if (!category) {
-            const response = ResponseBuilder.notFound('Category not found', req);
-            return res.status(404).json(response);
+        if (!(await Category.findOne({ id: itemData.categoryId }))) {
+            return res.status(404).json({ success: false, error: 'Category not found' });
         }
         const item = new Item(itemData);
         await item.save();
-        const response = ResponseBuilder.success({
-            message: 'Item created successfully',
-            item
-        }, req);
-        res.status(201).json(response);
+        res.status(201).json({
+            success: true,
+            data: {
+                message: 'Item created successfully',
+                item
+            }
+        });
     }
     catch (error) {
-        logger.error('Create item error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Create item error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const updateItem = async (req, res) => {
     try {
         const { id } = req.params;
         const updateData = req.body;
-        // If categoryId is being updated, verify the new category exists
-        if (updateData.categoryId) {
-            const category = await Category.findOne({ id: updateData.categoryId });
-            if (!category) {
-                const response = ResponseBuilder.notFound('Category not found', req);
-                return res.status(404).json(response);
-            }
+        if (updateData.categoryId && !(await Category.findOne({ id: updateData.categoryId }))) {
+            return res.status(404).json({ success: false, error: 'Category not found' });
         }
         const item = await Item.findOneAndUpdate({ id }, updateData, { new: true, runValidators: true });
         if (!item) {
-            const response = ResponseBuilder.notFound('Item not found', req);
-            return res.status(404).json(response);
+            return res.status(404).json({ success: false, error: 'Item not found' });
         }
-        const response = ResponseBuilder.success({
-            message: 'Item updated successfully',
-            item
-        }, req);
-        res.json(response);
+        res.json({
+            success: true,
+            data: {
+                message: 'Item updated successfully',
+                item
+            }
+        });
     }
     catch (error) {
-        logger.error('Update item error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Update item error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };
 export const deleteItem = async (req, res) => {
@@ -291,15 +181,12 @@ export const deleteItem = async (req, res) => {
         const { id } = req.params;
         const item = await Item.findOneAndDelete({ id });
         if (!item) {
-            const response = ResponseBuilder.notFound('Item not found', req);
-            return res.status(404).json(response);
+            return res.status(404).json({ success: false, error: 'Item not found' });
         }
-        const response = ResponseBuilder.success({ message: 'Item deleted successfully' }, req);
-        res.json(response);
+        res.json({ success: true, data: { message: 'Item deleted successfully' } });
     }
     catch (error) {
-        logger.error('Delete item error', 'AdminController', error);
-        const response = ResponseBuilder.internalError('Internal server error', req);
-        res.status(500).json(response);
+        console.error('[AdminController] Delete item error:', error);
+        res.status(500).json({ success: false, error: 'Internal server error' });
     }
 };

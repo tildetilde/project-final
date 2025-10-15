@@ -49,31 +49,19 @@ class ApiService {
     }));
   }
 
-  async getItemsByCategory(categoryId: string): Promise<GameItem[]> {
-    const response = await this.request<any>('/items/' + categoryId);
-    
-    return response.items.map((item: any, index: number) => ({
-      _id: item._id,
-      id: item.id,
-      name: item.name,
-      label: item.label,
-      value: 0,
-      categoryId: categoryId,
-      source: response.source,
-    }));
-  }
-
-  async getItemsWithValues(categoryId: string): Promise<GameItem[]> {
-    const items = await this.request<any[]>(`/category/${categoryId}/items`);
+  async getItems(categoryId: string, withValues = false): Promise<GameItem[]> {
+    const endpoint = withValues ? `/category/${categoryId}/items` : `/items/${categoryId}`;
+    const response = await this.request<any>(endpoint);
+    const items = response.items || response;
     
     return items.map((item: any) => ({
       _id: item._id,
       id: item.id,
       name: item.name,
       label: item.label,
-      value: item.value,
+      value: withValues ? item.value : 0,
       categoryId: categoryId,
-      source: item.source,
+      source: response.source || item.source,
     }));
   }
 }

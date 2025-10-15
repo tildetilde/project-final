@@ -1,7 +1,5 @@
 import { Item } from '../models/Item.js';
 import { Category } from '../models/Category.js';
-import { ResponseBuilder } from '../utils/response.js';
-import { logger } from '../utils/logger.js';
 // Helper function to shuffle an array
 const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -10,111 +8,110 @@ const shuffleArray = (array) => {
     }
     return array;
 };
-// Get all quiz categories
 export const getCategories = async (req, res) => {
     try {
         const categories = await Category.find({});
-        const response = ResponseBuilder.success(categories, req);
-        res.status(200).json(response);
+        res.status(200).json({ success: true, data: categories });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        logger.error('Error fetching categories', 'QuizController', error);
-        const response = ResponseBuilder.error('Error fetching categories', 'FETCH_ERROR', {
-            details: errorMessage
-        }, req);
-        res.status(500).json(response);
+        console.error('[QuizController] Error fetching categories:', error);
+        res.status(500).json({ success: false, error: 'Error fetching categories' });
     }
 };
-// Get all items for a category (with values for game use)
 export const getCategoryItems = async (req, res) => {
-    const { categoryId } = req.params;
     try {
-        const items = await Item.find({ categoryId }).sort({ value: 1 });
+        const { categoryId } = req.params;
+        const items = await Item.find({ categoryId });
         if (items.length === 0) {
-            const response = ResponseBuilder.notFound('No items found for this category', req);
-            return res.status(404).json(response);
+            return res.status(404).json({ success: false, error: 'No items found for this category' });
         }
-        const response = ResponseBuilder.success(items, req);
-        res.status(200).json(response);
+        res.status(200).json({ success: true, data: items });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        logger.error('Error fetching category items', 'QuizController', error);
-        const response = ResponseBuilder.error('Error fetching category items', 'FETCH_ERROR', {
-            details: errorMessage
-        }, req);
-        res.status(500).json(response);
+        console.error('[QuizController] Error fetching category items:', error);
+        res.status(500).json({ success: false, error: 'Error fetching category items' });
     }
 };
-// Get a random set of quiz items for a category
 export const getQuizItems = async (req, res) => {
-    const { categoryId } = req.params;
     try {
-        // Fetch both the category and items
-        const [category, items] = await Promise.all([
-            Category.findOne({ id: categoryId }),
-            Item.find({ categoryId })
-        ]);
+        const { categoryId } = req.params;
+        // Find the category
+        const category = await Category.findOne({ id: categoryId });
         if (!category) {
-            const response = ResponseBuilder.notFound('Category not found', req);
-            return res.status(404).json(response);
+            return res.status(404).json({ success: false, error: 'Category not found' });
         }
-        if (items.length < 5) {
-            const response = ResponseBuilder.error('Not enough items for this quiz', 'INSUFFICIENT_ITEMS', {
-                required: 5,
-                available: items.length,
-            }, req);
-            return res.status(404).json(response);
+        // Get items for this category
+        const items = await Item.find({ categoryId });
+        if (items.length < 2) {
+            return res.status(400).json({
+                success: false,
+                error: 'Not enough items for this quiz'
+            });
         }
-        const shuffledItems = shuffleArray(items);
-        const quizItems = shuffledItems.slice(0, 5); // Take 5 random items
-        // Remove the 'value' before sending to the client
-        const sanitizedItems = quizItems.map(item => ({
-            _id: item._id?.toString() || '',
-            id: item.id,
-            name: item.name,
-            label: item.label
-        }));
+        // Shuffle and take first 10 items
+        const shuffledItems = shuffleArray(items).slice(0, 10);
         const responseData = {
+            question: category.question || `Which ${category.name} is the most?`,
             unit: category.unit,
-            items: sanitizedItems,
-            question: category.get('question') || '',
-            unitVisible: category.get('unitVisible') || false,
+            unitVisible: category.unitVisible || false,
+            items: shuffledItems.map(item => ({
+                _id: item._id,
+                id: item.id,
+                name: item.name,
+                label: item.label
+            }))
         };
-        const response = ResponseBuilder.success(responseData, req);
-        res.status(200).json(response);
+        res.status(200).json({ success: true, data: responseData });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        logger.error('Error fetching quiz items', 'QuizController', error);
-        const response = ResponseBuilder.error('Error fetching quiz items', 'FETCH_ERROR', {
-            details: errorMessage
-        }, req);
-        res.status(500).json(response);
+        console.error('[QuizController] Error fetching quiz items:', error);
+        res.status(500).json({ success: false, error: 'Error fetching quiz items' });
     }
 };
-// Check if the user's answers are correct
 export const checkAnswers = async (req, res) => {
-    const { userAnswers } = req.body; // userAnswers is an array of item IDs
     try {
-        const itemIds = userAnswers.map((id) => id);
-        const correctItems = await Item.find({ '_id': { $in: itemIds } }).sort({ 'value': 1 }).lean();
-        // Check if the user's order matches the sorted order of correct answers
-        const isCorrect = userAnswers.every((id, index) => {
-            const correctItem = correctItems[index];
-            return correctItem && id === correctItem._id.toString();
+        const { categoryId, userAnswers } = req.body;
+        if (!categoryId || !Array.isArray(userAnswers) || userAnswers.length === 0) {
+            return res.status(400).json({
+                success: false,
+                error: 'Valid categoryId and userAnswers array are required'
+            });
+        }
+        // Get the correct order from the database
+        const items = await Item.find({ categoryId }).sort({ value: 1 });
+        if (items.length !== userAnswers.length) {
+            return res.status(400).json({
+                success: false,
+                error: 'Number of answers does not match number of items'
+            });
+        }
+        // Check answers
+        let correctCount = 0;
+        const results = userAnswers.map((userAnswer, index) => {
+            const isCorrect = userAnswer === items[index].id;
+            if (isCorrect)
+                correctCount++;
+            return {
+                userAnswer,
+                correctAnswer: items[index].id,
+                isCorrect,
+                item: {
+                    id: items[index].id,
+                    name: items[index].name,
+                    label: items[index].label,
+                    value: items[index].value
+                }
+            };
         });
-        const result = { isCorrect };
-        const response = ResponseBuilder.success(result, req);
-        res.status(200).json(response);
+        const result = {
+            isCorrect: correctCount === userAnswers.length,
+            correctOrder: items,
+            userOrder: results.map(r => r.item)
+        };
+        res.status(200).json({ success: true, data: result });
     }
     catch (error) {
-        const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-        logger.error('Error checking answers', 'QuizController', error);
-        const response = ResponseBuilder.error('Error checking answers', 'CHECK_ERROR', {
-            details: errorMessage
-        }, req);
-        res.status(500).json(response);
+        console.error('[QuizController] Error checking answers:', error);
+        res.status(500).json({ success: false, error: 'Error checking answers' });
     }
 };
