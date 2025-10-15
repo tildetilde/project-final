@@ -7,7 +7,7 @@ import type {
   RevealMode,
 } from "../types/game";
 import { apiService } from "../services/api";
-import { shuffle } from "../lib/shuffle";
+import { shuffle } from "../lib/utils";
 
 const WIN_TARGET = 10;
 
@@ -164,8 +164,9 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
 
       set({ loading: true, error: null });
       try {
-        const deck = await apiService.getItemsWithValues(
-          state.selectedCategory.id
+        const deck = await apiService.getItems(
+          state.selectedCategory.id,
+          true
         );
         if (!deck || deck.length < 2) throw new Error("Not enough items");
 

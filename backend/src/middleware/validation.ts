@@ -1,15 +1,10 @@
 import { Request, Response, NextFunction } from 'express';
-import { ResponseBuilder } from '../utils/response.js';
 
 export const validateCategoryId = (req: Request, res: Response, next: NextFunction): void => {
   const { categoryId } = req.params;
   
   if (!categoryId || typeof categoryId !== 'string') {
-    const response = ResponseBuilder.validationError('Valid categoryId is required', {
-      received: categoryId,
-      type: typeof categoryId,
-    }, req);
-    res.status(400).json(response);
+    res.status(400).json({ success: false, error: 'Valid categoryId is required' });
     return;
   }
   
@@ -20,21 +15,12 @@ export const validateQuizAnswers = (req: Request, res: Response, next: NextFunct
   const { userAnswers } = req.body;
   
   if (!Array.isArray(userAnswers) || userAnswers.length === 0) {
-    const response = ResponseBuilder.validationError('userAnswers must be a non-empty array', {
-      received: userAnswers,
-      type: typeof userAnswers,
-      length: Array.isArray(userAnswers) ? userAnswers.length : 'not an array',
-    }, req);
-    res.status(400).json(response);
+    res.status(400).json({ success: false, error: 'userAnswers must be a non-empty array' });
     return;
   }
   
   if (!userAnswers.every((id: unknown) => typeof id === 'string')) {
-    const response = ResponseBuilder.validationError('All userAnswers must be strings', {
-      received: userAnswers,
-      invalidTypes: userAnswers.map((id, index) => ({ index, type: typeof id, value: id })),
-    }, req);
-    res.status(400).json(response);
+    res.status(400).json({ success: false, error: 'All userAnswers must be strings' });
     return;
   }
   
