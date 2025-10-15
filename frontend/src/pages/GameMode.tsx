@@ -22,8 +22,6 @@ export default function GameMode() {
 
   const categoryLabel = "Category";
   const categoryValue = selectedCategory?.name || "Select Category";
-  const roundLabel = "Round";
-  const roundValue = "1";
 
   const scoreA = teams[0]?.timeline.length ?? 0;
   const scoreB = teams[1]?.timeline.length ?? 0;
@@ -141,16 +139,6 @@ if (!selectedCategory) {
       )}
 
       {phase !== "SETUP" && (
-        <div className="fixed z-50 bottom-3 sm:bottom-4 left-3 sm:left-6 flex items-center gap-2">
-          <span className="hidden sm:inline-block w-2 h-2 rounded-sm bg-[#f9ecdf] shadow-soft" />
-          <div className={chip}>
-            {roundLabel}:{" "}
-            <span className="text-[#f9ecdf] font-semibold">{roundValue}</span>
-          </div>
-        </div>
-      )}
-
-      {phase !== "SETUP" && (
         <div className="fixed z-50 bottom-3 sm:bottom-4 right-3 sm:right-6 flex items-center gap-2">
           <div className={chip}>
             {categoryLabel}:{" "}
@@ -188,7 +176,7 @@ if (!selectedCategory) {
             <>
 
               <div className="pt-4 sm:pt-2 lg:pt-8 pb-4 sm:pb-2 lg:pb-8">
-                <div className="hidden mb-2 lg:block text-xs tracking-wider uppercase text-[#fefcfa] font-mono text-center">
+                <div className="hidden mb-2 lg:block text-xs tracking-wider uppercase text-[#fefcfa] font-mono">
                   Game Question
                 </div>
                 <Heading

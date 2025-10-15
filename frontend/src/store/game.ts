@@ -55,6 +55,7 @@ type UIState = {
   timer: TimerState;
   lastTurnFeedback: { timeUp?: boolean; correct?: boolean | null } | null;
   winner: { teamIndex: number; teamName: string } | null;
+  wrongAnswerCard: GameItem | null;
 };
 
 type Actions = {
@@ -135,6 +136,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
     winner: null,
 
     lastTurnFeedback: null,
+    wrongAnswerCard: null,
 
     clearError: () => set({ error: null }),
 
@@ -223,6 +225,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         pendingIndex: null,
         lastPlacementCorrect: null,
         lastTurnFeedback: null,
+        wrongAnswerCard: null,
         phase: "DRAWN",
       });
       get().startTimer();
@@ -269,6 +272,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
           pendingIndex: null,
           lastPlacementCorrect: false,
           phase: "PLACED_WRONG",
+          wrongAnswerCard: card,
         });
         get().stopTimer();
       }
@@ -301,6 +305,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         ) as GameState["teams"],
         phase: "TURN_START",
         lastPlacementCorrect: null,
+        wrongAnswerCard: null,
       });
 
       if (s.lastPlacementCorrect !== false) {
@@ -325,6 +330,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         phase: "TURN_START",
         lastPlacementCorrect: null,
         lastTurnFeedback: null,
+        wrongAnswerCard: null,
         turnTimeline: nextTeam?.timeline?.slice() || [],
       });
     },
@@ -405,6 +411,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
             pendingIndex: null,
             lastPlacementCorrect: false,
             lastTurnFeedback: { timeUp: true, correct: false },
+            wrongAnswerCard: s.currentCard,
           });
           get().stopTimer();
           return;
@@ -488,6 +495,7 @@ export const useGame = create<GameState & UIState & Actions>()((set, get) => {
         selectedCategory: null,
         winner: null,
         lastTurnFeedback: null,
+        wrongAnswerCard: null,
         timer: {
           turnDeadline: null,
           secondsLeft: initialSettings.turnSeconds,
