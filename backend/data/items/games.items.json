@@ -16,8 +16,8 @@
   {
     "id": "game-3",
     "name": "Tetris",
-    "label": "Released 1989",
-    "value": 1989,
+    "label": "Released 1984",
+    "value": 1984,
     "categoryId": "games.releaseyear"
   },
   {
@@ -298,9 +298,9 @@
   },
   {
     "id": "game-50",
-    "name": "God of War",
-    "label": "Released 2018",
-    "value": 2018,
+    "name": "The Sims 2",
+    "label": "Released 2004",
+    "value": 2004,
     "categoryId": "games.releaseyear"
   },
   {

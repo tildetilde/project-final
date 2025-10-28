@@ -43,9 +43,13 @@ class ApiService {
       _id: cat._id,
       id: cat.id,
       name: cat.name,
+      description: cat.description,
       question: cat.question || cat.description || `Which ${cat.name} is the most?`,
       unit: cat.unit,
+      unitVisible: cat.unitVisible ?? true,
+      sort: cat.sort,
       source: cat.source,
+      version: cat.version,
     }));
   }
 

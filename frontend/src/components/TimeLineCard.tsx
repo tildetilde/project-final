@@ -76,6 +76,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
   const t = TOKENS[size];
   const unit = category?.unit;
   const unitVisible = category?.unitVisible ?? true;
+  const displayUnit = unitVisible ? unit : undefined;
 
   const responsiveWrapper =
     size === "sm" ? "w-[90px] h-[127px] lg:w-[164px] lg:h-[217px]" : t.wrapper;
@@ -99,7 +100,7 @@ export const TimeLineCard: React.FC<TimeLineCardProps> = ({
       >
         <div className={cn(t.vspace, "text-center")}>
           <div className={cn(t.value, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-bold font-mono")}>
-            {isRevealed ? formatValue(item.value, unit) : "??"}
+            {isRevealed ? formatValue(item.value, displayUnit) : "??"}
           </div>
 
           <div className={cn(t.name, isCorrect === false ? "text-[#f9ecdf]" : "text-[#2a0d0d]", "leading-tight font-mono break-words hyphens-auto")}>
